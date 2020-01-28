@@ -1,0 +1,47 @@
+{
+  "name": "hexo-site",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "build": "hexo generate",
+    "clean": "hexo clean",
+    "deploy": "hexo deploy",
+    "server": "hexo server",
+    "import": "node ./utils.js"
+  },
+  "hexo": {
+    "version": "4.2.0"
+  },
+  "dependencies": {
+    "css-select": "^2.1.0",
+    "hexo": "^4.0.0",
+    "hexo-admin": "^2.3.0",
+    "hexo-deployer-git": "^2.1.0",
+    "hexo-generator-archive": "^1.0.0",
+    "hexo-generator-category": "^1.0.0",
+    "hexo-generator-feed": "^2.2.0",
+    "hexo-generator-index": "^1.0.0",
+    "hexo-generator-tag": "^1.0.0",
+    "hexo-renderer-ejs": "^1.0.0",
+    "hexo-renderer-marked": "^2.0.0",
+    "hexo-renderer-stylus": "^1.1.0",
+    "hexo-server": "^1.0.0",
+    "lodash.assignin": "^4.2.0",
+    "lodash.bind": "^4.2.1",
+    "lodash.defaults": "^4.2.0",
+    "lodash.filter": "^4.6.0",
+    "lodash.flatten": "^4.4.0",
+    "lodash.foreach": "^4.5.0",
+    "lodash.map": "^4.6.0",
+    "lodash.merge": "^4.6.2",
+    "lodash.pick": "^4.4.0",
+    "lodash.reduce": "^4.6.0",
+    "lodash.reject": "^4.6.0",
+    "lodash.some": "^4.6.0"
+  },
+  "devDependencies": {
+    "cross-spawn": "^7.0.1",
+    "fs-extra": "^8.1.0",
+    "inquirer": "^7.0.4"
+  }
+}
