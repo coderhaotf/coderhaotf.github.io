@@ -6,15 +6,37 @@ cache: npm
 branches:
   only:
     - hexo # build hexo branch only
+# script:
+#   - hexo generate # generate static files
+# deploy:
+#   provider: pages
+#   skip-cleanup: true
+#   github-token: $GH_TOKEN
+#   keep-history: true
+#   on:
+#     branch: master
+#     all_branches: true # solve a permission problem
+#     target_branch: master
+#   local-dir: public
+
+before_install:
+  # - npm install -g hexo-cli
+ 
+# Start: Build Lifecycle
+install:
+  - npm install
+  - npm install hexo-deployer-git --save
+ 
+# 执行清缓存，生成网页操作
 script:
-  - hexo generate # generate static files
-deploy:
-  provider: pages
-  skip-cleanup: true
-  github-token: $GH_TOKEN
-  keep-history: true
-  on:
-    branch: master
-    all_branches: true # solve a permission problem
-    target_branch: master
-  local-dir: public
+  - hexo clean
+  - hexo generate
+ 
+# 设置git提交名，邮箱；替换真实token到_config.yml文件，最后depoy部署
+after_script:
+  - git config user.name "coderhaotf"
+  - git config user.email "2415156870@qq.com"
+  # 替换同目录下的_config.yml文件中gh_token字符串为travis后台刚才配置的变量，注意此处sed命令用了双引号。单引号无效！
+  - sed -i "s/gh_token/${GH_TOKEN}/g" ./_config.yml
+  - hexo deploy
+# End: Build LifeCycle
