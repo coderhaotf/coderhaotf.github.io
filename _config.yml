@@ -97,11 +97,19 @@ theme: obsidian
 #RSS订阅
 plugin:
 - hexo-generator-feed
+- hexo-generator-searchdb
+
 #Feed Atom
 feed:
   type: atom
   path: atom.xml
   limit: 20
+
+search:
+  path: search.xml
+  field: post
+  content: true
+  format: html
 
 # Deployment
 ## Docs: https://hexo.io/docs/deployment.html
