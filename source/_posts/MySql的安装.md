@@ -9,7 +9,7 @@ tags:
 2、配置my.ini文件；
 3、切换到自己MySQL根目录的bin目录下并执行mysqld --remove；
 4、继续运行mysqld  --initialize-insecure，生成data文件（删除旧的data文件）；
-5、运行mysqlld --install，安装服务;
+5、运行mysqld --install，安装服务;
 6、运行net start mysql启动服务；
 7、运行mysql -u root -p,连续回车进入，无需输入密码；
 8、接着运行set password for root@localhost = password('123')，设置密码（若退出，则可能已经生成随机密码，此时重复步骤3）；
