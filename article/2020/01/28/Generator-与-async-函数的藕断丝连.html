@@ -1,0 +1,605 @@
+
+<!DOCTYPE html>
+<html lang="en" class="loading">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Generator-与-async-函数的藕断丝连 - 早起不吃虫</title>
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="google" content="notranslate" />
+    <meta name="keywords" content="coderhaotf,"> 
+    <meta name="description" content="前言上上篇博文中，我们描述了异步回调的三种形式，相信小伙伴们对此都有了一个全新的认识。不过，一定也有小伙伴心存疑惑，比如第三种的async/await，大多数人可能都是知其然而不知其所以然。今天，就,"> 
+    <meta name="author" content="haotf"> 
+    <link rel="alternative" href="atom.xml" title="早起不吃虫" type="application/atom+xml"> 
+    <link rel="icon" href="/img/favicon.png"> 
+    <link href="https://fonts.loli.net/css?family=Roboto+Mono|Rubik&display=swap" rel="stylesheet">
+    
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1429596_nzgqgvnmkjb.css">
+
+    
+<link rel="stylesheet" href="//cdn.bootcss.com/animate.css/3.7.2/animate.min.css">
+
+    
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/social-share.js/1.0.16/css/share.min.css">
+
+    
+<link rel="stylesheet" href="//cdn.bootcss.com/codemirror/5.48.4/codemirror.min.css">
+
+    
+<link rel="stylesheet" href="//cdn.bootcss.com/codemirror/5.48.4/theme/dracula.css">
+
+    
+<link rel="stylesheet" href="/css/obsidian.css">
+
+    
+<link rel="stylesheet" href="/css/ball-atom.min.css">
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+
+<body class="loading">
+    <div class="loader">
+        <div class="la-ball-atom la-2x">
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+    </div>
+    <span id="config-title" style="display:none">早起不吃虫</span>
+    <div id="loader"></div>
+    <div id="single">
+    <div class="scrollbar gradient-bg-rev"></div>
+<div id="top" style="display: block;">
+    <div class="bar" style="width: 0;"></div>
+    <div class="navigation animated fadeIn fast delay-1s">
+        <img id="home-icon" class="icon-home" src="/img/favicon.png" alt="" data-url="https://coderhaotf.github.io">
+        <div id="play-icon" title="Play/Pause" class="iconfont icon-play"></div>
+        <h3 class="subtitle">Generator-与-async-函数的藕断丝连</h3>
+        <div class="social">
+            <!--        <div class="like-icon">-->
+            <!--            <a href="javascript:;" class="likeThis active"><span class="icon-like"></span><span class="count">76</span></a>-->
+            <!--        </div>-->
+            <div>
+                <div class="share">
+                    
+                        <a href="javascript:;" class="iconfont icon-share1"></a>
+                        <div class="share-component-cc" data-disabled="facebook,douban,linkedin,diandian,tencent,google"></div>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+    <div class="section">
+        <div class=article-header-wrapper>
+    <div class="article-header">
+        <div class="article-cover animated fadeIn" style="
+            animation-delay: 600ms;
+            animation-duration: 1.2s;
+            background-image: 
+                radial-gradient(ellipse closest-side, rgba(0, 0, 0, 0.65), #100e17),
+                url(/img/cover.jpg);">
+        </div>
+        <div class="else">
+            <p class="animated fadeInDown">
+                
+                <a href="javascript:;"><b>「 </b>Article<b> 」</b></a>
+                
+                January 28, 2020
+            </p>
+            <h3 class="post-title animated fadeInDown"><a href="/article/2020/01/28/Generator-%E4%B8%8E-async-%E5%87%BD%E6%95%B0%E7%9A%84%E8%97%95%E6%96%AD%E4%B8%9D%E8%BF%9E.html" title="Generator-与-async-函数的藕断丝连" class="">Generator-与-async-函数的藕断丝连</a>
+            </h3>
+            
+            <p class="post-count animated fadeInDown">
+                
+                <span>
+                    <b class="iconfont icon-text2"></b> <i>Words count</i>
+                    6.5k
+                </span>
+                
+                
+                <span>
+                    <b class="iconfont icon-timer__s"></b> <i>Reading time</i>
+                    6 mins.
+                </span>
+                
+                
+                
+                <span id="busuanzi_container_page_pv">
+                    <b class="iconfont icon-read"></b> <i>Read count</i>
+                    <span id="busuanzi_value_page_pv">0</span>
+                </span>
+                
+            </p>
+            
+            
+        </div>
+    </div>
+</div>
+
+<div class="screen-gradient-after">
+    <div class="screen-gradient-content">
+        <div class="screen-gradient-content-inside">
+            <div class="bold-underline-links screen-gradient-sponsor">
+                <p>
+                    <span class="animated fadeIn delay-1s"></span>
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="article">
+    <div class='main'>
+        <div class="content markdown animated fadeIn">
+            <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>上上篇博文中，我们描述了异步回调的三种形式，相信小伙伴们对此都有了一个全新的认识。不过，一定也有小伙伴心存疑惑，比如第三种的async/await，大多数人可能都是知其然而不知其所以然。今天，就让我们深入探究一下其庐山真面目吧。</p>
+<h2 id="一个问题"><a href="#一个问题" class="headerlink" title="一个问题"></a>一个问题</h2><p>我们来看一个题目： 给document添加一个点击事件，每点击一次则打印一次，依次打印 “吃饭”  - -&gt; “睡觉”  - -&gt; “打豆豆”。</p>
+<p>粗心的小伙伴一看就火了，这不是异步回调那一篇的栗子吗？？？</p>
+<p>仔细看看啦，上一篇栗子打印的时间间隔是提前确定的，这一次时间间隔则是全由点击事件来控制，至于啥时候点击，则无法确定。</p>
+<h2 id="传统实现"><a href="#传统实现" class="headerlink" title="传统实现"></a>传统实现</h2><pre><code class="js">clickEvent(document,&quot;click&quot;,eat); // 吃饭 睡觉 打豆豆
+function eat(){
+    console.log(&quot;吃饭&quot;);
+    clickEvent(document,&quot;click&quot;,sleep,eat);
+}
+function sleep(){
+    console.log(&quot;睡觉&quot;);
+    clickEvent(document,&quot;click&quot;,dadoudou,sleep);
+}
+function dadoudou(){
+    console.log(&quot;打豆豆&quot;);
+    clickEvent(document,&quot;click&quot;,null,dadoudou);
+}
+function clickEvent(target,event,fn,rmFn){
+    target &amp;&amp; target.addEventListener(event,fn);
+    target &amp;&amp; target.removeEventListener(event,rmFn);
+}</code></pre>
+<p>看着这段代码，你有什么感觉呢？如果是你自己来写，又是什么感觉呢？</p>
+<p>先说看，为了摸清打印的顺序，要从clickEvent - -&gt; eat - -&gt; sleep - -&gt; dadoudou四个函数不断跳跃阅读。所幸目前每个业务函数中只有一个打印的操作，想象一下，实际开发中，当业务函数长达几十行甚至更多的时候，要从业务函数中找到clickEvent函数也是一件很辛苦的工作。</p>
+<p>再说写，不知道你们是什么样的一个过程，反正我确定了代码思路之后，整个代码顺序调整了不止一次，clickEvent也是后面才抽离出来的，整个过程非常的别扭。</p>
+<p>这是为什么呢？很简单，因为代码不符合我们常规的思考过程。</p>
+<p>人是一种懒惰的动物，越是简单直接，越会觉得轻松愉快。</p>
+<p>那有没有所谓的简单直接的方法呢？</p>
+<h2 id="划时代的巨变"><a href="#划时代的巨变" class="headerlink" title="划时代的巨变"></a>划时代的巨变</h2><p>小伙伴们无语了，“博主，你又标题党了！！”</p>
+<p>我承认有的时候是有标题党的嫌疑（只是嫌疑！），不过，这一次的标题，再怎么夸张都不为过！！！</p>
+<pre><code class="js">//生成器函数
+function* clickEvent(){
+    yield console.log(&quot;吃饭&quot;);
+    yield console.log(&quot;睡觉&quot;);
+    yield console.log(&quot;打豆豆&quot;);
+}
+//创建一个遍历器
+var iterator = clickEvent();
+document.onclick = function(){
+    //调用遍历器
+    iterator.next(); // 吃饭 睡觉 打豆豆
+}</code></pre>
+<p>怎么样？怎么样？怎么样？！！</p>
+<p>这可以称得上划时代的巨变了么？可以么？如果你真正比对比上例代码，相信你心里已经有答案了。</p>
+<p>平复一下心情，我们来看一下这代码：</p>
+<ul>
+<li>生成器函数与普通函数的两个不同，一是function后的 <code>*</code> 标识符，二是只能存在与生成器函数里面的 <code>yield</code> 关键字。</li>
+<li>通过调用生成器函数来创建一个遍历器，遍历器则是通过自带的 <code>next</code> 方法，逐步执行。</li>
+</ul>
+<p>再对比一下上面两段代码，通过生成器函数书写的代码，显然不需要进行各种跳跃类高难度动作才能摸清执行顺序，整个代码显得更加简单直接，执行思路也一目了然。</p>
+<h2 id="Generator（生成器）与-Iterator（遍历器）的关系"><a href="#Generator（生成器）与-Iterator（遍历器）的关系" class="headerlink" title="Generator（生成器）与 Iterator（遍历器）的关系"></a>Generator（生成器）与 Iterator（遍历器）的关系</h2><p>第一次接触生成器的小伙伴，最不解的一点就是：调用生成器函数后，为什么可以调用 <code>next</code> 方法？</p>
+<p>这就要说到ES6新出的 <code>Iterator</code> 接口了。在解释 Iterator 之前，我们先思考一个问题：如何遍历 Array , Set , Map 等数据？遍历的内在机制又是什么呢？</p>
+<h5 id="for…of"><a href="#for…of" class="headerlink" title="for…of"></a>for…of</h5><p>没错，就是这个全新的ES6遍历命令：</p>
+<pre><code class="js">var arr = [&quot;吃饭&quot;,&quot;睡觉&quot;,&quot;打豆豆&quot;];
+for(let val of arr){
+    console.log(val); // 吃饭 睡觉 打豆豆
+}
+var set = new Set(arr);
+for(let val of set){
+    console.log(val); // 吃饭 睡觉 打豆豆
+}</code></pre>
+<p>有的小伙伴就疑问了，<code>for...of</code> 这么厉害，之前的遍历方法还有用吗？？</p>
+<pre><code class="js">var obj = {
+    name: &quot;张三&quot;,
+    age: 20
+}
+for(let key in obj){
+    console.log(key); // name age
+}
+for(let key of obj){
+    console.log(key); // Uncaught TypeError: obj is not iterable
+}</code></pre>
+<p>勤快测试的小伙伴就发现了，当用 for…of 遍历对象的时候，竟然报错了， <code>obj is not iterable</code> 。</p>
+<p>啥是 iterable ？</p>
+<h5 id="Symbol-iterator"><a href="#Symbol-iterator" class="headerlink" title="Symbol.iterator"></a>Symbol.iterator</h5><p>我们先看一段代码：</p>
+<pre><code class="js">typeof (new Array())[Symbol.iterator]; //&quot;function&quot;
+typeof (new Set())[Symbol.iterator]; //&quot;function&quot;
+typeof (new Map())[Symbol.iterator]; //&quot;function&quot;
+// 没有该属性
+typeof (new Object())[Symbol.iterator]; // &quot;undefined&quot;</code></pre>
+<p>讲这里，小伙伴们应该有些眉目了，for…of  遍历的机制就是隐藏在这里。</p>
+<p><code>Symbol.iterator</code> 属性本身是一个函数，就是当前数据结构默认的遍历器生成函数。执行这个函数，就会返回一个遍历器。</p>
+<pre><code class="js">var arr = [&quot;吃饭&quot;,&quot;睡觉&quot;,&quot;打豆豆&quot;];
+var iterator = arr[Symbol.iterator](); // 执行遍历器生成函数，返回一个遍历器；
+iterator.next(); // {value: &quot;吃饭&quot;, done: false}
+iterator.next(); // {value: &quot;睡觉&quot;, done: false}
+iterator.next(); // {value: &quot;打豆豆&quot;, done: false}
+iterator.next(); // {value: undefined, done: true}</code></pre>
+<p>目前原生具备 Iterator 接口的数据结构如下：</p>
+<ul>
+<li>Array</li>
+<li>Map</li>
+<li>Set</li>
+<li>String</li>
+<li>TypedArray</li>
+<li>函数的 arguments 对象</li>
+<li>NodeList 对象</li>
+</ul>
+<p>有些小伙伴这时就迷茫了，原生具备的？那我还怎么玩呀！！</p>
+<p>额，这就把人家遍历器看的有点小肚鸡肠啦，其实人家还是给了我们发挥空间的:</p>
+<pre><code class="js">var obj = {
+    [Symbol.iterator](){
+        return {
+            begin: 1,
+            next(){
+                if(this.begin &lt; 4){
+                    return {value: this.begin ++, done: false}
+                }else{
+                    return { value: undefined, done: true}
+                }
+            }
+        }
+    }
+}
+for (let val of obj){
+    console.log(val); // 1  2  3
+}</code></pre>
+<p>这样的话，我们就可以自定义一个遍历器了。</p>
+<h5 id="水落石出"><a href="#水落石出" class="headerlink" title="水落石出"></a>水落石出</h5><p>绕了这么一大圈，相信各位小伙伴此时都心中有数啦，让我回头再看看一开始那个栗子：</p>
+<pre><code class="js">//生成器函数
+function* clickEvent(){
+    yield console.log(&quot;吃饭&quot;);
+    yield console.log(&quot;睡觉&quot;);
+    yield console.log(&quot;打豆豆&quot;);
+}
+//创建一个遍历器
+var iterator = clickEvent();
+// 证明了这是一个遍历器
+typeof iterator[Symbol.iterator]; //&quot;function&quot;</code></pre>
+<p>没有错，就是这么简单，所谓的Generator（生成器），其实就生成 Iterator (遍历器)的一种特殊函数！！</p>
+<h2 id="Generator-函数与-async-函数"><a href="#Generator-函数与-async-函数" class="headerlink" title="Generator 函数与 async 函数"></a>Generator 函数与 async 函数</h2><p>讲了这么多，小伙伴们已经急，“天天废话一大摞，你说你，讲了大半天，跟标题有啥子关系哦！”</p>
+<p>额，其实我也不想啊！写文章很累的好吧！！！不过考虑到一些基础还不太扎实的小伙伴，循序渐进还是很有必要的，而且这样把整个个知识体系串联了起来，显得更为系统了不是？</p>
+<p>我们回到正题。</p>
+<p><code>async</code> 函数我们在异步回调的前世今生篇已经有所涉及，但是好事多磨，我们再重写一遍今天这个栗子：</p>
+<pre><code class="js">//生成器函数
+async function clickEvent(){
+    await console.log(&quot;吃饭&quot;);
+    await console.log(&quot;睡觉&quot;);
+    await console.log(&quot;打豆豆&quot;);
+}
+//麻烦了,一骨碌全打印出来了
+clickEvent(); // 吃饭 睡觉 打豆豆
+// 说明 async 函数并不是遍历器
+typeof clickEvent[Symbol.iterator]; // &quot;undefined&quot;</code></pre>
+<p>小伙伴们顿时兴奋了，“露陷了吧！哈哈哈哈哈！”</p>
+<p>额，。。。还好我早已对这种充满幸灾乐祸的人生见惯不惯了。</p>
+<p>不过，我有说过 <code>async</code> 能实现吗？有说过吗？？有证据吗？？</p>
+<p>“既然都不能实现，你说这些有啥子意思咧”，小伙伴们一脸不屑。</p>
+<p>“我想说”，我一脸严肃，“虽然 async 函数不能实现，但是它却是 Generator 函数的语法糖！”</p>
+
+            <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
+            <audio id="audio" loop="1" preload="auto" controls="controls"
+                data-autoplay="false">
+                <source type="audio/mpeg" src="">
+            </audio>
+            
+            <ul id="audio-list" style="display:none">
+                
+                
+                <li title='0' data-url='/statics/chengdu.mp3'></li>
+                
+                    
+            </ul>
+            
+            
+            
+    <div id='gitalk-container' class="comment link"
+        data-ae='true'
+        data-ci='ad0ec68ac6b80ef0adbd'
+        data-cs='bcf8895a95f3e128f12210a56df3cedd7d09a17d'
+        data-r='coderhaotf.github.io'
+        data-o='coderhaotf'
+        data-a='coderhaotf'
+        data-d=''
+    >Comments</div>
+
+
+            
+            
+        </div>
+        <div class="sidebar">
+            <div class="box animated fadeInRight">
+                <div class="subbox">
+                    <img src="https://res.cloudinary.com/tridiamond/image/upload/v1573019751/TriDiamond_logo_ui_xeublz.jpg" height=300 width=300></img>
+                    <p>haotf</p>
+                    <span>Think like an artist, develop like an artisan</span>
+                    <dl>
+                        <dd><a href="https://github.com/coderhaotf" target="_blank"><span
+                                    class=" iconfont icon-github"></span></a></dd>
+                        <dd><a href="https://twitter.com/" target="_blank"><span
+                                    class=" iconfont icon-twitter"></span></a></dd>
+                        <dd><a href="https://stackoverflow.com/" target="_blank"><span
+                                    class=" iconfont icon-stack-overflow"></span></a></dd>
+                    </dl>
+                </div>
+                <ul>
+                    <li><a href="/">31 <p>Articles</p></a></li>
+                    <li><a href="/categories">0 <p>Categories</p></a></li>
+                    <li><a href="/tags">0 <p>Tags</p></a></li>
+                </ul>
+            </div>
+            
+            
+            
+            <div class="box sticky animated fadeInRight faster">
+                <div id="toc" class="subbox">
+                    <h4>Contents</h4>
+                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#前言"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#一个问题"><span class="toc-number">2.</span> <span class="toc-text">一个问题</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#传统实现"><span class="toc-number">3.</span> <span class="toc-text">传统实现</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#划时代的巨变"><span class="toc-number">4.</span> <span class="toc-text">划时代的巨变</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Generator（生成器）与-Iterator（遍历器）的关系"><span class="toc-number">5.</span> <span class="toc-text">Generator（生成器）与 Iterator（遍历器）的关系</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Generator-函数与-async-函数"><span class="toc-number">6.</span> <span class="toc-text">Generator 函数与 async 函数</span></a></li></ol>
+                </div>
+            </div>
+            
+            
+        </div>
+    </div>
+</div>
+
+    </div>
+</div>
+    <div id="back-to-top" class="animated fadeIn faster">
+        <div class="flow"></div>
+        <span class="percentage animated fadeIn faster">0%</span>
+        <span class="iconfont icon-top02 animated fadeIn faster"></span>
+    </div>
+</body>
+<footer>
+    <p class="copyright" id="copyright">
+        &copy; 2020
+        <span class="gradient-text">
+            haotf
+        </span>.
+        Designed && Powerd  by <a href="http://hexo.io/" title="Hexo" target="_blank" rel="noopener">Hexo</a>
+        <p>Copyright© 2018 早起不吃虫的博客 粤ICP备18104892号</p>
+        <!-- Theme
+        <span class="gradient-text">
+            <a href="https://github.com/TriDiamond/hexo-theme-obsidian" title="Obsidian" target="_blank" rel="noopener">Obsidian</a>
+        </span>
+        <small><a href="https://github.com/TriDiamond/hexo-theme-obsidian/blob/master/CHANGELOG.md" title="v1.4.3" target="_blank" rel="noopener">v1.4.3</a></small> -->
+    </p>
+</footer>
+
+<script type="text/javascript" src="https://cdn.bootcss.com/mathjax/2.7.6/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<script>
+  MathJax.Hub.Config({
+    "HTML-CSS": {
+      preferredFont: "TeX",
+      availableFonts: ["STIX", "TeX"],
+      linebreaks: {
+        automatic: true
+      },
+      EqnChunk: (MathJax.Hub.Browser.isMobile ? 10 : 50)
+    },
+    tex2jax: {
+      inlineMath: [
+        ["$", "$"],
+        ["\\(", "\\)"]
+      ],
+      processEscapes: true,
+      ignoreClass: "tex2jax_ignore|dno",
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    TeX: {
+      noUndefined: {
+        attributes: {
+          mathcolor: "red",
+          mathbackground: "#FFEEEE",
+          mathsize: "90%"
+        }
+      },
+      Macros: {
+        href: "{}"
+      }
+    },
+    messageStyle: "none"
+  });
+</script>
+<script>
+  function initialMathJax() {
+    MathJax.Hub.Queue(function () {
+      var all = MathJax.Hub.getAllJax(),
+        i;
+      // console.log(all);
+      for (i = 0; i < all.length; i += 1) {
+        console.log(all[i].SourceElement().parentNode)
+        all[i].SourceElement().parentNode.className += ' has-jax';
+      }
+    });
+  }
+
+  function reprocessMathJax() {
+    if (typeof MathJax !== 'undefined') {
+      MathJax.Hub.Queue(["Typeset", MathJax.Hub]);
+    }
+  }
+</script>
+
+
+
+    
+<link rel="stylesheet" href="//cdn.bootcss.com/gitalk/1.5.0/gitalk.min.css">
+
+    
+<script src="//cdn.bootcss.com/gitalk/1.5.0/gitalk.min.js"></script>
+
+
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="/js/plugin.js"></script>
+<script src="/js/obsidian.js"></script>
+<script src="/js/jquery.truncate.js"></script>
+<script src="/js/search.js"></script>
+
+
+<script src="//cdn.bootcss.com/typed.js/2.0.10/typed.min.js"></script>
+
+
+<script src="//cdn.bootcss.com/blueimp-md5/2.12.0/js/md5.min.js"></script>
+
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/social-share.js/1.0.16/js/social-share.min.js"></script>
+
+
+<script src="https://cdn.bootcss.com/codemirror/5.48.4/codemirror.min.js"></script>
+
+    
+<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/javascript/javascript.min.js"></script>
+
+
+    
+<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/css/css.min.js"></script>
+
+
+    
+<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/xml/xml.min.js"></script>
+
+
+    
+<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/htmlmixed/htmlmixed.min.js"></script>
+
+
+    
+<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/clike/clike.min.js"></script>
+
+
+    
+<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/php/php.min.js"></script>
+
+
+    
+<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/shell/shell.min.js"></script>
+
+
+    
+<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/python/python.min.js"></script>
+
+
+
+
+    
+<script src="/js/busuanzi.min.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            if ($('span[id^="busuanzi_"]').length) {
+                initialBusuanzi();
+            }
+        });
+    </script>
+
+
+
+<link rel="stylesheet" href="//cdn.bootcss.com/photoswipe/4.1.3/photoswipe.min.css">
+<link rel="stylesheet" href="//cdn.bootcss.com/photoswipe/4.1.3/default-skin/default-skin.min.css">
+
+
+<script src="//cdn.bootcss.com/photoswipe/4.1.3/photoswipe.min.js"></script>
+<script src="//cdn.bootcss.com/photoswipe/4.1.3/photoswipe-ui-default.min.js"></script>
+
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+            <div class="pswp__top-bar">
+                <!--  Controls are self-explanatory. Order can be changed. -->
+                <div class="pswp__counter"></div>
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                      <div class="pswp__preloader__cut">
+                        <div class="pswp__preloader__donut"></div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div> 
+            </div>
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="//www.googletagmanager.com/gtag/js?id=UA-149874671-1"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', 'UA-149874671-1');
+    </script>
+
+
+
+
+
+<script>
+    function initialTyped () {
+        var typedTextEl = $('.typed-text');
+        if (typedTextEl && typedTextEl.length > 0) {
+            var typed = new Typed('.typed-text', {
+                strings: ["Think like an artist, develop like an artisan", "艺术家思维去思考问题，工匠创造精神去开发"],
+                typeSpeed: 90,
+                loop: true,
+                loopCount: Infinity,
+                backSpeed: 20,
+            });
+        }
+    }
+
+    if ($('.article-header') && $('.article-header').length) {
+        $(document).ready(function () {
+            initialTyped();
+        });
+    }
+</script>
+
+
+
+
+</html>

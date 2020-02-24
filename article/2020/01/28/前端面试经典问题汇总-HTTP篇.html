@@ -1,0 +1,636 @@
+
+<!DOCTYPE html>
+<html lang="en" class="loading">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>前端面试经典问题汇总-HTTP篇 - 早起不吃虫</title>
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="google" content="notranslate" />
+    <meta name="keywords" content="coderhaotf,"> 
+    <meta name="description" content="GET与POST请求的区别GET和POST是什么？HTTP协议中的两种发送请求的方法。
+HTTP是什么？HTTP是基于TCP/IP的关于数据如何在万维网中如何通信的协议。
+HTTP的底层是TCP/I,"> 
+    <meta name="author" content="haotf"> 
+    <link rel="alternative" href="atom.xml" title="早起不吃虫" type="application/atom+xml"> 
+    <link rel="icon" href="/img/favicon.png"> 
+    <link href="https://fonts.loli.net/css?family=Roboto+Mono|Rubik&display=swap" rel="stylesheet">
+    
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1429596_nzgqgvnmkjb.css">
+
+    
+<link rel="stylesheet" href="//cdn.bootcss.com/animate.css/3.7.2/animate.min.css">
+
+    
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/social-share.js/1.0.16/css/share.min.css">
+
+    
+<link rel="stylesheet" href="//cdn.bootcss.com/codemirror/5.48.4/codemirror.min.css">
+
+    
+<link rel="stylesheet" href="//cdn.bootcss.com/codemirror/5.48.4/theme/dracula.css">
+
+    
+<link rel="stylesheet" href="/css/obsidian.css">
+
+    
+<link rel="stylesheet" href="/css/ball-atom.min.css">
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+
+<body class="loading">
+    <div class="loader">
+        <div class="la-ball-atom la-2x">
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+    </div>
+    <span id="config-title" style="display:none">早起不吃虫</span>
+    <div id="loader"></div>
+    <div id="single">
+    <div class="scrollbar gradient-bg-rev"></div>
+<div id="top" style="display: block;">
+    <div class="bar" style="width: 0;"></div>
+    <div class="navigation animated fadeIn fast delay-1s">
+        <img id="home-icon" class="icon-home" src="/img/favicon.png" alt="" data-url="https://coderhaotf.github.io">
+        <div id="play-icon" title="Play/Pause" class="iconfont icon-play"></div>
+        <h3 class="subtitle">前端面试经典问题汇总-HTTP篇</h3>
+        <div class="social">
+            <!--        <div class="like-icon">-->
+            <!--            <a href="javascript:;" class="likeThis active"><span class="icon-like"></span><span class="count">76</span></a>-->
+            <!--        </div>-->
+            <div>
+                <div class="share">
+                    
+                        <a href="javascript:;" class="iconfont icon-share1"></a>
+                        <div class="share-component-cc" data-disabled="facebook,douban,linkedin,diandian,tencent,google"></div>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+    <div class="section">
+        <div class=article-header-wrapper>
+    <div class="article-header">
+        <div class="article-cover animated fadeIn" style="
+            animation-delay: 600ms;
+            animation-duration: 1.2s;
+            background-image: 
+                radial-gradient(ellipse closest-side, rgba(0, 0, 0, 0.65), #100e17),
+                url(/img/cover.jpg);">
+        </div>
+        <div class="else">
+            <p class="animated fadeInDown">
+                
+                <a href="javascript:;"><b>「 </b>Article<b> 」</b></a>
+                
+                January 28, 2020
+            </p>
+            <h3 class="post-title animated fadeInDown"><a href="/article/2020/01/28/%E5%89%8D%E7%AB%AF%E9%9D%A2%E8%AF%95%E7%BB%8F%E5%85%B8%E9%97%AE%E9%A2%98%E6%B1%87%E6%80%BB-HTTP%E7%AF%87.html" title="前端面试经典问题汇总-HTTP篇" class="">前端面试经典问题汇总-HTTP篇</a>
+            </h3>
+            
+            <p class="post-count animated fadeInDown">
+                
+                <span>
+                    <b class="iconfont icon-text2"></b> <i>Words count</i>
+                    11k
+                </span>
+                
+                
+                <span>
+                    <b class="iconfont icon-timer__s"></b> <i>Reading time</i>
+                    10 mins.
+                </span>
+                
+                
+                
+                <span id="busuanzi_container_page_pv">
+                    <b class="iconfont icon-read"></b> <i>Read count</i>
+                    <span id="busuanzi_value_page_pv">0</span>
+                </span>
+                
+            </p>
+            
+            
+        </div>
+    </div>
+</div>
+
+<div class="screen-gradient-after">
+    <div class="screen-gradient-content">
+        <div class="screen-gradient-content-inside">
+            <div class="bold-underline-links screen-gradient-sponsor">
+                <p>
+                    <span class="animated fadeIn delay-1s"></span>
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="article">
+    <div class='main'>
+        <div class="content markdown animated fadeIn">
+            <h2 id="GET与POST请求的区别"><a href="#GET与POST请求的区别" class="headerlink" title="GET与POST请求的区别"></a>GET与POST请求的区别</h2><p>GET和POST是什么？HTTP协议中的两种发送请求的方法。</p>
+<p>HTTP是什么？HTTP是基于TCP/IP的关于数据如何在万维网中如何通信的协议。</p>
+<p>HTTP的底层是TCP/IP。所以GET和POST的底层也是TCP/IP，也就是说，GET/POST都是TCP连接。GET和POST能做的事情是一样一样的。你要给GET加上request body，给POST带上url参数，技术上是完全行的通的。</p>
+<p>为什么GET与POST请求还有这么多差异呢？根源在于浏览器与服务器的限制。</p>
+<h5 id="缓存上的区别"><a href="#缓存上的区别" class="headerlink" title="缓存上的区别"></a><strong>缓存上的区别</strong></h5><ul>
+<li>get请求类似于查找的过程，用户获取数据，可以不用每次都与数据库连接，所以可以使用缓存。</li>
+<li>post不同，post做的一般是修改和删除的工作，所以必须与数据库交互，所以不能使用缓存。因此get请求适合于请求缓存。</li>
+</ul>
+<h5 id="安全上的区别"><a href="#安全上的区别" class="headerlink" title="安全上的区别"></a><strong>安全上的区别</strong></h5><ul>
+<li>查询字符串（名称/值对）是在 GET 请求的 URL 中发送的，有安全问题。</li>
+<li>查询字符串（名称/值对）是在 POST 请求的 HTTP 消息主体中发送的，因此安全性较get高</li>
+</ul>
+<p><strong>误区：我们经常说get请求参数的大小存在限制，而post请求的参数大小是无限制的。</strong></p>
+<p>实际上HTTP 协议从未规定 GET/POST 的请求长度限制是多少。对get请求参数的限制是来源与浏览器或web服务器，浏览器或web服务器限制了url的长度。为了明确这个概念，我们必须再次强调下面几点:</p>
+<ul>
+<li>HTTP 协议 未规定 GET 和POST的长度限制</li>
+<li>GET的最大长度显示是因为 浏览器和 web服务器限制了 URI的长度</li>
+<li>不同的浏览器和WEB服务器，限制的最大长度不一样</li>
+<li>要支持IE，则最大长度为2083byte，若只支持Chrome，则最大长度 8182byte</li>
+</ul>
+<h5 id="总结"><a href="#总结" class="headerlink" title="总结"></a><strong>总结</strong></h5><p>有关 GET 请求的其他一些注释：</p>
+<ul>
+<li>GET 请求可被缓存</li>
+<li>GET 请求保留在浏览器历史记录中</li>
+<li>GET 请求可被收藏为书签</li>
+<li>GET 请求不应在处理敏感数据时使用</li>
+<li>GET 请求有长度限制</li>
+<li>GET 请求只应当用于取回数据</li>
+</ul>
+<p>有关 POST 请求的其他一些注释：</p>
+<ul>
+<li>POST 请求不会被缓存</li>
+<li>POST 请求不会保留在浏览器历史记录中</li>
+<li>POST 不能被收藏为书签</li>
+<li>POST 请求对数据长度没有要求</li>
+</ul>
+<h2 id="浏览器缓存"><a href="#浏览器缓存" class="headerlink" title="浏览器缓存"></a><a href="http://www.cnblogs.com/lyzg/p/5125934.html" target="_blank" rel="noopener">浏览器缓存</a></h2><p>强缓存与协商缓存的共同点是：如果命中，都是从客户端缓存中加载资源，而不是从服务器加载资源数据；</p>
+<p>区别是：强缓存不发请求到服务器，协商缓存会发请求到服务器。</p>
+<h5 id="强缓存"><a href="#强缓存" class="headerlink" title="强缓存"></a>强缓存</h5><h6 id="Expires"><a href="#Expires" class="headerlink" title="Expires"></a>Expires</h6><p>Expires是较老的强缓存管理header，由于它是服务器返回的一个绝对时间，在服务器时间与客户端时间相差较大时，缓存管理容易出现问题，比如随意修改下客户端时间，就能影响缓存命中的结果。</p>
+<ul>
+<li>浏览器第一次跟服务器请求一个资源，服务器在返回这个资源的同时，在respone的header加上Expires的header；</li>
+<li>浏览器在接收到这个资源后，会把这个资源连同所有response header一起缓存下来（所以缓存命中的请求返回的header并不是来自服务器，而是来自之前缓存的header）；</li>
+<li>浏览器再请求这个资源时，先从缓存中寻找，找到这个资源后，拿出它的Expires跟当前的请求时间比较，如果请求时间在Expires指定的时间之前，就能命中缓存，否则就不行。</li>
+<li>如果缓存没有命中，浏览器直接从服务器加载资源时，Expires Header在重新加载的时候会被更新。</li>
+</ul>
+<h6 id="Cache-Control"><a href="#Cache-Control" class="headerlink" title="Cache-Control"></a>Cache-Control</h6><p>在http1.1的时候，提出了一个新的header，就是Cache-Control，这是一个相对时间，在配置缓存的时候，以秒为单位，用数值表示，如：Cache-Control:max-age=315360000，它的缓存原理是：</p>
+<ul>
+<li>浏览器第一次跟服务器请求一个资源，服务器在返回这个资源的同时，在respone的header加上Cache-Control的header；</li>
+<li>浏览器在接收到这个资源后，会把这个资源连同所有response header一起缓存下来；</li>
+<li>浏览器再请求这个资源时，先从缓存中寻找，找到这个资源后，根据它第一次的请求时间和Cache-Control设定的有效期，计算出一个资源过期时间，再拿这个过期时间跟当前的请求时间比较，如果请求时间在过期时间之前，就能命中缓存，否则就不行。</li>
+<li>如果缓存没有命中，浏览器直接从服务器加载资源时，Cache-Control Header在重新加载的时候会被更新。</li>
+</ul>
+<p>Cache-Control描述的是一个相对时间，在进行缓存命中的时候，都是利用客户端时间进行判断，所以相比较Expires，Cache-Control的缓存管理更有效，安全一些。</p>
+<p>这两个header可以只启用一个，也可以同时启用，当response header中，Expires和Cache-Control同时存在时，Cache-Control优先级高于Expires。</p>
+<h5 id="强缓存的管理"><a href="#强缓存的管理" class="headerlink" title="强缓存的管理"></a>强缓存的管理</h5><p>通常有2种方式来设置是否启用强缓存：</p>
+<ul>
+<li>通过代码的方式，在web服务器返回的响应中添加Expires和Cache-Control Header；</li>
+<li>通过配置web服务器的方式，让web服务器在响应资源的时候统一添加Expires和Cache-Control Header。</li>
+</ul>
+<h5 id="协商缓存"><a href="#协商缓存" class="headerlink" title="协商缓存"></a>协商缓存</h5><p>Last-Modified，If-Modified-Since】都是根据服务器时间返回的header，一般来说，在没有调整服务器时间和篡改客户端缓存的情况下，这两个header配合起来管理协商缓存是非常可靠的，但是有时候也会服务器上资源其实有变化，但是最后修改时间却没有变化的情况，而这种问题又很不容易被定位出来，而当这种情况出现的时候，就会影响协商缓存的可靠性。所以就有了另外一对header来管理协商缓存，这对header就是【ETag、If-None-Match】。</p>
+<h6 id="Last-Modified，If-Modified-Since"><a href="#Last-Modified，If-Modified-Since" class="headerlink" title="Last-Modified，If-Modified-Since"></a>Last-Modified，If-Modified-Since</h6><ul>
+<li>浏览器第一次跟服务器请求一个资源，服务器在返回这个资源的同时，在respone的header加上Last-Modified的header，这个header表示这个资源在服务器上的最后修改时间；</li>
+<li>浏览器再次跟服务器请求这个资源时，在request的header上加上If-Modified-Since的header，这个header的值就是上一次请求时返回的Last-Modified的值；</li>
+<li>服务器再次收到资源请求时，根据浏览器传过来If-Modified-Since和资源在服务器上的最后修改时间判断资源是否有变化，如果没有变化则返回304 Not Modified，但是不会返回资源内容；如果有变化，就正常返回资源内容。</li>
+<li>浏览器收到304的响应后，就会从缓存中加载资源。</li>
+<li>如果协商缓存没有命中，浏览器直接从服务器加载资源时，Last-Modified Header在重新加载的时候会被更新，下次请求时，If-Modified-Since会启用上次返回的Last-Modified值。</li>
+</ul>
+<h6 id="ETag、If-None-Match"><a href="#ETag、If-None-Match" class="headerlink" title="ETag、If-None-Match"></a>ETag、If-None-Match</h6><ul>
+<li>浏览器第一次跟服务器请求一个资源，服务器在返回这个资源的同时，在respone的header加上ETag的header，这个header是服务器根据当前请求的资源生成的一个唯一标识，这个唯一标识是一个字符串，只要资源有变化这个串就不同，跟最后修改时间没有关系；</li>
+<li>浏览器再次跟服务器请求这个资源时，在request的header上加上If-None-Match的header，这个header的值就是上一次请求时返回的ETag的值；</li>
+<li>服务器再次收到资源请求时，根据浏览器传过来If-None-Match和然后再根据资源生成一个新的ETag，如果这两个值相同就说明资源没有变化，否则就是有变化；如果没有变化则返回304 Not Modified，但是不会返回资源内容；如果有变化，就正常返回资源内容。与Last-Modified不一样的是，当服务器返回304 Not Modified的响应时，由于ETag重新生成过，response header中还会把这个ETag返回，即使这个ETag跟之前的没有变化；</li>
+<li>浏览器收到304的响应后，就会从缓存中加载资源。</li>
+</ul>
+<h5 id="协商缓存的管理"><a href="#协商缓存的管理" class="headerlink" title="协商缓存的管理"></a>协商缓存的管理</h5><p>【Last-Modified，If-Modified-Since】和【ETag、If-None-Match】一般都是同时启用，这是为了处理Last-Modified不可靠的情况。</p>
+<p>分布式系统里多台机器间文件的Last-Modified必须保持一致，以免负载均衡到不同机器导致比对失败；</p>
+<p>分布式系统尽量关闭掉ETag(每台机器生成的ETag都会不一样）；</p>
+<h5 id="浏览器行为对缓存的影响"><a href="#浏览器行为对缓存的影响" class="headerlink" title="浏览器行为对缓存的影响"></a>浏览器行为对缓存的影响</h5><ul>
+<li>当ctrl+f5强制刷新网页时，直接从服务器加载，跳过强缓存和协商缓存；</li>
+<li>当f5刷新网页时，跳过强缓存，但是会检查协商缓存；</li>
+</ul>
+<h2 id="OPTIONS请求方法"><a href="#OPTIONS请求方法" class="headerlink" title="OPTIONS请求方法"></a>OPTIONS请求方法</h2><p>非简单请求是那种对服务器有特殊要求的请求，比如请求方法是PUT或DELETE，或者Content-Type字段的类型是application/json。</p>
+<p>非简单请求的CORS请求，会在正式通信之前，增加一次HTTP查询请求，称为”预检”请求（preflight）。</p>
+<ul>
+<li>获取服务器支持的HTTP请求方法；也是黑客经常使用的方法。</li>
+<li>用来检查服务器的性能。例如：AJAX进行跨域请求时的预检，需要向另外一个域名的资源发送一个HTTP OPTIONS请求头，用以判断实际发送的请求是否安全。</li>
+</ul>
+<h2 id="前端工程与性能优化"><a href="#前端工程与性能优化" class="headerlink" title="前端工程与性能优化"></a>前端工程与性能优化</h2><table>
+<thead>
+<tr>
+<th>优化方向</th>
+<th>优化手段</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>请求数量</td>
+<td>合并脚本和样式表，CSS Sprites，拆分初始化负载，划分主域</td>
+</tr>
+<tr>
+<td>请求带宽</td>
+<td>开启GZip，精简JavaScript，移除重复脚本，图像优化</td>
+</tr>
+<tr>
+<td>缓存利用</td>
+<td>使用CDN，使用外部JavaScript和CSS，添加Expires头，减少DNS查找，配置ETag，使AjaX可缓存</td>
+</tr>
+<tr>
+<td>页面结构</td>
+<td>将样式表放在顶部，将脚本放在底部，尽早刷新文档的输出</td>
+</tr>
+<tr>
+<td>代码校验</td>
+<td>避免CSS表达式，避免重定向</td>
+</tr>
+</tbody></table>
+<h2 id="ES6模块与CommonJS模块的差异"><a href="#ES6模块与CommonJS模块的差异" class="headerlink" title="ES6模块与CommonJS模块的差异"></a>ES6模块与CommonJS模块的差异</h2><ul>
+<li>CommonJs 模块输出的是一个值的拷贝，ES6模块输出的是一个值的引用</li>
+<li>CommonJS 模块是运行时加载，ES6模块是编译时输出接口</li>
+<li>ES6输入的模块变量，只是一个符号链接，所以这个变量是只读的，对它进行重新赋值就会报错</li>
+</ul>
+<h2 id="http-与-https"><a href="#http-与-https" class="headerlink" title="http 与 https"></a>http 与 https</h2><h5 id="http的不足："><a href="#http的不足：" class="headerlink" title="http的不足："></a>http的不足：</h5><ul>
+<li>通信使用明文，可能会被窃听</li>
+<li>不验证通信方的身份，可能遭遇伪装</li>
+<li>无法证明报文的完整性，可能遭遇篡改</li>
+</ul>
+<h5 id="何为https"><a href="#何为https" class="headerlink" title="何为https?"></a>何为https?</h5><p><strong>http + 加密 + 验证 + 完整性保护 = https</strong></p>
+<h5 id="https的原理"><a href="#https的原理" class="headerlink" title="https的原理"></a>https的原理</h5><p>https并非应用层上一种新的协议，而是http通信接口部分用SSL（Secure Socket Layer，安全套接层）和TLS（Transport Layer Security，传输安全协议）协议代替。</p>
+<p>通常情况下，http与TCP直接通信，当使用SSL时，就演变层先跟SSL通信，再由SSL与TCP通信。</p>
+<p>所谓的https，也就是身披SSL协议外壳的http。</p>
+<h5 id="SSL如何加密？"><a href="#SSL如何加密？" class="headerlink" title="SSL如何加密？"></a>SSL如何加密？</h5><p>SSL使用的是一种公开密钥加密（Public-key cryptography）的加密方式。</p>
+<p>加密方法中，加密算法是公开的，密钥是保密的，加密跟解密都需要用到密钥。</p>
+<h6 id="共享密钥加密（Common-key-cryto-system）"><a href="#共享密钥加密（Common-key-cryto-system）" class="headerlink" title="共享密钥加密（Common key cryto system）"></a>共享密钥加密（Common key cryto system）</h6><p>加密与解密使用同一个密钥，也被称为对称密钥加密。</p>
+<p>不足：密钥能够安全发送，信息也能安全发送。</p>
+<h6 id="公开密钥加密"><a href="#公开密钥加密" class="headerlink" title="公开密钥加密"></a>公开密钥加密</h6><p>公开密钥加密使用一对非对称的密钥，一把叫做私有密钥（private key），另一把叫做公开密钥（public key）。</p>
+<p>发送密文的一方使用公开密钥加密，对方收到信息之后，再使用私有密钥解密。</p>
+<h5 id="https使用混合加密机制"><a href="#https使用混合加密机制" class="headerlink" title="https使用混合加密机制"></a>https使用混合加密机制</h5><p>公开密钥加密与共享密钥加密相比，其处理速度要慢，所以需要利用其各自的优势。</p>
+<p>在交换密钥阶段使用公开密钥加密的方式，之后建立通信交换报文阶段则使用共享密钥加密的方式。</p>
+<h5 id="公开密钥的可靠性证明"><a href="#公开密钥的可靠性证明" class="headerlink" title="公开密钥的可靠性证明"></a>公开密钥的可靠性证明</h5><p>解决方法是，使用数据证书认证机构（CA,Certificate Authority）和其相关机构颁布的公开密钥证书。</p>
+<ul>
+<li>提出公开密钥申请</li>
+<li>数字证书认证机构对公开密钥做数字签名，颁发公钥证书</li>
+<li>服务器发送公钥证书给客户端，进行公开密钥加密通信</li>
+<li>客户端使用内置的数据证书认证机构的公开密钥，对公钥证书的数字签名进行认证。</li>
+</ul>
+<p>数据证书认证机构的公开密钥必须安全的转交给客户端，使用通信方式进行安全转交是一件非常困难的事情，所以，浏览器发布时，一般会事先植入认证机构的公开密钥。</p>
+<h2 id="TCP三次握手"><a href="#TCP三次握手" class="headerlink" title="TCP三次握手"></a>TCP三次握手</h2><p>TCP/IP协议中，TCP协议提供可靠的连接服务，采用三次握手建立一个连接。</p>
+<ul>
+<li>第一次握手：建立连接时，客户端A发送SYN包（SYN=j）到服务器B，并进入SYN-SEND状态，等待服务器B确认。</li>
+<li>第二次握手：服务器B收到SYN包，必须确认客户A的SYN（ACK=j+1），同时自己也发送一个SYN包（SYN=k），即SYN+ACK包，此时服务器B进入SYN-RECV状态。</li>
+<li>第三次握手：客户端A收到服务器B的SYN＋ACK包，向服务器B发送确认包ACK（ACK=k+1），此包发送完毕，客户端A和服务器B进入ESTABLISHED状态，完成三次握手。</li>
+</ul>
+<p>完成三次握手，客户端与服务器开始传送数据。</p>
+<p>LISTEN - 侦听来自远方TCP端口的连接请求；<br>SYN-SENT -在发送连接请求后等待匹配的连接请求；<br>SYN-RECEIVED - 在收到和发送一个连接请求后等待对连接请求的确认；<br>ESTABLISHED- 代表一个打开的连接，数据可以传送给用户；</p>
+<h2 id="TCP四次挥手"><a href="#TCP四次挥手" class="headerlink" title="TCP四次挥手"></a>TCP四次挥手</h2><p>TCP的连接的拆除需要发送四个包，因此称为四次挥手(four-way handshake)。客户端或服务器均可主动发起挥手动作，在socket编程中，任何一方执行close()操作即可产生挥手操作。</p>
+<ul>
+<li>客户端A发送一个FIN，用来关闭客户A到服务器B的数据传送。</li>
+<li>服务器B收到这个FIN，它发回一个ACK，确认序号为收到的序号加1。和SYN一样，一个FIN将占用一个序号。</li>
+<li>服务器B关闭与客户端A的连接，发送一个FIN给客户端A。</li>
+<li>客户端A发回ACK报文确认，并将确认序号设置为收到序号加1。</li>
+</ul>
+<h2 id="TCP和UDP的区别"><a href="#TCP和UDP的区别" class="headerlink" title="TCP和UDP的区别"></a>TCP和UDP的区别</h2><p>“信道复用技术”实现了，在同一条线路上，单位时间内可供X台计算机同时通信。</p>
+<p>一个TCP协议连接其实就是在物理线路上创建的一条“虚拟信道”。这条“虚拟信道”建立后，在TCP协议发出FIN包之前（两个终端都会向对方发送一个FIN包），是不会释放的。正因为这一点，TCP协议被称为面向连接的协议！</p>
+<p>UDP协议，一样会在物理线路上创建一条“虚拟信道”，否则UDP协议无法传输数据！但是，当UDP协议传完数据后，这条“虚拟信道”就被立即注销了！因此，称UDP是不面向连接的协议！</p>
+<ul>
+<li>TCP协议提供了可靠的数据传输,但是其拥塞控制、数据校验、重传机制的网络开销很大,不适合实时通信。</li>
+<li>UDP 协议是无连接的数据传输协议并且无重传机制,会发生丢包、收到重复包、乱序等情况。而对于数据精确性要求不高的状态数据以及视频数据,丢包的影响不大。</li>
+</ul>
+<h2 id="webSocket"><a href="#webSocket" class="headerlink" title="webSocket"></a>webSocket</h2><p>WebSocket protocol 是HTML5一种新的协议。它是实现了浏览器与服务器全双工通信(full-duplex)。HTML5定义了WebSocket协议，能更好的节省服务器资源和带宽并达到实时通讯。</p>
+<p>在WebSocket出现之前，一般通过两种方式来实现Web实时用：轮询机制和流技术；其中轮询有不同的轮询，还有一种叫Comet的长轮询。</p>
+<ul>
+<li><p>轮询：这是最早的一种实现实时 Web 应用的方案。客户端以一定的时间间隔向服务端发出请求，以频繁请求的方式来保持客户端和服务器端的同步。这种同步方案的缺点是，当客户端以固定频率向服务器发起请求的时候，服务器端的数据可能并没有更新，这样会带来很多<strong>无谓的网络传输</strong>，所以这是一种非常低效的实时方案。</p>
+</li>
+<li><p>长轮询：是对定时轮询的改进和提高，目地是为了降低无效的网络传输。当服务器端没有数据更新的时候，连接会保持一段时间周期直到数据或状态改变或者时间过期，通过这种机制来减少无效的客户端和服务器间的交互。当然，如果服务端的数据变更非常频繁的话，这种机制和定时轮询比较起来没有本质上的性能的提高。</p>
+</li>
+<li><p>流：常就是在客户端的页面使用一个隐藏的窗口向服务端发出一个<strong>长连接的请求</strong>。服务器端接到这个请求后作出回应并不断更新连接状态以保证客户端和服务 器端的连接不过期。通过这种机制可以将服务器端的信息源源不断地推向客户端。这种机制在用户体验上有一点问题，需要针对不同的浏览器设计不同的方案来改进 用户体验，同时这种机制在并发比较大的情况下，对服务器端的资源是一个极大的考验。</p>
+</li>
+</ul>
+<p>WebSocket 协议本质上是一个基于 TCP 的协议。为了建立一个 WebSocket 连接，客户端浏览器首先要向服务器发起一个 HTTP 请求，这个请求和通常的 HTTP 请求不同，包含了一些附加头信息，其中附加头信息”Upgrade: WebSocket”表明这是一个申请协议升级的 HTTP 请求，服务器端解析这些附加的头信息然后产生应答信息返回给客户端，客户端和服务器端的 WebSocket 连接就建立起来了，双方就可以通过这个连接通道自由的传递信息，并且这个连接会持续存在直到客户端或者服务器端的某一方主动的关闭连接。</p>
+
+            <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
+            <audio id="audio" loop="1" preload="auto" controls="controls"
+                data-autoplay="false">
+                <source type="audio/mpeg" src="">
+            </audio>
+            
+            <ul id="audio-list" style="display:none">
+                
+                
+                <li title='0' data-url='/statics/chengdu.mp3'></li>
+                
+                    
+            </ul>
+            
+            
+            
+    <div id='gitalk-container' class="comment link"
+        data-ae='true'
+        data-ci='ad0ec68ac6b80ef0adbd'
+        data-cs='bcf8895a95f3e128f12210a56df3cedd7d09a17d'
+        data-r='coderhaotf.github.io'
+        data-o='coderhaotf'
+        data-a='coderhaotf'
+        data-d=''
+    >Comments</div>
+
+
+            
+            
+        </div>
+        <div class="sidebar">
+            <div class="box animated fadeInRight">
+                <div class="subbox">
+                    <img src="https://res.cloudinary.com/tridiamond/image/upload/v1573019751/TriDiamond_logo_ui_xeublz.jpg" height=300 width=300></img>
+                    <p>haotf</p>
+                    <span>Think like an artist, develop like an artisan</span>
+                    <dl>
+                        <dd><a href="https://github.com/coderhaotf" target="_blank"><span
+                                    class=" iconfont icon-github"></span></a></dd>
+                        <dd><a href="https://twitter.com/" target="_blank"><span
+                                    class=" iconfont icon-twitter"></span></a></dd>
+                        <dd><a href="https://stackoverflow.com/" target="_blank"><span
+                                    class=" iconfont icon-stack-overflow"></span></a></dd>
+                    </dl>
+                </div>
+                <ul>
+                    <li><a href="/">31 <p>Articles</p></a></li>
+                    <li><a href="/categories">0 <p>Categories</p></a></li>
+                    <li><a href="/tags">0 <p>Tags</p></a></li>
+                </ul>
+            </div>
+            
+            
+            
+            <div class="box sticky animated fadeInRight faster">
+                <div id="toc" class="subbox">
+                    <h4>Contents</h4>
+                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#GET与POST请求的区别"><span class="toc-number">1.</span> <span class="toc-text">GET与POST请求的区别</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#浏览器缓存"><span class="toc-number">2.</span> <span class="toc-text">浏览器缓存</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#OPTIONS请求方法"><span class="toc-number">3.</span> <span class="toc-text">OPTIONS请求方法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#前端工程与性能优化"><span class="toc-number">4.</span> <span class="toc-text">前端工程与性能优化</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ES6模块与CommonJS模块的差异"><span class="toc-number">5.</span> <span class="toc-text">ES6模块与CommonJS模块的差异</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#http-与-https"><span class="toc-number">6.</span> <span class="toc-text">http 与 https</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#TCP三次握手"><span class="toc-number">7.</span> <span class="toc-text">TCP三次握手</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#TCP四次挥手"><span class="toc-number">8.</span> <span class="toc-text">TCP四次挥手</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#TCP和UDP的区别"><span class="toc-number">9.</span> <span class="toc-text">TCP和UDP的区别</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#webSocket"><span class="toc-number">10.</span> <span class="toc-text">webSocket</span></a></li></ol>
+                </div>
+            </div>
+            
+            
+        </div>
+    </div>
+</div>
+
+    </div>
+</div>
+    <div id="back-to-top" class="animated fadeIn faster">
+        <div class="flow"></div>
+        <span class="percentage animated fadeIn faster">0%</span>
+        <span class="iconfont icon-top02 animated fadeIn faster"></span>
+    </div>
+</body>
+<footer>
+    <p class="copyright" id="copyright">
+        &copy; 2020
+        <span class="gradient-text">
+            haotf
+        </span>.
+        Designed && Powerd  by <a href="http://hexo.io/" title="Hexo" target="_blank" rel="noopener">Hexo</a>
+        <p>Copyright© 2018 早起不吃虫的博客 粤ICP备18104892号</p>
+        <!-- Theme
+        <span class="gradient-text">
+            <a href="https://github.com/TriDiamond/hexo-theme-obsidian" title="Obsidian" target="_blank" rel="noopener">Obsidian</a>
+        </span>
+        <small><a href="https://github.com/TriDiamond/hexo-theme-obsidian/blob/master/CHANGELOG.md" title="v1.4.3" target="_blank" rel="noopener">v1.4.3</a></small> -->
+    </p>
+</footer>
+
+<script type="text/javascript" src="https://cdn.bootcss.com/mathjax/2.7.6/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<script>
+  MathJax.Hub.Config({
+    "HTML-CSS": {
+      preferredFont: "TeX",
+      availableFonts: ["STIX", "TeX"],
+      linebreaks: {
+        automatic: true
+      },
+      EqnChunk: (MathJax.Hub.Browser.isMobile ? 10 : 50)
+    },
+    tex2jax: {
+      inlineMath: [
+        ["$", "$"],
+        ["\\(", "\\)"]
+      ],
+      processEscapes: true,
+      ignoreClass: "tex2jax_ignore|dno",
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    TeX: {
+      noUndefined: {
+        attributes: {
+          mathcolor: "red",
+          mathbackground: "#FFEEEE",
+          mathsize: "90%"
+        }
+      },
+      Macros: {
+        href: "{}"
+      }
+    },
+    messageStyle: "none"
+  });
+</script>
+<script>
+  function initialMathJax() {
+    MathJax.Hub.Queue(function () {
+      var all = MathJax.Hub.getAllJax(),
+        i;
+      // console.log(all);
+      for (i = 0; i < all.length; i += 1) {
+        console.log(all[i].SourceElement().parentNode)
+        all[i].SourceElement().parentNode.className += ' has-jax';
+      }
+    });
+  }
+
+  function reprocessMathJax() {
+    if (typeof MathJax !== 'undefined') {
+      MathJax.Hub.Queue(["Typeset", MathJax.Hub]);
+    }
+  }
+</script>
+
+
+
+    
+<link rel="stylesheet" href="//cdn.bootcss.com/gitalk/1.5.0/gitalk.min.css">
+
+    
+<script src="//cdn.bootcss.com/gitalk/1.5.0/gitalk.min.js"></script>
+
+
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="/js/plugin.js"></script>
+<script src="/js/obsidian.js"></script>
+<script src="/js/jquery.truncate.js"></script>
+<script src="/js/search.js"></script>
+
+
+<script src="//cdn.bootcss.com/typed.js/2.0.10/typed.min.js"></script>
+
+
+<script src="//cdn.bootcss.com/blueimp-md5/2.12.0/js/md5.min.js"></script>
+
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/social-share.js/1.0.16/js/social-share.min.js"></script>
+
+
+<script src="https://cdn.bootcss.com/codemirror/5.48.4/codemirror.min.js"></script>
+
+    
+<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/javascript/javascript.min.js"></script>
+
+
+    
+<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/css/css.min.js"></script>
+
+
+    
+<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/xml/xml.min.js"></script>
+
+
+    
+<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/htmlmixed/htmlmixed.min.js"></script>
+
+
+    
+<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/clike/clike.min.js"></script>
+
+
+    
+<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/php/php.min.js"></script>
+
+
+    
+<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/shell/shell.min.js"></script>
+
+
+    
+<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/python/python.min.js"></script>
+
+
+
+
+    
+<script src="/js/busuanzi.min.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            if ($('span[id^="busuanzi_"]').length) {
+                initialBusuanzi();
+            }
+        });
+    </script>
+
+
+
+<link rel="stylesheet" href="//cdn.bootcss.com/photoswipe/4.1.3/photoswipe.min.css">
+<link rel="stylesheet" href="//cdn.bootcss.com/photoswipe/4.1.3/default-skin/default-skin.min.css">
+
+
+<script src="//cdn.bootcss.com/photoswipe/4.1.3/photoswipe.min.js"></script>
+<script src="//cdn.bootcss.com/photoswipe/4.1.3/photoswipe-ui-default.min.js"></script>
+
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+            <div class="pswp__top-bar">
+                <!--  Controls are self-explanatory. Order can be changed. -->
+                <div class="pswp__counter"></div>
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                      <div class="pswp__preloader__cut">
+                        <div class="pswp__preloader__donut"></div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div> 
+            </div>
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="//www.googletagmanager.com/gtag/js?id=UA-149874671-1"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', 'UA-149874671-1');
+    </script>
+
+
+
+
+
+<script>
+    function initialTyped () {
+        var typedTextEl = $('.typed-text');
+        if (typedTextEl && typedTextEl.length > 0) {
+            var typed = new Typed('.typed-text', {
+                strings: ["Think like an artist, develop like an artisan", "艺术家思维去思考问题，工匠创造精神去开发"],
+                typeSpeed: 90,
+                loop: true,
+                loopCount: Infinity,
+                backSpeed: 20,
+            });
+        }
+    }
+
+    if ($('.article-header') && $('.article-header').length) {
+        $(document).ready(function () {
+            initialTyped();
+        });
+    }
+</script>
+
+
+
+
+</html>

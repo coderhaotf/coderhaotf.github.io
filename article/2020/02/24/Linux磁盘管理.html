@@ -1,0 +1,813 @@
+
+<!DOCTYPE html>
+<html lang="en" class="loading">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Linux磁盘管理 - 早起不吃虫</title>
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="google" content="notranslate" />
+    <meta name="keywords" content="coderhaotf,"> 
+    <meta name="description" content="一切从“/”开始在Linux系统中，目录、字符设备、块设备、套接字、打印机等都被抽象成了文件，即“Linux系统中一切都是文件”。
+在Windows操作系统中，想要找到一个文件，我们要依次进入该文件,"> 
+    <meta name="author" content="haotf"> 
+    <link rel="alternative" href="atom.xml" title="早起不吃虫" type="application/atom+xml"> 
+    <link rel="icon" href="/img/favicon.png"> 
+    <link href="https://fonts.loli.net/css?family=Roboto+Mono|Rubik&display=swap" rel="stylesheet">
+    
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1429596_nzgqgvnmkjb.css">
+
+    
+<link rel="stylesheet" href="//cdn.bootcss.com/animate.css/3.7.2/animate.min.css">
+
+    
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/social-share.js/1.0.16/css/share.min.css">
+
+    
+<link rel="stylesheet" href="//cdn.bootcss.com/codemirror/5.48.4/codemirror.min.css">
+
+    
+<link rel="stylesheet" href="//cdn.bootcss.com/codemirror/5.48.4/theme/dracula.css">
+
+    
+<link rel="stylesheet" href="/css/obsidian.css">
+
+    
+<link rel="stylesheet" href="/css/ball-atom.min.css">
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+
+<body class="loading">
+    <div class="loader">
+        <div class="la-ball-atom la-2x">
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+    </div>
+    <span id="config-title" style="display:none">早起不吃虫</span>
+    <div id="loader"></div>
+    <div id="single">
+    <div class="scrollbar gradient-bg-rev"></div>
+<div id="top" style="display: block;">
+    <div class="bar" style="width: 0;"></div>
+    <div class="navigation animated fadeIn fast delay-1s">
+        <img id="home-icon" class="icon-home" src="/img/favicon.png" alt="" data-url="https://coderhaotf.github.io">
+        <div id="play-icon" title="Play/Pause" class="iconfont icon-play"></div>
+        <h3 class="subtitle">Linux磁盘管理</h3>
+        <div class="social">
+            <!--        <div class="like-icon">-->
+            <!--            <a href="javascript:;" class="likeThis active"><span class="icon-like"></span><span class="count">76</span></a>-->
+            <!--        </div>-->
+            <div>
+                <div class="share">
+                    
+                        <a href="javascript:;" class="iconfont icon-share1"></a>
+                        <div class="share-component-cc" data-disabled="facebook,douban,linkedin,diandian,tencent,google"></div>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+    <div class="section">
+        <div class=article-header-wrapper>
+    <div class="article-header">
+        <div class="article-cover animated fadeIn" style="
+            animation-delay: 600ms;
+            animation-duration: 1.2s;
+            background-image: 
+                radial-gradient(ellipse closest-side, rgba(0, 0, 0, 0.65), #100e17),
+                url(/img/cover.jpg);">
+        </div>
+        <div class="else">
+            <p class="animated fadeInDown">
+                
+                <a href="javascript:;"><b>「 </b>Article<b> 」</b></a>
+                
+                February 24, 2020
+            </p>
+            <h3 class="post-title animated fadeInDown"><a href="/article/2020/02/24/Linux%E7%A3%81%E7%9B%98%E7%AE%A1%E7%90%86.html" title="Linux磁盘管理" class="">Linux磁盘管理</a>
+            </h3>
+            
+            <p class="post-count animated fadeInDown">
+                
+                <span>
+                    <b class="iconfont icon-text2"></b> <i>Words count</i>
+                    14k
+                </span>
+                
+                
+                <span>
+                    <b class="iconfont icon-timer__s"></b> <i>Reading time</i>
+                    13 mins.
+                </span>
+                
+                
+                
+                <span id="busuanzi_container_page_pv">
+                    <b class="iconfont icon-read"></b> <i>Read count</i>
+                    <span id="busuanzi_value_page_pv">0</span>
+                </span>
+                
+            </p>
+            
+            
+        </div>
+    </div>
+</div>
+
+<div class="screen-gradient-after">
+    <div class="screen-gradient-content">
+        <div class="screen-gradient-content-inside">
+            <div class="bold-underline-links screen-gradient-sponsor">
+                <p>
+                    <span class="animated fadeIn delay-1s"></span>
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="article">
+    <div class='main'>
+        <div class="content markdown animated fadeIn">
+            <h2 id="一切从“-”开始"><a href="#一切从“-”开始" class="headerlink" title="一切从“/”开始"></a>一切从“/”开始</h2><p>在Linux系统中，目录、字符设备、块设备、套接字、打印机等都被抽象成了文件，即“Linux系统中一切都是文件”。</p>
+<p>在Windows操作系统中，想要找到一个文件，我们要依次进入该文件所在的磁盘分区（假设这里是D盘），然后在进入该分区下的具体目录，最终找到这个文件。但是在Linux系统中并不存在C/D/E/F等盘符，Linux系统中的一切文件都是从“根（/）”目录开始的，并按照文件系统层次化标准（FHS）采用树形结构来存放文件，以及定义了常见目录的用途。</p>
+<p>根目录下输入<code>ls</code>，可以查看下面常见目录</p>
+<table>
+<thead>
+<tr>
+<th>目录名称</th>
+<th>应放置文件的内容</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>/boot</td>
+<td>开机所需文件—内核、开机菜单以及所需配置文件等</td>
+</tr>
+<tr>
+<td>/dev</td>
+<td>以文件形式存放任何设备与接口</td>
+</tr>
+<tr>
+<td>/etc</td>
+<td>配置文件</td>
+</tr>
+<tr>
+<td>/home</td>
+<td>用户主目录</td>
+</tr>
+<tr>
+<td>/bin</td>
+<td>存放单用户模式下还可以操作的命令</td>
+</tr>
+<tr>
+<td>/lib</td>
+<td>开机时用到的函数库，以及/bin与/sbin下面的命令要调用的函数</td>
+</tr>
+<tr>
+<td>/sbin</td>
+<td>开机过程中需要的命令</td>
+</tr>
+<tr>
+<td>/media</td>
+<td>用于挂载设备文件的目录</td>
+</tr>
+<tr>
+<td>/opt</td>
+<td>放置第三方的软件</td>
+</tr>
+<tr>
+<td>/root</td>
+<td>系统管理员的家目录</td>
+</tr>
+<tr>
+<td>/srv</td>
+<td>一些网络服务的数据文件目录</td>
+</tr>
+<tr>
+<td>/tmp</td>
+<td>任何人均可使用的“共享”临时目录</td>
+</tr>
+<tr>
+<td>/proc</td>
+<td>虚拟文件系统，例如系统内核、进程、外部设备及网络状态等</td>
+</tr>
+<tr>
+<td>/usr/local</td>
+<td>用户自行安装的软件</td>
+</tr>
+<tr>
+<td>/usr/sbin</td>
+<td>Linux系统开机时不会使用到的软件/命令/脚本</td>
+</tr>
+<tr>
+<td>/usr/share</td>
+<td>帮助与说明文件，也可放置共享文件</td>
+</tr>
+<tr>
+<td>/var</td>
+<td>主要存放经常变化的文件，如日志</td>
+</tr>
+</tbody></table>
+<h2 id="磁盘基础"><a href="#磁盘基础" class="headerlink" title="磁盘基础"></a>磁盘基础</h2><h5 id="磁盘命名"><a href="#磁盘命名" class="headerlink" title="磁盘命名"></a>磁盘命名</h5><p>在Linux系统中一切都是文件，硬件设备也不例外。既然是文件，就必须有文件名称。系统内核中的udev设备管理器会自动把硬件名称规范起来，目的是让用户通过设备文件的名字可以猜出设备大致的属性以及分区信息等。</p>
+<p>常见的硬件设备及其文件名称如下：</p>
+<table>
+<thead>
+<tr>
+<th>硬件设备</th>
+<th>文件名称</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>IDE设备</td>
+<td>/dev/hd[a-d]</td>
+</tr>
+<tr>
+<td>SCSI/SATA/U盘</td>
+<td>/dev/sd[a-p]</td>
+</tr>
+<tr>
+<td>软驱</td>
+<td>/dev/fd[0-1]</td>
+</tr>
+<tr>
+<td>打印机</td>
+<td>/dev/lp[0-15]</td>
+</tr>
+<tr>
+<td>光驱</td>
+<td>/dev/cdrom</td>
+</tr>
+<tr>
+<td>鼠标</td>
+<td>/dev/mouse</td>
+</tr>
+</tbody></table>
+<p>系统采用a～p来代表16块不同的硬盘（默认从a开始分配），而且硬盘的分区编号也很有讲究：</p>
+<blockquote>
+<p>主分区或扩展分区的编号从1开始，到4结束；<br>逻辑分区从编号5开始。</p>
+</blockquote>
+<h5 id="主分区、扩展分区、逻辑分区"><a href="#主分区、扩展分区、逻辑分区" class="headerlink" title="主分区、扩展分区、逻辑分区"></a>主分区、扩展分区、逻辑分区</h5><p>给一块磁盘分区时，我们可以选择MBR（Master Boot Record）磁盘分区模式（还有一种更先进的GPT模式）进行分区。</p>
+<p><strong>==<em>在MBR模式下，主分区与扩展分区之和++最多是 4++ 个，且扩展分区最多++只能有 1++ 个。在扩展分区上面，可以创建 ++n 个++逻辑分区。</em>==</strong></p>
+<h6 id="主分区跟扩展分区为什么最多是四个呢？"><a href="#主分区跟扩展分区为什么最多是四个呢？" class="headerlink" title="主分区跟扩展分区为什么最多是四个呢？"></a>主分区跟扩展分区为什么最多是四个呢？</h6><ul>
+<li><p>首先，硬盘设备是由大量的扇区组成的，每个扇区的容量为512字节。</p>
+</li>
+<li><p>其次，MBR的意思是：主引导记录（Master Boot Record），又叫做主引导扇区，是计算机开机后访问硬盘时所必须要读取的<strong>==首个扇区==</strong>，它在硬盘上的三维地址为（柱面，磁头，扇区）＝（0，0，1）。</p>
+</li>
+<li><p>接着，主引导扇区的内部结构，其开头的446字节内容特指为“主引导记录”（MBR），其后是4个16字节的“磁盘分区表”（DPT），以及2字节的结束标志（55AA）。</p>
+</li>
+<li><p>最后，分区表中每记录一个分区的引用信息就需要16字节，这样一来最多只有4个分区信息可以写到第一个扇区中，这4个分区就是4个主分区。</p>
+</li>
+</ul>
+<h6 id="逻辑分区为什么可以是n个呢？"><a href="#逻辑分区为什么可以是n个呢？" class="headerlink" title="逻辑分区为什么可以是n个呢？"></a>逻辑分区为什么可以是n个呢？</h6><ul>
+<li>类似主引导扇区，扩展分区利用最前面几个扇区来记载逻辑分区的引用信息。</li>
+</ul>
+<h5 id="磁盘分区实质"><a href="#磁盘分区实质" class="headerlink" title="磁盘分区实质"></a>磁盘分区实质</h5><ul>
+<li>其实所谓的“分区”只是针对那个64 Bytes的磁盘分区表进行设置而已！</li>
+<li>硬盘默认的分区表仅能写入四组分区信息</li>
+<li>这四组分区信息我们称为主要（Primary）或延伸（Extended）分区</li>
+<li>分区的最小单位“通常”为柱面（cylinder）</li>
+<li>当系统要写入磁盘时，一定会参考磁盘分区表，才能针对某个分区进行数据的处理</li>
+</ul>
+<h2 id="磁盘分区"><a href="#磁盘分区" class="headerlink" title="磁盘分区"></a>磁盘分区</h2><p>了解磁盘基础之后，我们就可以进行磁盘分区实操了。先了解一下分区整个流程：</p>
+<ol>
+<li>对磁盘进行分区，以创建可用的 partition ；</li>
+<li>对该 partition 进行格式化 （format），以创建系统可用的 filesystem；</li>
+<li>若想要仔细一点，则可对刚刚创建好的 filesystem 进行检验；</li>
+<li>在 Linux 系统上，需要创建挂载点 （亦即是目录），并将它挂载上来；</li>
+</ol>
+<h5 id="查看分区状态"><a href="#查看分区状态" class="headerlink" title="查看分区状态"></a>查看分区状态</h5><p>在分区之前，我们需要先了解机器的磁盘状态：</p>
+<p><strong>lsblk 列出系统上的所有磁盘列表 ：</strong></p>
+<pre><code>[root@localhost ~]# lsblk
+NAME            MAJ:MIN RM  SIZE RO TYPE MOUNTPOINT
+sda               8:0    0   20G  0 disk 
+├─sda1            8:1    0    2M  0 part 
+├─sda2            8:2    0    2M  0 part 
+├─sda3            8:3    0    2G  0 part /boot
+├─sda4            8:4    0    1K  0 part 
+└─sda5            8:5    0   18G  0 part 
+  ├─centos-root 253:0    0  9.8G  0 lvm  /
+  ├─centos-swap 253:1    0 1000M  0 lvm  [SWAP]
+  ├─centos-var  253:2    0    2G  0 lvm  /var
+  └─centos-home 253:3    0  5.3G  0 lvm  /home
+sdb               8:16   0   20G  0 disk 
+sr0              11:0    1    4G  0 rom  </code></pre><p>为了方便演示，新增了<code>sdb</code>磁盘，原来的<code>sda</code>磁盘则已经进行了分区。</p>
+<p><strong>blkid 列出设备的 UUID 等参数</strong> :</p>
+<pre><code>[root@localhost ~]# blkid
+/dev/sda3: UUID=&quot;c225904f-a210-43cc-8c8c-e210642262f6&quot; TYPE=&quot;xfs&quot; 
+/dev/sda5: UUID=&quot;OXEomY-lqXp-6Beu-cebI-T9wv-Z4S8-UZ9Aq9&quot; TYPE=&quot;LVM2_member&quot; 
+/dev/sr0: UUID=&quot;2015-12-09-23-14-10-00&quot; LABEL=&quot;CentOS 7 x86_64&quot; TYPE=&quot;iso9660&quot; PTTYPE=&quot;dos&quot; 
+/dev/mapper/centos-root: UUID=&quot;775ac81a-210f-4089-87a3-a9a6a680b018&quot; TYPE=&quot;xfs&quot; 
+/dev/mapper/centos-swap: UUID=&quot;f229bae3-e7f5-4da0-8f45-8269bd0f03e7&quot; TYPE=&quot;swap&quot; 
+/dev/mapper/centos-var: UUID=&quot;9acbfd67-676d-4b0d-9c78-63e5fbdf1236&quot; TYPE=&quot;xfs&quot; 
+/dev/mapper/centos-home: UUID=&quot;557aae02-8971-4d3f-a258-e3222b1483f1&quot; TYPE=&quot;xfs&quot; </code></pre><p><strong>parted 列出磁盘的分区表类型与分区信息</strong> ：</p>
+<pre><code>[root@localhost ~]# parted /dev/sda print
+Model: VMware, VMware Virtual S (scsi)
+Disk /dev/sda: 21.5GB
+Sector size (logical/physical): 512B/512B
+Partition Table: msdos
+Disk Flags:
+
+Number  Start   End     Size    Type      File system  Flags
+ 1      1049kB  3146kB  2097kB  primary
+ 2      3146kB  5243kB  2097kB  primary
+ 3      5243kB  2102MB  2097MB  primary   xfs          boot
+ 4      2102MB  21.5GB  19.4GB  extended
+ 5      2103MB  21.5GB  19.4GB  logical                lvm</code></pre><h5 id="进行分区"><a href="#进行分区" class="headerlink" title="进行分区"></a>进行分区</h5><blockquote>
+<p>“MBR 分区表请使用 <code>fdisk</code> 分区， GPT 分区表请使用 <code>gdisk</code> 分区！”</p>
+</blockquote>
+<p>整个分区操作分两步：</p>
+<ol>
+<li>gdisk、fdisk分区</li>
+<li>partprobe 更新 Linux 核心的分区表信息</li>
+</ol>
+<h6 id="gdisk、fdisk分区"><a href="#gdisk、fdisk分区" class="headerlink" title="gdisk、fdisk分区"></a>gdisk、fdisk分区</h6><p>下面我们用<code>gdisk</code>命令来进行分区，没有该命令的先<code>yum install -y gdisk</code>进行安装。</p>
+<pre><code>[root@localhost ~]# gdisk /dev/sdb
+GPT fdisk (gdisk) version 0.8.10
+
+Partition table scan:
+  MBR: not present
+  BSD: not present
+  APM: not present
+  GPT: not present
+
+Creating new GPT entries.
+
+Command (? for help): ?
+b    back up GPT data to a file
+c    change a partition&#39;s name
+d    delete a partition
+i    show detailed information on a partition
+l    list known partition types
+n    add a new partition
+o    create a new empty GUID partition table (GPT)
+p    print the partition table
+q    quit without saving changes
+r    recovery and transformation options (experts only)
+s    sort partitions
+t    change a partition&#39;s type code
+v    verify disk
+w    write table to disk and exit
+x    extra functionality (experts only)
+?    print this menu
+
+Command (? for help): p
+Disk /dev/sdb: 41943040 sectors, 20.0 GiB
+Logical sector size: 512 bytes
+Disk identifier (GUID): 0F88B5F3-360F-4B70-A503-2C705CA23023
+Partition table holds up to 128 entries
+First usable sector is 34, last usable sector is 41943006
+Partitions will be aligned on 2048-sector boundaries
+Total free space is 41942973 sectors (20.0 GiB)
+
+Number  Start (sector)    End (sector)  Size       Code  Name
+
+Command (? for help): n
+Partition number (1-128, default 1): 
+First sector (34-41943006, default = 2048) or {+-}size{KMGTP}: 
+Last sector (2048-41943006, default = 41943006) or {+-}size{KMGTP}: +5G
+Current type is &#39;Linux filesystem&#39;
+Hex code or GUID (L to show codes, Enter = 8300): 
+Changed type of partition to &#39;Linux filesystem&#39;
+
+Command (? for help): p
+Disk /dev/sdb: 41943040 sectors, 20.0 GiB
+Logical sector size: 512 bytes
+Disk identifier (GUID): 0F88B5F3-360F-4B70-A503-2C705CA23023
+Partition table holds up to 128 entries
+First usable sector is 34, last usable sector is 41943006
+Partitions will be aligned on 2048-sector boundaries
+Total free space is 31457213 sectors (15.0 GiB)
+
+Number  Start (sector)    End (sector)  Size       Code  Name
+   1            2048        10487807   5.0 GiB     8300  Linux filesystem
+
+Command (? for help):</code></pre><p>该命令非常简单，输入<code>?</code>命令可以看到详细的操作命令指南，完全不需要记忆就可以对一个磁盘进行增删分区操作。</p>
+<p>最后， 如果一切的分区状态都正常的话，还需要执行一步操作写入磁盘分区表：</p>
+<pre><code>Command (? for help): w
+
+Final checks complete. About to write GPT data. THIS WILL OVERWRITE EXISTING
+PARTITIONS!!
+
+Do you want to proceed? (Y/N): y
+OK; writing new GUID partition table (GPT) to /dev/sdb.
+The operation has completed successfully.</code></pre><h6 id="partprobe-更新-Linux-核心的分区表信息"><a href="#partprobe-更新-Linux-核心的分区表信息" class="headerlink" title="partprobe 更新 Linux 核心的分区表信息"></a>partprobe 更新 Linux 核心的分区表信息</h6><p>进行分区操作之后，如果 Linux 此时还在使用这颗磁盘，为了担心系统出问题，所以分区表并没有被更新，这时需要我们手动更新：</p>
+<pre><code>[root@localhost ~]# partprobe -s
+/dev/sda: msdos partitions 1 2 3 4 &lt;5&gt;
+/dev/sdb: gpt partitions 1 2
+[root@localhost ~]# cat /proc/partitions
+major minor  #blocks  name
+
+   8        0   20971520 sda
+   8        1       2048 sda1
+   8        2       2048 sda2
+   8        3    2048000 sda3
+   8        4          0 sda4
+   8        5   18917376 sda5
+  11        0    4228096 sr0
+   8       16   20971520 sdb
+   8       17    5242880 sdb1
+   8       18    6291456 sdb2</code></pre><h5 id="磁盘格式化（创建文件系统）"><a href="#磁盘格式化（创建文件系统）" class="headerlink" title="磁盘格式化（创建文件系统）"></a>磁盘格式化（创建文件系统）</h5><p>我们常听到的“格式化”其实应该称为“创建文件系统 （make filesystem）”才对啦！所以使用的指令是 mkfs 喔！</p>
+<p>如果我们要创建的是 xfs 文件系统， 那使用的是 mkfs.xfs 这个指令。这个指令是这样使用的： <code>mkfs.xfs device</code>；如果创建 ext4 系统，则用 <code>mkfs.ext4 device</code>;</p>
+<pre><code>[root@localhost ~]# mkfs.xfs /dev/sdb1
+meta-data=/dev/sdb1              isize=256    agcount=4, agsize=327680 blks
+         =                       sectsz=512   attr=2, projid32bit=1
+         =                       crc=0        finobt=0
+data     =                       bsize=4096   blocks=1310720, imaxpct=25
+...
+[root@localhost ~]# mkfs.ext4 /dev/sdb2
+mke2fs 1.42.9 (28-Dec-2013)
+Filesystem label=
+OS type: Linux
+Block size=4096 (log=2)
+Fragment size=4096 (log=2)
+Stride=0 blocks, Stripe width=0 blocks
+393216 inodes, 1572864 blocks
+...</code></pre><p>查看格式化结果：</p>
+<pre><code>[root@localhost ~]# parted /dev/sdb print
+Model: VMware, VMware Virtual S (scsi)
+Disk /dev/sdb: 21.5GB
+Sector size (logical/physical): 512B/512B
+Partition Table: gpt
+Disk Flags: 
+
+Number  Start   End     Size    File system  Name              Flags
+ 1      1049kB  5370MB  5369MB  xfs          Linux filesystem
+ 2      5370MB  11.8GB  6442MB  ext4         Linux filesystem</code></pre><h5 id="文件系统挂载与卸载"><a href="#文件系统挂载与卸载" class="headerlink" title="文件系统挂载与卸载"></a>文件系统挂载与卸载</h5><p>磁盘格式化之后是不是就能使用了呢？当然还不行，格式化就类似酒店房间已经打扫干净，最后还要给客户办理入住手续啊，毕竟一个房间只能接待一位客户，这就是所谓的挂载。</p>
+<blockquote>
+<p>挂载点：挂载点是目录， 而这个目录是进入磁盘分区（其实是文件系统啦！）的入口。</p>
+</blockquote>
+<p>进行挂载操作前，需要了解几点：</p>
+<ul>
+<li>单一文件系统不应该被重复挂载在不同的挂载点（目录）中；</li>
+<li>单一目录不应该重复挂载多个文件系统；</li>
+<li>要作为挂载点的目录，理论上应该都是空目录才是。</li>
+</ul>
+<h6 id="挂载磁盘-mount-device-dirname"><a href="#挂载磁盘-mount-device-dirname" class="headerlink" title="挂载磁盘 mount device dirname"></a>挂载磁盘 mount device dirname</h6><pre><code>[root@localhost ~]# mkdir -p /test/xfs_test
+[root@localhost ~]# mkdir -p /test/ext4_test
+[root@localhost ~]# mount /dev/sdb1 /test/xfs_test/
+[root@localhost ~]# mount /dev/sdb2 /test/ext4_test/
+
+[root@localhost ~]# df /test/xfs_test/
+Filesystem     1K-blocks  Used Available Use% Mounted on
+/dev/sdb1        5232640 32928   5199712   1% /test/xfs_test
+[root@localhost ~]# df /test/ext4_test/
+Filesystem     1K-blocks  Used Available Use% Mounted on
+/dev/sdb2        6061632 24568   5706108   1% /test/ext4_test</code></pre><h6 id="挂载目录-mount-–bind-dirname-target-dirname"><a href="#挂载目录-mount-–bind-dirname-target-dirname" class="headerlink" title="挂载目录 mount  –bind dirname target_dirname"></a>挂载目录 mount  –bind dirname target_dirname</h6><pre><code>[root@localhost ~]# mkdir -p /test/var
+[root@localhost ~]# mount --bind /test/var/ /test/xfs_test/
+
+[root@localhost ~]# ls -lid /test/var/ /test/xfs_test/
+34108202 drwxr-xr-x. 2 root root 6 Sep  8 10:35 /test/var/
+34108202 drwxr-xr-x. 2 root root 6 Sep  8 10:35 /test/xfs_test/
+
+[root@localhost ~]# touch /test/var/a.txt
+[root@localhost ~]# ls /test/xfs_test/
+a.txt</code></pre><h6 id="卸载-umount-device-mountpoint"><a href="#卸载-umount-device-mountpoint" class="headerlink" title="卸载 umount device | mountpoint"></a>卸载 umount device | mountpoint</h6><pre><code>[root@localhost ~]# umount /dev/sdb1
+[root@localhost ~]# umount /dev/sdb2
+
+[root@localhost ~]# lsblk /dev/sdb
+NAME   MAJ:MIN RM SIZE RO TYPE MOUNTPOINT
+sdb      8:16   0  20G  0 disk 
+├─sdb1   8:17   0   5G  0 part 
+└─sdb2   8:18   0   6G  0 part </code></pre><p>此时挂载点已经消失，即卸载成功。</p>
+<h2 id="设置开机挂载"><a href="#设置开机挂载" class="headerlink" title="设置开机挂载"></a>设置开机挂载</h2><p>我们上面讨论整个挂载的流程，磁盘分区也顺其自然成功挂载上去了，一切看起来都很完美了！</p>
+<p>不过，这里还有一个坑爹的地方，就是上面的所有操作都是临时有效的，当机器重启之后，我们需要重新进行挂载。</p>
+<p>那么可不可以在开机的时候就将我要的文件系统都挂好呢？当然可以啰！那就直接到 <code>/etc/fstab</code> 里面去修改就行啰！</p>
+<pre><code>[root@localhost ~]# vim /etc/fstab
+/dev/mapper/centos-root /                       xfs     defaults        0 0
+UUID=c225904f-a210-43cc-8c8c-e210642262f6 /boot                   xfs     defaults        0 0
+/dev/mapper/centos-home /home                   xfs     defaults        0 0
+/dev/mapper/centos-var  /var                    xfs     defaults        0 0
+/dev/mapper/centos-swap swap                    swap    defaults        0 0
+/dev/sdb1               /test/xfs_test          xfs     defaults        0 0
+/dev/sdb2               /test/ext4_test         ext4     defaults        0 0</code></pre><pre><code>[root@localhost ~]# reboot
+[root@localhost ~]# lsblk /dev/sdb
+NAME   MAJ:MIN RM SIZE RO TYPE MOUNTPOINT
+sdb      8:16   0  20G  0 disk 
+├─sdb1   8:17   0   5G  0 part /test/xfs_test
+└─sdb2   8:18   0   6G  0 part /test/ext4_test</code></pre>
+            <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
+            <audio id="audio" loop="1" preload="auto" controls="controls"
+                data-autoplay="false">
+                <source type="audio/mpeg" src="">
+            </audio>
+            
+            <ul id="audio-list" style="display:none">
+                
+                
+                <li title='0' data-url='/statics/chengdu.mp3'></li>
+                
+                    
+            </ul>
+            
+            
+            
+    <div id='gitalk-container' class="comment link"
+        data-ae='true'
+        data-ci='ad0ec68ac6b80ef0adbd'
+        data-cs='bcf8895a95f3e128f12210a56df3cedd7d09a17d'
+        data-r='coderhaotf.github.io'
+        data-o='coderhaotf'
+        data-a='coderhaotf'
+        data-d=''
+    >Comments</div>
+
+
+            
+            
+        </div>
+        <div class="sidebar">
+            <div class="box animated fadeInRight">
+                <div class="subbox">
+                    <img src="https://res.cloudinary.com/tridiamond/image/upload/v1573019751/TriDiamond_logo_ui_xeublz.jpg" height=300 width=300></img>
+                    <p>haotf</p>
+                    <span>Think like an artist, develop like an artisan</span>
+                    <dl>
+                        <dd><a href="https://github.com/coderhaotf" target="_blank"><span
+                                    class=" iconfont icon-github"></span></a></dd>
+                        <dd><a href="https://twitter.com/" target="_blank"><span
+                                    class=" iconfont icon-twitter"></span></a></dd>
+                        <dd><a href="https://stackoverflow.com/" target="_blank"><span
+                                    class=" iconfont icon-stack-overflow"></span></a></dd>
+                    </dl>
+                </div>
+                <ul>
+                    <li><a href="/">31 <p>Articles</p></a></li>
+                    <li><a href="/categories">0 <p>Categories</p></a></li>
+                    <li><a href="/tags">0 <p>Tags</p></a></li>
+                </ul>
+            </div>
+            
+            
+            
+            <div class="box sticky animated fadeInRight faster">
+                <div id="toc" class="subbox">
+                    <h4>Contents</h4>
+                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#一切从“-”开始"><span class="toc-number">1.</span> <span class="toc-text">一切从“&#x2F;”开始</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#磁盘基础"><span class="toc-number">2.</span> <span class="toc-text">磁盘基础</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#磁盘分区"><span class="toc-number">3.</span> <span class="toc-text">磁盘分区</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#设置开机挂载"><span class="toc-number">4.</span> <span class="toc-text">设置开机挂载</span></a></li></ol>
+                </div>
+            </div>
+            
+            
+        </div>
+    </div>
+</div>
+
+    </div>
+</div>
+    <div id="back-to-top" class="animated fadeIn faster">
+        <div class="flow"></div>
+        <span class="percentage animated fadeIn faster">0%</span>
+        <span class="iconfont icon-top02 animated fadeIn faster"></span>
+    </div>
+</body>
+<footer>
+    <p class="copyright" id="copyright">
+        &copy; 2020
+        <span class="gradient-text">
+            haotf
+        </span>.
+        Designed && Powerd  by <a href="http://hexo.io/" title="Hexo" target="_blank" rel="noopener">Hexo</a>
+        <p>Copyright© 2018 早起不吃虫的博客 粤ICP备18104892号</p>
+        <!-- Theme
+        <span class="gradient-text">
+            <a href="https://github.com/TriDiamond/hexo-theme-obsidian" title="Obsidian" target="_blank" rel="noopener">Obsidian</a>
+        </span>
+        <small><a href="https://github.com/TriDiamond/hexo-theme-obsidian/blob/master/CHANGELOG.md" title="v1.4.3" target="_blank" rel="noopener">v1.4.3</a></small> -->
+    </p>
+</footer>
+
+<script type="text/javascript" src="https://cdn.bootcss.com/mathjax/2.7.6/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<script>
+  MathJax.Hub.Config({
+    "HTML-CSS": {
+      preferredFont: "TeX",
+      availableFonts: ["STIX", "TeX"],
+      linebreaks: {
+        automatic: true
+      },
+      EqnChunk: (MathJax.Hub.Browser.isMobile ? 10 : 50)
+    },
+    tex2jax: {
+      inlineMath: [
+        ["$", "$"],
+        ["\\(", "\\)"]
+      ],
+      processEscapes: true,
+      ignoreClass: "tex2jax_ignore|dno",
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    TeX: {
+      noUndefined: {
+        attributes: {
+          mathcolor: "red",
+          mathbackground: "#FFEEEE",
+          mathsize: "90%"
+        }
+      },
+      Macros: {
+        href: "{}"
+      }
+    },
+    messageStyle: "none"
+  });
+</script>
+<script>
+  function initialMathJax() {
+    MathJax.Hub.Queue(function () {
+      var all = MathJax.Hub.getAllJax(),
+        i;
+      // console.log(all);
+      for (i = 0; i < all.length; i += 1) {
+        console.log(all[i].SourceElement().parentNode)
+        all[i].SourceElement().parentNode.className += ' has-jax';
+      }
+    });
+  }
+
+  function reprocessMathJax() {
+    if (typeof MathJax !== 'undefined') {
+      MathJax.Hub.Queue(["Typeset", MathJax.Hub]);
+    }
+  }
+</script>
+
+
+
+    
+<link rel="stylesheet" href="//cdn.bootcss.com/gitalk/1.5.0/gitalk.min.css">
+
+    
+<script src="//cdn.bootcss.com/gitalk/1.5.0/gitalk.min.js"></script>
+
+
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="/js/plugin.js"></script>
+<script src="/js/obsidian.js"></script>
+<script src="/js/jquery.truncate.js"></script>
+<script src="/js/search.js"></script>
+
+
+<script src="//cdn.bootcss.com/typed.js/2.0.10/typed.min.js"></script>
+
+
+<script src="//cdn.bootcss.com/blueimp-md5/2.12.0/js/md5.min.js"></script>
+
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/social-share.js/1.0.16/js/social-share.min.js"></script>
+
+
+<script src="https://cdn.bootcss.com/codemirror/5.48.4/codemirror.min.js"></script>
+
+    
+<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/javascript/javascript.min.js"></script>
+
+
+    
+<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/css/css.min.js"></script>
+
+
+    
+<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/xml/xml.min.js"></script>
+
+
+    
+<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/htmlmixed/htmlmixed.min.js"></script>
+
+
+    
+<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/clike/clike.min.js"></script>
+
+
+    
+<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/php/php.min.js"></script>
+
+
+    
+<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/shell/shell.min.js"></script>
+
+
+    
+<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/python/python.min.js"></script>
+
+
+
+
+    
+<script src="/js/busuanzi.min.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            if ($('span[id^="busuanzi_"]').length) {
+                initialBusuanzi();
+            }
+        });
+    </script>
+
+
+
+<link rel="stylesheet" href="//cdn.bootcss.com/photoswipe/4.1.3/photoswipe.min.css">
+<link rel="stylesheet" href="//cdn.bootcss.com/photoswipe/4.1.3/default-skin/default-skin.min.css">
+
+
+<script src="//cdn.bootcss.com/photoswipe/4.1.3/photoswipe.min.js"></script>
+<script src="//cdn.bootcss.com/photoswipe/4.1.3/photoswipe-ui-default.min.js"></script>
+
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+            <div class="pswp__top-bar">
+                <!--  Controls are self-explanatory. Order can be changed. -->
+                <div class="pswp__counter"></div>
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                      <div class="pswp__preloader__cut">
+                        <div class="pswp__preloader__donut"></div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div> 
+            </div>
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="//www.googletagmanager.com/gtag/js?id=UA-149874671-1"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', 'UA-149874671-1');
+    </script>
+
+
+
+
+
+<script>
+    function initialTyped () {
+        var typedTextEl = $('.typed-text');
+        if (typedTextEl && typedTextEl.length > 0) {
+            var typed = new Typed('.typed-text', {
+                strings: ["Think like an artist, develop like an artisan", "艺术家思维去思考问题，工匠创造精神去开发"],
+                typeSpeed: 90,
+                loop: true,
+                loopCount: Infinity,
+                backSpeed: 20,
+            });
+        }
+    }
+
+    if ($('.article-header') && $('.article-header').length) {
+        $(document).ready(function () {
+            initialTyped();
+        });
+    }
+</script>
+
+
+
+
+</html>

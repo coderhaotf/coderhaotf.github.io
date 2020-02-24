@@ -1,0 +1,597 @@
+
+<!DOCTYPE html>
+<html lang="en" class="loading">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>深入理解闭包 - 早起不吃虫</title>
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="google" content="notranslate" />
+    <meta name="keywords" content="coderhaotf,"> 
+    <meta name="description" content="前言今天我们来说一个人见人爱，花见花开的的主题 - - 闭包。有的小伙伴就说了，扯犊子，哪里人见人爱，花见花开了？我是见着闭包就烦！好吧，如果是这样，那这句话不是对你说的，我是对神秘莫测的大佬（装逼,"> 
+    <meta name="author" content="haotf"> 
+    <link rel="alternative" href="atom.xml" title="早起不吃虫" type="application/atom+xml"> 
+    <link rel="icon" href="/img/favicon.png"> 
+    <link href="https://fonts.loli.net/css?family=Roboto+Mono|Rubik&display=swap" rel="stylesheet">
+    
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1429596_nzgqgvnmkjb.css">
+
+    
+<link rel="stylesheet" href="//cdn.bootcss.com/animate.css/3.7.2/animate.min.css">
+
+    
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/social-share.js/1.0.16/css/share.min.css">
+
+    
+<link rel="stylesheet" href="//cdn.bootcss.com/codemirror/5.48.4/codemirror.min.css">
+
+    
+<link rel="stylesheet" href="//cdn.bootcss.com/codemirror/5.48.4/theme/dracula.css">
+
+    
+<link rel="stylesheet" href="/css/obsidian.css">
+
+    
+<link rel="stylesheet" href="/css/ball-atom.min.css">
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+
+<body class="loading">
+    <div class="loader">
+        <div class="la-ball-atom la-2x">
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+    </div>
+    <span id="config-title" style="display:none">早起不吃虫</span>
+    <div id="loader"></div>
+    <div id="single">
+    <div class="scrollbar gradient-bg-rev"></div>
+<div id="top" style="display: block;">
+    <div class="bar" style="width: 0;"></div>
+    <div class="navigation animated fadeIn fast delay-1s">
+        <img id="home-icon" class="icon-home" src="/img/favicon.png" alt="" data-url="https://coderhaotf.github.io">
+        <div id="play-icon" title="Play/Pause" class="iconfont icon-play"></div>
+        <h3 class="subtitle">深入理解闭包</h3>
+        <div class="social">
+            <!--        <div class="like-icon">-->
+            <!--            <a href="javascript:;" class="likeThis active"><span class="icon-like"></span><span class="count">76</span></a>-->
+            <!--        </div>-->
+            <div>
+                <div class="share">
+                    
+                        <a href="javascript:;" class="iconfont icon-share1"></a>
+                        <div class="share-component-cc" data-disabled="facebook,douban,linkedin,diandian,tencent,google"></div>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+    <div class="section">
+        <div class=article-header-wrapper>
+    <div class="article-header">
+        <div class="article-cover animated fadeIn" style="
+            animation-delay: 600ms;
+            animation-duration: 1.2s;
+            background-image: 
+                radial-gradient(ellipse closest-side, rgba(0, 0, 0, 0.65), #100e17),
+                url(/img/cover.jpg);">
+        </div>
+        <div class="else">
+            <p class="animated fadeInDown">
+                
+                <a href="javascript:;"><b>「 </b>Article<b> 」</b></a>
+                
+                January 28, 2020
+            </p>
+            <h3 class="post-title animated fadeInDown"><a href="/article/2020/01/28/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E9%97%AD%E5%8C%85.html" title="深入理解闭包" class="">深入理解闭包</a>
+            </h3>
+            
+            <p class="post-count animated fadeInDown">
+                
+                <span>
+                    <b class="iconfont icon-text2"></b> <i>Words count</i>
+                    4k
+                </span>
+                
+                
+                <span>
+                    <b class="iconfont icon-timer__s"></b> <i>Reading time</i>
+                    4 mins.
+                </span>
+                
+                
+                
+                <span id="busuanzi_container_page_pv">
+                    <b class="iconfont icon-read"></b> <i>Read count</i>
+                    <span id="busuanzi_value_page_pv">0</span>
+                </span>
+                
+            </p>
+            
+            
+        </div>
+    </div>
+</div>
+
+<div class="screen-gradient-after">
+    <div class="screen-gradient-content">
+        <div class="screen-gradient-content-inside">
+            <div class="bold-underline-links screen-gradient-sponsor">
+                <p>
+                    <span class="animated fadeIn delay-1s"></span>
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="article">
+    <div class='main'>
+        <div class="content markdown animated fadeIn">
+            <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>今天我们来说一个人见人爱，花见花开的的主题 - - 闭包。有的小伙伴就说了，扯犊子，哪里人见人爱，花见花开了？我是见着闭包就烦！好吧，如果是这样，那这句话不是对你说的，我是对神秘莫测的大佬（装逼犯）说的。</p>
+<p>好吧，废话有点多，不过有点是真的，如果你掌握了闭包，它确实是个好东西，人见人爱，花见花开是一点也不夸张。</p>
+<p>进入正题。</p>
+<h2 id="闭包初体验"><a href="#闭包初体验" class="headerlink" title="闭包初体验"></a>闭包初体验</h2><p>看到深入闭包这个吓唬人的标题还敢进来的，相信各位之前都有一定的接触了，我们就暴力一些，直入正题吧：</p>
+<pre><code class="js">function foo() {
+    var n = 0;
+    function bar() {
+        return ++n;
+    }
+    return bar;
+}
+var a = foo();
+a(); // 1
+a(); // 2</code></pre>
+<p>好了，相信各位小伙伴已经看过无数个类似的栗子了，甚至有了平平无奇大闭包的印象。</p>
+<p>这里我想提问一个问题，为什么 <code>a</code> 第2次调用的时候不是1而是再之前的基础上递增？</p>
+<ul>
+<li>foo 函数调用后返回 bar 函数给 a ,因为 bar 是一个函数对象，所以 a 其实持有的只是 bar 函数的指引。</li>
+<li>根据词法作用域，函数的作用域在声明时已经确定了下来，而与函数在哪里调用无关，所以，bar 函数的外层作用域正是 foo 函数的内部作用域。</li>
+<li>因为 a 持有 bar 函数的指引，foo 函数调用后，其内部作用域并没有销毁，所以重复调用 a 也就调用 bar 函数时， n 得以不断递增。</li>
+</ul>
+<p>相信很多小伙伴对这段描述已经是耳熟能详了，我们就到此为止，接着看看改造后的栗子。</p>
+<h2 id="孙大圣的汗毛"><a href="#孙大圣的汗毛" class="headerlink" title="孙大圣的汗毛"></a>孙大圣的汗毛</h2><p>小伙伴们无语了，“博主！”，“讨论学术能不能严肃点！！”</p>
+<p>好吧，虽然我很多时候起标题有些不靠谱，但是，可以肯定的是，这一次的标题是再恰如其分不过了！</p>
+<p>怎么说呢？请看：</p>
+<pre><code class="js">function foo() {
+    var n = 0;
+    function bar() {
+        return ++n;
+    }
+    return bar;
+}
+var a = foo();
+var b = foo();
+a(); // 1
+a(); // 2
+b(); // 1
+b(); // 2</code></pre>
+<p>小伙伴们无语了，这有啥奇怪呀！</p>
+<p>好吧，虽然跟上例只有一点点变化，但是其中隐藏着一个极其重要的知识点。</p>
+<p>我先问一个问题，为什么 b 调用后， n 不是在之前的基础上递增，而是从头开始？</p>
+<p>照例，代码说话：</p>
+<pre><code class="js">function foo() {
+    var n = [1,2];
+    function bar() {
+        n.push(3);
+        return n;
+    }
+    return bar;
+}
+var a = foo();
+var b = foo();
+var a1 = a();
+var a2 = a();
+var b1 = b();
+var b2 = b();
+console.log(a1);// [1,2,3,3]
+console.log(b1);// [1,2,3,3]
+//重点关注！！
+console.log(a1 === a2); //true
+console.log(b1 === b2); //true
+console.log(a1 === b1); //false</code></pre>
+<p>啥情况？a 跟 b 不都是指向 bar 函数么？怎么返回的 n 不相等呢？</p>
+<p>原因简要说就一句话：生成闭包的函数（foo）每调用一次，就创造一个<strong>独立的作用域链</strong>，也可以看做是产生一个上下文环境，<strong>相互独立，互不影响</strong>！</p>
+<p>好了，这个时候可以回头看看本小节的标题了。</p>
+<p>见没见过孙大圣的汗毛？换句话说孙大圣就是 foo 函数， a 跟 b 就是孙大圣的汗毛了，它们长得跟孙大圣极其类似（要素相同的作用域链），但是它们可以自由活动，互不影响（作用域链相互独立）。</p>
+<h2 id="铁证如山"><a href="#铁证如山" class="headerlink" title="铁证如山"></a>铁证如山</h2><p>小伙伴们就郁闷了，这就能证明了么？</p>
+<p>按照我的理解，确实是可以证明了，不过为了让大伙加深认识，我们来看看一个栗子，也是促使我写下本文的一个极好的栗子：</p>
+<pre><code class="js">var add = null;
+function foo() {
+    var n = 0;
+    add = function(){
+        n++;
+        console.log(n);
+    }
+    function bar(){
+        n++;
+        console.log(n);
+    }
+    return bar;
+}
+var a = foo();
+var b = foo();
+a();//1
+a();//2
+add();//1
+b();//2
+b();//3</code></pre>
+<p>啥情况？为什么 add 横插一脚调用之后，b 竟然不再从 1 开始了！！！</p>
+<p>其实深入理解上一节的小伙伴，加上一点细心，就会发现其中的蹊跷。</p>
+<p>上一节说了，a 跟 b 都是 foo 函数产生的一根汗毛，那是怎么产生的呢？</p>
+<p>额，被我吓唬一下就一哆嗦的小伙伴，请听我细细道来：</p>
+<p>foo 是不是函数？函数是怎么调用的？</p>
+<p>当然是一泻千里，一行到底啊！！！函数还能怎么调用！！！</p>
+<p>不过这有一个特殊的细节，就是 add 函数。</p>
+<h5 id="揭秘时刻"><a href="#揭秘时刻" class="headerlink" title="揭秘时刻"></a>揭秘时刻</h5><p>add 函数是表达式的，产生 a 的时候，全局变量 add 被赋值；接着产生 b 的时候，add 变量就被重写了！！！</p>
+<p>什么意思呢？</p>
+<p>换句话说，在调用 add 的时候，add 是指向的是 b 函数所在的作用域链。</p>
+<p>要证明？</p>
+<pre><code class="js">var add = null;
+function foo() {
+    var n = 0;
+    add = function(){
+        n++;
+        console.log(n);
+    }
+    function bar(){
+        n++;
+        console.log(n);
+    }
+    return {bar:bar,add:add};
+}
+var a = foo();
+var b = foo();
+console.log(a.add === add); // false
+console.log(b.add === add); // true</code></pre>
+<p>同样，我们也可以把 add 函数加到 a 上面啦，交换一下 a , b 产生的顺序即可：</p>
+<pre><code class="js">var add = null;
+function foo() {
+    var n = 0;
+    add = function(){
+        n++;
+        console.log(n);
+    }
+    function bar(){
+        n++;
+        console.log(n);
+    }
+    return bar;
+}
+//换一下顺序
+var b = foo();
+var a = foo();
+a();//1
+a();//2
+add();//3
+b();//1
+b();//2</code></pre>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>好了，闭包的博文可谓是浩如烟海了，我这篇也是站在巨人的肩膀上胡扯一番，如有错误，还请留言交流。</p>
+<p>没有错误也请留下您的脚印，交个朋友嘛，行不行嘛？</p>
+
+            <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
+            <audio id="audio" loop="1" preload="auto" controls="controls"
+                data-autoplay="false">
+                <source type="audio/mpeg" src="">
+            </audio>
+            
+            <ul id="audio-list" style="display:none">
+                
+                
+                <li title='0' data-url='/statics/chengdu.mp3'></li>
+                
+                    
+            </ul>
+            
+            
+            
+    <div id='gitalk-container' class="comment link"
+        data-ae='true'
+        data-ci='ad0ec68ac6b80ef0adbd'
+        data-cs='bcf8895a95f3e128f12210a56df3cedd7d09a17d'
+        data-r='coderhaotf.github.io'
+        data-o='coderhaotf'
+        data-a='coderhaotf'
+        data-d=''
+    >Comments</div>
+
+
+            
+            
+        </div>
+        <div class="sidebar">
+            <div class="box animated fadeInRight">
+                <div class="subbox">
+                    <img src="https://res.cloudinary.com/tridiamond/image/upload/v1573019751/TriDiamond_logo_ui_xeublz.jpg" height=300 width=300></img>
+                    <p>haotf</p>
+                    <span>Think like an artist, develop like an artisan</span>
+                    <dl>
+                        <dd><a href="https://github.com/coderhaotf" target="_blank"><span
+                                    class=" iconfont icon-github"></span></a></dd>
+                        <dd><a href="https://twitter.com/" target="_blank"><span
+                                    class=" iconfont icon-twitter"></span></a></dd>
+                        <dd><a href="https://stackoverflow.com/" target="_blank"><span
+                                    class=" iconfont icon-stack-overflow"></span></a></dd>
+                    </dl>
+                </div>
+                <ul>
+                    <li><a href="/">31 <p>Articles</p></a></li>
+                    <li><a href="/categories">0 <p>Categories</p></a></li>
+                    <li><a href="/tags">0 <p>Tags</p></a></li>
+                </ul>
+            </div>
+            
+            
+            
+            <div class="box sticky animated fadeInRight faster">
+                <div id="toc" class="subbox">
+                    <h4>Contents</h4>
+                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#前言"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#闭包初体验"><span class="toc-number">2.</span> <span class="toc-text">闭包初体验</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#孙大圣的汗毛"><span class="toc-number">3.</span> <span class="toc-text">孙大圣的汗毛</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#铁证如山"><span class="toc-number">4.</span> <span class="toc-text">铁证如山</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#总结"><span class="toc-number">5.</span> <span class="toc-text">总结</span></a></li></ol>
+                </div>
+            </div>
+            
+            
+        </div>
+    </div>
+</div>
+
+    </div>
+</div>
+    <div id="back-to-top" class="animated fadeIn faster">
+        <div class="flow"></div>
+        <span class="percentage animated fadeIn faster">0%</span>
+        <span class="iconfont icon-top02 animated fadeIn faster"></span>
+    </div>
+</body>
+<footer>
+    <p class="copyright" id="copyright">
+        &copy; 2020
+        <span class="gradient-text">
+            haotf
+        </span>.
+        Designed && Powerd  by <a href="http://hexo.io/" title="Hexo" target="_blank" rel="noopener">Hexo</a>
+        <p>Copyright© 2018 早起不吃虫的博客 粤ICP备18104892号</p>
+        <!-- Theme
+        <span class="gradient-text">
+            <a href="https://github.com/TriDiamond/hexo-theme-obsidian" title="Obsidian" target="_blank" rel="noopener">Obsidian</a>
+        </span>
+        <small><a href="https://github.com/TriDiamond/hexo-theme-obsidian/blob/master/CHANGELOG.md" title="v1.4.3" target="_blank" rel="noopener">v1.4.3</a></small> -->
+    </p>
+</footer>
+
+<script type="text/javascript" src="https://cdn.bootcss.com/mathjax/2.7.6/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<script>
+  MathJax.Hub.Config({
+    "HTML-CSS": {
+      preferredFont: "TeX",
+      availableFonts: ["STIX", "TeX"],
+      linebreaks: {
+        automatic: true
+      },
+      EqnChunk: (MathJax.Hub.Browser.isMobile ? 10 : 50)
+    },
+    tex2jax: {
+      inlineMath: [
+        ["$", "$"],
+        ["\\(", "\\)"]
+      ],
+      processEscapes: true,
+      ignoreClass: "tex2jax_ignore|dno",
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    TeX: {
+      noUndefined: {
+        attributes: {
+          mathcolor: "red",
+          mathbackground: "#FFEEEE",
+          mathsize: "90%"
+        }
+      },
+      Macros: {
+        href: "{}"
+      }
+    },
+    messageStyle: "none"
+  });
+</script>
+<script>
+  function initialMathJax() {
+    MathJax.Hub.Queue(function () {
+      var all = MathJax.Hub.getAllJax(),
+        i;
+      // console.log(all);
+      for (i = 0; i < all.length; i += 1) {
+        console.log(all[i].SourceElement().parentNode)
+        all[i].SourceElement().parentNode.className += ' has-jax';
+      }
+    });
+  }
+
+  function reprocessMathJax() {
+    if (typeof MathJax !== 'undefined') {
+      MathJax.Hub.Queue(["Typeset", MathJax.Hub]);
+    }
+  }
+</script>
+
+
+
+    
+<link rel="stylesheet" href="//cdn.bootcss.com/gitalk/1.5.0/gitalk.min.css">
+
+    
+<script src="//cdn.bootcss.com/gitalk/1.5.0/gitalk.min.js"></script>
+
+
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="/js/plugin.js"></script>
+<script src="/js/obsidian.js"></script>
+<script src="/js/jquery.truncate.js"></script>
+<script src="/js/search.js"></script>
+
+
+<script src="//cdn.bootcss.com/typed.js/2.0.10/typed.min.js"></script>
+
+
+<script src="//cdn.bootcss.com/blueimp-md5/2.12.0/js/md5.min.js"></script>
+
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/social-share.js/1.0.16/js/social-share.min.js"></script>
+
+
+<script src="https://cdn.bootcss.com/codemirror/5.48.4/codemirror.min.js"></script>
+
+    
+<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/javascript/javascript.min.js"></script>
+
+
+    
+<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/css/css.min.js"></script>
+
+
+    
+<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/xml/xml.min.js"></script>
+
+
+    
+<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/htmlmixed/htmlmixed.min.js"></script>
+
+
+    
+<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/clike/clike.min.js"></script>
+
+
+    
+<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/php/php.min.js"></script>
+
+
+    
+<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/shell/shell.min.js"></script>
+
+
+    
+<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/python/python.min.js"></script>
+
+
+
+
+    
+<script src="/js/busuanzi.min.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            if ($('span[id^="busuanzi_"]').length) {
+                initialBusuanzi();
+            }
+        });
+    </script>
+
+
+
+<link rel="stylesheet" href="//cdn.bootcss.com/photoswipe/4.1.3/photoswipe.min.css">
+<link rel="stylesheet" href="//cdn.bootcss.com/photoswipe/4.1.3/default-skin/default-skin.min.css">
+
+
+<script src="//cdn.bootcss.com/photoswipe/4.1.3/photoswipe.min.js"></script>
+<script src="//cdn.bootcss.com/photoswipe/4.1.3/photoswipe-ui-default.min.js"></script>
+
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+            <div class="pswp__top-bar">
+                <!--  Controls are self-explanatory. Order can be changed. -->
+                <div class="pswp__counter"></div>
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                      <div class="pswp__preloader__cut">
+                        <div class="pswp__preloader__donut"></div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div> 
+            </div>
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="//www.googletagmanager.com/gtag/js?id=UA-149874671-1"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', 'UA-149874671-1');
+    </script>
+
+
+
+
+
+<script>
+    function initialTyped () {
+        var typedTextEl = $('.typed-text');
+        if (typedTextEl && typedTextEl.length > 0) {
+            var typed = new Typed('.typed-text', {
+                strings: ["Think like an artist, develop like an artisan", "艺术家思维去思考问题，工匠创造精神去开发"],
+                typeSpeed: 90,
+                loop: true,
+                loopCount: Infinity,
+                backSpeed: 20,
+            });
+        }
+    }
+
+    if ($('.article-header') && $('.article-header').length) {
+        $(document).ready(function () {
+            initialTyped();
+        });
+    }
+</script>
+
+
+
+
+</html>

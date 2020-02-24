@@ -1,0 +1,563 @@
+
+<!DOCTYPE html>
+<html lang="en" class="loading">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>菜鸟解读jQuery源码系列-二-疯狂的链式调用 - 早起不吃虫</title>
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="google" content="notranslate" />
+    <meta name="keywords" content="coderhaotf,"> 
+    <meta name="description" content="引言&amp;emsp;&amp;emsp;熟悉jQuery的小伙伴应该都知道，链式调用是其特色之一。我们创建了一个jQuery对象之后，就可以链式调用其对象上的方法，从而大大方便了我们的代码书写。这特色写法的背后,"> 
+    <meta name="author" content="haotf"> 
+    <link rel="alternative" href="atom.xml" title="早起不吃虫" type="application/atom+xml"> 
+    <link rel="icon" href="/img/favicon.png"> 
+    <link href="https://fonts.loli.net/css?family=Roboto+Mono|Rubik&display=swap" rel="stylesheet">
+    
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1429596_nzgqgvnmkjb.css">
+
+    
+<link rel="stylesheet" href="//cdn.bootcss.com/animate.css/3.7.2/animate.min.css">
+
+    
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/social-share.js/1.0.16/css/share.min.css">
+
+    
+<link rel="stylesheet" href="//cdn.bootcss.com/codemirror/5.48.4/codemirror.min.css">
+
+    
+<link rel="stylesheet" href="//cdn.bootcss.com/codemirror/5.48.4/theme/dracula.css">
+
+    
+<link rel="stylesheet" href="/css/obsidian.css">
+
+    
+<link rel="stylesheet" href="/css/ball-atom.min.css">
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+
+<body class="loading">
+    <div class="loader">
+        <div class="la-ball-atom la-2x">
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+    </div>
+    <span id="config-title" style="display:none">早起不吃虫</span>
+    <div id="loader"></div>
+    <div id="single">
+    <div class="scrollbar gradient-bg-rev"></div>
+<div id="top" style="display: block;">
+    <div class="bar" style="width: 0;"></div>
+    <div class="navigation animated fadeIn fast delay-1s">
+        <img id="home-icon" class="icon-home" src="/img/favicon.png" alt="" data-url="https://coderhaotf.github.io">
+        <div id="play-icon" title="Play/Pause" class="iconfont icon-play"></div>
+        <h3 class="subtitle">菜鸟解读jQuery源码系列-二-疯狂的链式调用</h3>
+        <div class="social">
+            <!--        <div class="like-icon">-->
+            <!--            <a href="javascript:;" class="likeThis active"><span class="icon-like"></span><span class="count">76</span></a>-->
+            <!--        </div>-->
+            <div>
+                <div class="share">
+                    
+                        <a href="javascript:;" class="iconfont icon-share1"></a>
+                        <div class="share-component-cc" data-disabled="facebook,douban,linkedin,diandian,tencent,google"></div>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+    <div class="section">
+        <div class=article-header-wrapper>
+    <div class="article-header">
+        <div class="article-cover animated fadeIn" style="
+            animation-delay: 600ms;
+            animation-duration: 1.2s;
+            background-image: 
+                radial-gradient(ellipse closest-side, rgba(0, 0, 0, 0.65), #100e17),
+                url(/img/cover.jpg);">
+        </div>
+        <div class="else">
+            <p class="animated fadeInDown">
+                
+                <a href="javascript:;"><b>「 </b>Article<b> 」</b></a>
+                
+                January 28, 2020
+            </p>
+            <h3 class="post-title animated fadeInDown"><a href="/article/2020/01/28/%E8%8F%9C%E9%B8%9F%E8%A7%A3%E8%AF%BBjQuery%E6%BA%90%E7%A0%81%E7%B3%BB%E5%88%97-%E4%BA%8C-%E7%96%AF%E7%8B%82%E7%9A%84%E9%93%BE%E5%BC%8F%E8%B0%83%E7%94%A8.html" title="菜鸟解读jQuery源码系列-二-疯狂的链式调用" class="">菜鸟解读jQuery源码系列-二-疯狂的链式调用</a>
+            </h3>
+            
+            <p class="post-count animated fadeInDown">
+                
+                <span>
+                    <b class="iconfont icon-text2"></b> <i>Words count</i>
+                    5.1k
+                </span>
+                
+                
+                <span>
+                    <b class="iconfont icon-timer__s"></b> <i>Reading time</i>
+                    5 mins.
+                </span>
+                
+                
+                
+                <span id="busuanzi_container_page_pv">
+                    <b class="iconfont icon-read"></b> <i>Read count</i>
+                    <span id="busuanzi_value_page_pv">0</span>
+                </span>
+                
+            </p>
+            
+            
+        </div>
+    </div>
+</div>
+
+<div class="screen-gradient-after">
+    <div class="screen-gradient-content">
+        <div class="screen-gradient-content-inside">
+            <div class="bold-underline-links screen-gradient-sponsor">
+                <p>
+                    <span class="animated fadeIn delay-1s"></span>
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="article">
+    <div class='main'>
+        <div class="content markdown animated fadeIn">
+            <h2 id="引言"><a href="#引言" class="headerlink" title="引言"></a>引言</h2><p>&emsp;&emsp;熟悉jQuery的小伙伴应该都知道，链式调用是其特色之一。我们创建了一个jQuery对象之后，就可以链式调用其对象上的方法，从而大大方便了我们的代码书写。这特色写法的背后是怎么实现的呢？本篇就让我们一起来探索其背后的奥秘吧！</p>
+<h2 id="一点疑问"><a href="#一点疑问" class="headerlink" title="一点疑问"></a>一点疑问</h2><p>按照惯例，我们先来看几个常用的场景：</p>
+<pre><code class="js">$(&quot;#id&quot;).find(&quot;li&quot;).css(&quot;background&quot;,&quot;red&quot;);
+$(&quot;&lt;li&gt;&lt;/li&gt;&quot;).appendTo(&quot;body&quot;).css(&quot;background&quot;,&quot;red&quot;);
+//...</code></pre>
+<p>上例每个例子都可以继续调用jQuery的方法，无穷无尽的调用下去，正所谓海阔凭鱼跃，天高任鸟飞啊！阅读过系列（一）的小伙伴都知道，<code>$()</code>方法返回的是一个jQuery构造函数生成的实例，也就是说我们可以接着调用其原型链上的各类方法，甚至<code>$()</code>返回的实例都是其原型上的<code>init</code>方法生成的。</p>
+<p>这到底是如何实现的呢？这时，旁边智商高达150的小伙伴大佬冷笑一声，沉默了几秒钟后，突然额头青筋暴起，粗着脖子朝我怒吼：通过返回<code>this</code>啊啊啊！！！你到底懂不懂javaScript！！！方法内的<code>this</code>不就是指向调用该方法的对象么！这不是so easy么？？！！额。。。我侧头看了看另一旁也在冷笑的John Resig（jQuery的作者），连忙擦了擦汗：咳咳。。。其实，。。。你说的。。。没错。。。。不过！你只对了一半。。。。（小伙伴大佬刚咧开的嘴巴顿时僵住了）。。。</p>
+<h2 id="灵魂拷问"><a href="#灵魂拷问" class="headerlink" title="灵魂拷问"></a>灵魂拷问</h2><p>为什么John Resig会冷笑不止呢，其实。。。好吧，我也不知道为啥，可能真正的大佬都不是一般人能理解的吧。。。不过小伙伴大佬确实只对了一半，下面看简单模拟代码（不理解本实现的可以回看<a href="http://codedoges.com/article/1535898268557" target="_blank" rel="noopener" title="jQuery对象的诞生记">系列一</a>文章）：</p>
+<pre><code class="js">//即将继承jQuery的函数
+function Fn(){
+    return this; //关键点：第一种this；
+}
+function jQuery(){
+    return new Fn(); //返回继承jQuery原型的一个实例
+}
+//继承jQuery函数
+Fn.prototype = jQuery.prototype = {
+    construtor: jQuery,
+    find: function(){
+        console.log(&quot;find方法调用&quot;);
+        return this;//关键点：第二种this；
+    },
+    css:function(){
+        console.log(&quot;css方法调用&quot;);
+        return this;//关键点：第二种this；
+    }
+}
+var $ = jQuery;
+$().find().css(); //find方法调用  //css方法调用</code></pre>
+<p>小伙伴大佬看到这里，额头青筋暴突，大脸再度涨红了起来：这。。。这有啥了不起的！！？？</p>
+<p>额。。。好吧，确实没啥了不起的。其实这里面两种情况代表了<code>this</code>的两种指向：</p>
+<ul>
+<li>默认绑定，即指向<code>window</code>；</li>
+<li>隐式绑定，即指向调用方法的对象；</li>
+<li>显示绑定，即通过<code>call</code>，<code>apply</code>，<code>bind</code>显式绑定指向；</li>
+<li><code>new</code>绑定；</li>
+</ul>
+<p>显而易见，小伙伴大佬所指的是隐式绑定的情况，另一种情况则是<code>new</code>的绑定；其实上面四种情况中，前三种大家还是非常熟悉的，接下来具体看一下<code>new</code>绑定时的发生的过程：</p>
+<ol>
+<li>创建（或者说构造）一个全新的对象。</li>
+<li>这个新对象会被执行 [[ 原型 ]] 连接。</li>
+<li>这个新对象会绑定到函数调用的 this 。</li>
+<li>如果函数没有返回其他对象，那么 new 表达式中的函数调用会自动返回这个新对象。</li>
+</ol>
+<p>简而言之，构造函数中的<code>this</code>一定会绑定到生成的实例对象上，但是这个实例对象却不一定会返回（当构造函数返回一个对象时）：</p>
+<pre><code class="js">function jQueryA(){
+    this.XXX = 1;
+    return ; //没有返回对象时，生成一个实例对象
+    //return undefined || null || 1 || &quot;string&quot; || true ;
+}
+function jQueryB(){
+    this.XXX = 1;
+    return [1,2,3]; //返回一个对象时，直接把该对象返回，无论构造函数里面是什么
+    //return {} || function(){} || new Number(1) || ....
+}
+var a = new jQueryA();
+var b = new jQueryB();
+console.log(a); //{XXX: 1}
+console.log(b); //[1, 2, 3]</code></pre>
+<p>对照上面的文字跟代码，相信很多小伙伴都可以理解<code>new</code>构造函数时所发生的情况，不过这里还有一个特殊情况：</p>
+<pre><code class="js">function jQueryC(){
+    this.XXX = 1;
+    return this; //返回的是this对象
+}
+var c = new jQueryC();
+console.log(c); //{XXX: 1}</code></pre>
+<p>哈哈，是不是有点小惊喜！其实这段代码也很好理解，已经说过，无论返回的是不是对象，构造函数中的<code>this</code>一定会绑定到生成的实例对象上的，返不返回另说！！！而<code>this</code>则是一个赤裸裸的实例对象啊，既然是对象，肯定就是返回咯，只不过它恰好是实例对象而已！</p>
+<p>讲到这里，小伙伴大佬眼神带着一丝惊慌，努力轻蔑一笑：即使我说漏了一半，这也没啥出奇的嘛，小失误啦！哈哈哈。。。</p>
+<h2 id="闭关修炼"><a href="#闭关修炼" class="headerlink" title="闭关修炼"></a>闭关修炼</h2><p>正当小伙伴大佬肆无忌惮地狂笑时，John Resig也轻蔑一笑，默默的拿出了源码（简略版，看不懂回看<a href="http://codedoges.com/article/1535898268557" target="_blank" rel="noopener" title="jQuery对象的诞生记">系列一</a>）：</p>
+<pre><code class="js">// 定义jQuery构造函数
+jQuery = function( selector, context ) {
+    //返回一个新函数
+    return new jQuery.fn.init(/** selector, context, rootjQuery **/);
+};
+jQuery.fn = jQuery.prototype = {
+    constructor: jQuery,
+    init: function(/** selector, context, rootjQuery **/){
+        //本篇关键之关键！！！
+        return this;//关键点：第一种this；
+    },
+    find: function(){//伪造的测试方法
+        console.log(&quot;find方法调用&quot;);
+        return this;//关键点：第二种this；
+    },
+    css:function(){//伪造的测试方法
+        console.log(&quot;css方法调用&quot;);
+        return this;//关键点：第二种this；
+    }
+    //...
+}
+// init其实就是继承jQuery的新函数(Fn)，所以需要手动添加继承
+jQuery.fn.init.prototype = jQuery.fn;
+var $ = jQuery;
+$().find().css(); //find方法调用  //css方法调用</code></pre>
+<p>空气突然安静。小伙伴大佬：这？？。。这踏马是一回事？？？</p>
+<p>其实没错，在我们的印象中，构造函数不是一般是大写的吗？里面不是一般都是各种实例属性方法的挂载吗？怎么这<code>jQuery.fn.init</code>也是构造函数？？？</p>
+<p>嗯嗯。。。没错，这句话其实是我写本篇唯一想说的一句话，其他都是附带的收获了，逃。。。就酱！！！</p>
+<blockquote>
+<p>实质上拥有[[Construct]]方法的函数才能成为构造函数，因此不是所有函数都可以用<code>new</code>来调用。例如箭头函数就未拥有该方法。but！who care?</p>
+</blockquote>
+<h2 id="修仙秘笈"><a href="#修仙秘笈" class="headerlink" title="修仙秘笈"></a>修仙秘笈</h2><p>讲到这里，房间的某处，小伙伴大佬抱着John Resig的大腿正在狂喊大佬云云，暂且不表了，先理一下思路吧。</p>
+<h4 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h4><ul>
+<li>显而易见，理解构造函数下<code>this</code>的指向与<code>new</code>构造函数时返回的两种情况是这篇文章的重点；</li>
+<li>另一个就是小伙伴们对构造函数要有一个通透的理解，不要被复杂的表象所迷惑，即到底是不是构造函数，就看函数有没有被<code>new</code>过。世上本没有构造函数，被<code>new</code>了之后，就有了构造函数；</li>
+</ul>
+<p>通篇下来，仔细看的小伙伴应该都知道我这是在挂羊头卖狗肉啦，其实这也正是我的初衷，就是通过jQuery源码的解读重现，从中学习到一丝丝有意思的知识，我觉得这就够了，对我来说这也就是jQuery最大的价值所在，相信你们也会感同身受。</p>
+
+            <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
+            <audio id="audio" loop="1" preload="auto" controls="controls"
+                data-autoplay="false">
+                <source type="audio/mpeg" src="">
+            </audio>
+            
+            <ul id="audio-list" style="display:none">
+                
+                
+                <li title='0' data-url='/statics/chengdu.mp3'></li>
+                
+                    
+            </ul>
+            
+            
+            
+    <div id='gitalk-container' class="comment link"
+        data-ae='true'
+        data-ci='ad0ec68ac6b80ef0adbd'
+        data-cs='bcf8895a95f3e128f12210a56df3cedd7d09a17d'
+        data-r='coderhaotf.github.io'
+        data-o='coderhaotf'
+        data-a='coderhaotf'
+        data-d=''
+    >Comments</div>
+
+
+            
+            
+        </div>
+        <div class="sidebar">
+            <div class="box animated fadeInRight">
+                <div class="subbox">
+                    <img src="https://res.cloudinary.com/tridiamond/image/upload/v1573019751/TriDiamond_logo_ui_xeublz.jpg" height=300 width=300></img>
+                    <p>haotf</p>
+                    <span>Think like an artist, develop like an artisan</span>
+                    <dl>
+                        <dd><a href="https://github.com/coderhaotf" target="_blank"><span
+                                    class=" iconfont icon-github"></span></a></dd>
+                        <dd><a href="https://twitter.com/" target="_blank"><span
+                                    class=" iconfont icon-twitter"></span></a></dd>
+                        <dd><a href="https://stackoverflow.com/" target="_blank"><span
+                                    class=" iconfont icon-stack-overflow"></span></a></dd>
+                    </dl>
+                </div>
+                <ul>
+                    <li><a href="/">31 <p>Articles</p></a></li>
+                    <li><a href="/categories">0 <p>Categories</p></a></li>
+                    <li><a href="/tags">0 <p>Tags</p></a></li>
+                </ul>
+            </div>
+            
+            
+            
+            <div class="box sticky animated fadeInRight faster">
+                <div id="toc" class="subbox">
+                    <h4>Contents</h4>
+                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#引言"><span class="toc-number">1.</span> <span class="toc-text">引言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#一点疑问"><span class="toc-number">2.</span> <span class="toc-text">一点疑问</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#灵魂拷问"><span class="toc-number">3.</span> <span class="toc-text">灵魂拷问</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#闭关修炼"><span class="toc-number">4.</span> <span class="toc-text">闭关修炼</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#修仙秘笈"><span class="toc-number">5.</span> <span class="toc-text">修仙秘笈</span></a></li></ol>
+                </div>
+            </div>
+            
+            
+        </div>
+    </div>
+</div>
+
+    </div>
+</div>
+    <div id="back-to-top" class="animated fadeIn faster">
+        <div class="flow"></div>
+        <span class="percentage animated fadeIn faster">0%</span>
+        <span class="iconfont icon-top02 animated fadeIn faster"></span>
+    </div>
+</body>
+<footer>
+    <p class="copyright" id="copyright">
+        &copy; 2020
+        <span class="gradient-text">
+            haotf
+        </span>.
+        Designed && Powerd  by <a href="http://hexo.io/" title="Hexo" target="_blank" rel="noopener">Hexo</a>
+        <p>Copyright© 2018 早起不吃虫的博客 粤ICP备18104892号</p>
+        <!-- Theme
+        <span class="gradient-text">
+            <a href="https://github.com/TriDiamond/hexo-theme-obsidian" title="Obsidian" target="_blank" rel="noopener">Obsidian</a>
+        </span>
+        <small><a href="https://github.com/TriDiamond/hexo-theme-obsidian/blob/master/CHANGELOG.md" title="v1.4.3" target="_blank" rel="noopener">v1.4.3</a></small> -->
+    </p>
+</footer>
+
+<script type="text/javascript" src="https://cdn.bootcss.com/mathjax/2.7.6/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<script>
+  MathJax.Hub.Config({
+    "HTML-CSS": {
+      preferredFont: "TeX",
+      availableFonts: ["STIX", "TeX"],
+      linebreaks: {
+        automatic: true
+      },
+      EqnChunk: (MathJax.Hub.Browser.isMobile ? 10 : 50)
+    },
+    tex2jax: {
+      inlineMath: [
+        ["$", "$"],
+        ["\\(", "\\)"]
+      ],
+      processEscapes: true,
+      ignoreClass: "tex2jax_ignore|dno",
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    TeX: {
+      noUndefined: {
+        attributes: {
+          mathcolor: "red",
+          mathbackground: "#FFEEEE",
+          mathsize: "90%"
+        }
+      },
+      Macros: {
+        href: "{}"
+      }
+    },
+    messageStyle: "none"
+  });
+</script>
+<script>
+  function initialMathJax() {
+    MathJax.Hub.Queue(function () {
+      var all = MathJax.Hub.getAllJax(),
+        i;
+      // console.log(all);
+      for (i = 0; i < all.length; i += 1) {
+        console.log(all[i].SourceElement().parentNode)
+        all[i].SourceElement().parentNode.className += ' has-jax';
+      }
+    });
+  }
+
+  function reprocessMathJax() {
+    if (typeof MathJax !== 'undefined') {
+      MathJax.Hub.Queue(["Typeset", MathJax.Hub]);
+    }
+  }
+</script>
+
+
+
+    
+<link rel="stylesheet" href="//cdn.bootcss.com/gitalk/1.5.0/gitalk.min.css">
+
+    
+<script src="//cdn.bootcss.com/gitalk/1.5.0/gitalk.min.js"></script>
+
+
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="/js/plugin.js"></script>
+<script src="/js/obsidian.js"></script>
+<script src="/js/jquery.truncate.js"></script>
+<script src="/js/search.js"></script>
+
+
+<script src="//cdn.bootcss.com/typed.js/2.0.10/typed.min.js"></script>
+
+
+<script src="//cdn.bootcss.com/blueimp-md5/2.12.0/js/md5.min.js"></script>
+
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/social-share.js/1.0.16/js/social-share.min.js"></script>
+
+
+<script src="https://cdn.bootcss.com/codemirror/5.48.4/codemirror.min.js"></script>
+
+    
+<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/javascript/javascript.min.js"></script>
+
+
+    
+<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/css/css.min.js"></script>
+
+
+    
+<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/xml/xml.min.js"></script>
+
+
+    
+<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/htmlmixed/htmlmixed.min.js"></script>
+
+
+    
+<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/clike/clike.min.js"></script>
+
+
+    
+<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/php/php.min.js"></script>
+
+
+    
+<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/shell/shell.min.js"></script>
+
+
+    
+<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/python/python.min.js"></script>
+
+
+
+
+    
+<script src="/js/busuanzi.min.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            if ($('span[id^="busuanzi_"]').length) {
+                initialBusuanzi();
+            }
+        });
+    </script>
+
+
+
+<link rel="stylesheet" href="//cdn.bootcss.com/photoswipe/4.1.3/photoswipe.min.css">
+<link rel="stylesheet" href="//cdn.bootcss.com/photoswipe/4.1.3/default-skin/default-skin.min.css">
+
+
+<script src="//cdn.bootcss.com/photoswipe/4.1.3/photoswipe.min.js"></script>
+<script src="//cdn.bootcss.com/photoswipe/4.1.3/photoswipe-ui-default.min.js"></script>
+
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+            <div class="pswp__top-bar">
+                <!--  Controls are self-explanatory. Order can be changed. -->
+                <div class="pswp__counter"></div>
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                      <div class="pswp__preloader__cut">
+                        <div class="pswp__preloader__donut"></div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div> 
+            </div>
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="//www.googletagmanager.com/gtag/js?id=UA-149874671-1"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', 'UA-149874671-1');
+    </script>
+
+
+
+
+
+<script>
+    function initialTyped () {
+        var typedTextEl = $('.typed-text');
+        if (typedTextEl && typedTextEl.length > 0) {
+            var typed = new Typed('.typed-text', {
+                strings: ["Think like an artist, develop like an artisan", "艺术家思维去思考问题，工匠创造精神去开发"],
+                typeSpeed: 90,
+                loop: true,
+                loopCount: Infinity,
+                backSpeed: 20,
+            });
+        }
+    }
+
+    if ($('.article-header') && $('.article-header').length) {
+        $(document).ready(function () {
+            initialTyped();
+        });
+    }
+</script>
+
+
+
+
+</html>

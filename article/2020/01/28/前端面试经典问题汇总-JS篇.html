@@ -1,0 +1,1334 @@
+
+<!DOCTYPE html>
+<html lang="en" class="loading">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>前端面试经典问题汇总-JS篇 - 早起不吃虫</title>
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="google" content="notranslate" />
+    <meta name="keywords" content="coderhaotf,"> 
+    <meta name="description" content="对象的属性ECMAScript 中有两种属性：数据属性和访问器属性。
+描述符可同时具有的键值
+
+
+
+
+configurable
+enumerable
+value
+writable
+get
+set
+
+,"> 
+    <meta name="author" content="haotf"> 
+    <link rel="alternative" href="atom.xml" title="早起不吃虫" type="application/atom+xml"> 
+    <link rel="icon" href="/img/favicon.png"> 
+    <link href="https://fonts.loli.net/css?family=Roboto+Mono|Rubik&display=swap" rel="stylesheet">
+    
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1429596_nzgqgvnmkjb.css">
+
+    
+<link rel="stylesheet" href="//cdn.bootcss.com/animate.css/3.7.2/animate.min.css">
+
+    
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/social-share.js/1.0.16/css/share.min.css">
+
+    
+<link rel="stylesheet" href="//cdn.bootcss.com/codemirror/5.48.4/codemirror.min.css">
+
+    
+<link rel="stylesheet" href="//cdn.bootcss.com/codemirror/5.48.4/theme/dracula.css">
+
+    
+<link rel="stylesheet" href="/css/obsidian.css">
+
+    
+<link rel="stylesheet" href="/css/ball-atom.min.css">
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+
+<body class="loading">
+    <div class="loader">
+        <div class="la-ball-atom la-2x">
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+    </div>
+    <span id="config-title" style="display:none">早起不吃虫</span>
+    <div id="loader"></div>
+    <div id="single">
+    <div class="scrollbar gradient-bg-rev"></div>
+<div id="top" style="display: block;">
+    <div class="bar" style="width: 0;"></div>
+    <div class="navigation animated fadeIn fast delay-1s">
+        <img id="home-icon" class="icon-home" src="/img/favicon.png" alt="" data-url="https://coderhaotf.github.io">
+        <div id="play-icon" title="Play/Pause" class="iconfont icon-play"></div>
+        <h3 class="subtitle">前端面试经典问题汇总-JS篇</h3>
+        <div class="social">
+            <!--        <div class="like-icon">-->
+            <!--            <a href="javascript:;" class="likeThis active"><span class="icon-like"></span><span class="count">76</span></a>-->
+            <!--        </div>-->
+            <div>
+                <div class="share">
+                    
+                        <a href="javascript:;" class="iconfont icon-share1"></a>
+                        <div class="share-component-cc" data-disabled="facebook,douban,linkedin,diandian,tencent,google"></div>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+    <div class="section">
+        <div class=article-header-wrapper>
+    <div class="article-header">
+        <div class="article-cover animated fadeIn" style="
+            animation-delay: 600ms;
+            animation-duration: 1.2s;
+            background-image: 
+                radial-gradient(ellipse closest-side, rgba(0, 0, 0, 0.65), #100e17),
+                url(/img/cover.jpg);">
+        </div>
+        <div class="else">
+            <p class="animated fadeInDown">
+                
+                <a href="javascript:;"><b>「 </b>Article<b> 」</b></a>
+                
+                January 28, 2020
+            </p>
+            <h3 class="post-title animated fadeInDown"><a href="/article/2020/01/28/%E5%89%8D%E7%AB%AF%E9%9D%A2%E8%AF%95%E7%BB%8F%E5%85%B8%E9%97%AE%E9%A2%98%E6%B1%87%E6%80%BB-JS%E7%AF%87.html" title="前端面试经典问题汇总-JS篇" class="">前端面试经典问题汇总-JS篇</a>
+            </h3>
+            
+            <p class="post-count animated fadeInDown">
+                
+                <span>
+                    <b class="iconfont icon-text2"></b> <i>Words count</i>
+                    33k
+                </span>
+                
+                
+                <span>
+                    <b class="iconfont icon-timer__s"></b> <i>Reading time</i>
+                    30 mins.
+                </span>
+                
+                
+                
+                <span id="busuanzi_container_page_pv">
+                    <b class="iconfont icon-read"></b> <i>Read count</i>
+                    <span id="busuanzi_value_page_pv">0</span>
+                </span>
+                
+            </p>
+            
+            
+        </div>
+    </div>
+</div>
+
+<div class="screen-gradient-after">
+    <div class="screen-gradient-content">
+        <div class="screen-gradient-content-inside">
+            <div class="bold-underline-links screen-gradient-sponsor">
+                <p>
+                    <span class="animated fadeIn delay-1s"></span>
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="article">
+    <div class='main'>
+        <div class="content markdown animated fadeIn">
+            <h2 id="对象的属性"><a href="#对象的属性" class="headerlink" title="对象的属性"></a>对象的属性</h2><p>ECMAScript 中有两种属性：数据属性和访问器属性。</p>
+<p>描述符可同时具有的键值</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>configurable</th>
+<th>enumerable</th>
+<th>value</th>
+<th>writable</th>
+<th>get</th>
+<th>set</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>数据描述符</td>
+<td>Yes</td>
+<td>Yes</td>
+<td>Yes</td>
+<td>Yes</td>
+<td>No</td>
+<td>No</td>
+</tr>
+<tr>
+<td>存取描述符</td>
+<td>Yes</td>
+<td>Yes</td>
+<td>No</td>
+<td>No</td>
+<td>Yes</td>
+<td>Yes</td>
+</tr>
+</tbody></table>
+<h5 id="数据属性："><a href="#数据属性：" class="headerlink" title="数据属性："></a>数据属性：</h5><pre><code class="js">var obj = {};
+Object.defineProperty(obj, &quot;key&quot;, {
+  enumerable: false,
+  configurable: false,
+  writable: false,
+  value: &quot;static&quot;
+});</code></pre>
+<h5 id="访问器属性："><a href="#访问器属性：" class="headerlink" title="访问器属性："></a>访问器属性：</h5><pre><code class="js">var obj = {
+  _year:2001,
+  get year() {
+    return this._year;
+  },
+  set year(val){
+    this._year = val
+  }
+}
+console.log(obj._year); //2001
+console.log(obj.year); //2001
+obj.year = &#39;hello&#39;;
+console.log(obj._year); // hello
+console.log(obj.year); // hello</code></pre>
+<h2 id="事件委托"><a href="#事件委托" class="headerlink" title="事件委托"></a>事件委托</h2><h5 id="为什么要事件委托："><a href="#为什么要事件委托：" class="headerlink" title="为什么要事件委托："></a>为什么要事件委托：</h5><ul>
+<li>绑定事件越多，浏览器内存占用越大，严重影响性能。</li>
+<li>ajax的出现，局部刷新的盛行，导致每次加载完，都要重新绑定事件</li>
+<li>部分浏览器移除元素时，绑定的事件并没有被及时移除，导致的内存泄漏，严重影响性能</li>
+<li>大部分ajax局部刷新的，只是显示的数据，而操作却是大部分相同的，重复绑定，会导致代码的耦合性过大，严重影响后期的维护。</li>
+</ul>
+<h5 id="事件委托的简单实现："><a href="#事件委托的简单实现：" class="headerlink" title="事件委托的简单实现："></a>事件委托的简单实现：</h5><pre><code class="js">function _addEvent(obj,type,fn){
+    obj.addEventListener(type,fn,false);
+}
+function _delegate(obj,tag,fn){
+    function cb(e){
+        var target = e.target || e.srcElement;
+        var tags = obj.getElementsByTagName(tag);
+        if(tags.length === 0){return;}
+        while(e.nodeName.toLowerCase() !== tag){
+            target = target.parentNode;
+        }
+        for(var i = 0; i &lt; tags.length; i++){
+            if(tags[i] === target){
+                alert(i);
+                break;
+            }
+        }
+    }
+    _addEvent(obj,&quot;click&quot;,cb);
+}</code></pre>
+<h5 id="事件委托的缺点："><a href="#事件委托的缺点：" class="headerlink" title="事件委托的缺点："></a>事件委托的缺点：</h5><p>通过jQuery的源码可以获知，事件委托的性能受下面三个因素所影响：</p>
+<ul>
+<li>DOM遍历的次数</li>
+<li>DOM结构的层数</li>
+<li>事件委托绑定的个数</li>
+</ul>
+<h5 id="提高事件委托性能的解决方案："><a href="#提高事件委托性能的解决方案：" class="headerlink" title="提高事件委托性能的解决方案："></a>提高事件委托性能的解决方案：</h5><ul>
+<li>降低层级，尽量在父级绑定</li>
+<li>减少绑定的次数</li>
+</ul>
+<h2 id="图片预加载与懒加载"><a href="#图片预加载与懒加载" class="headerlink" title="图片预加载与懒加载"></a>图片预加载与懒加载</h2><h5 id="预加载"><a href="#预加载" class="headerlink" title="预加载"></a>预加载</h5><p>######方法一：用CSS和JavaScript实现预加载<br>使用纯CSS:</p>
+<pre><code class="css">background: url(http://domain.tld/image-01.png) no-repeat -9999px -9999px; }  </code></pre>
+<p>使用该法加载的图片会同页面的其他内容一起加载，增加了页面的整体加载时间。为了解决这个问题，我们增加了一些JavaScript代码，来推迟预加载的时间，直到页面加载完毕。</p>
+<pre><code class="js">function preloader() {
+    if (document.getElementById) {
+        document.getElementById(&quot;preload-01&quot;).style.background = &quot;url(http://domain.tld/image-01.png) no-repeat -9999px -9999px&quot;;
+    }
+}
+function addLoadEvent(func) {
+    var oldonload = window.onload;
+    if (typeof window.onload != &#39;function&#39;) {
+        window.onload = func;
+    } else {
+        window.onload = function() {
+            if (oldonload) {
+                oldonload();
+            }
+            func();
+        }
+    }
+}
+addLoadEvent(preloader);</code></pre>
+<h6 id="方法二：仅使用JavaScript实现预加载"><a href="#方法二：仅使用JavaScript实现预加载" class="headerlink" title="方法二：仅使用JavaScript实现预加载"></a>方法二：仅使用JavaScript实现预加载</h6><p>上述方法有时确实很高效，但我们逐渐发现它在实际实现过程中会耗费太多时间。相反，我更喜欢使用纯JavaScript来实现图片的预加载。</p>
+<pre><code class="js">var images = new Array()
+function preload() {
+    for (i = 0; i &lt; preload.arguments.length; i++) {
+        images[i] = new Image()
+        images[i].src = preload.arguments[i]
+    }
+}
+preload(
+    &quot;http://domain.tld/gallery/image-001.jpg&quot;,
+    &quot;http://domain.tld/gallery/image-002.jpg&quot;,
+    &quot;http://domain.tld/gallery/image-003.jpg&quot;)</code></pre>
+<h6 id="方法三：使用Ajax实现预加载"><a href="#方法三：使用Ajax实现预加载" class="headerlink" title="方法三：使用Ajax实现预加载"></a>方法三：使用Ajax实现预加载</h6><pre><code class="js">window.onload = function() {
+setTimeout(function() {
+    // XHR to request a JS and a CSS
+    var xhr = new XMLHttpRequest();
+    xhr.open(&#39;GET&#39;, &#39;http://domain.tld/preload.js&#39;);
+    xhr.send(&#39;&#39;);
+    xhr = new XMLHttpRequest();
+    xhr.open(&#39;GET&#39;, &#39;http://domain.tld/preload.css&#39;);
+    xhr.send(&#39;&#39;);
+    // preload image
+    new Image().src = &quot;http://domain.tld/preload.png&quot;;
+}, 1000);
+};</code></pre>
+<h5 id="懒加载"><a href="#懒加载" class="headerlink" title="懒加载"></a>懒加载</h5><ul>
+<li>第一种是纯粹的延迟加载，使用setTimeOut或setInterval进行加载延迟。</li>
+<li>第二种是条件加载，符合某些条件，或触发了某些事件才开始异步下载。</li>
+<li>第三种是可视区加载，即仅加载用户可以看到的区域，这个主要由监控滚动条来实现。</li>
+</ul>
+<pre><code class="js">(function($) {
+    $.fn.scrollLoading = function(options) {
+        var defaults = {
+            attr: &quot;data-url&quot;,
+            container: $(window),
+            callback: $.noop
+        };
+        var params = $.extend({}, defaults, options || {});
+        params.cache = [];
+        $(this).each(function() {
+            var node = this.nodeName.toLowerCase(), url = $(this).attr(params[&quot;attr&quot;]);
+            var data = {
+                obj: $(this),
+                tag: node,
+                url: url
+            };
+            params.cache.push(data);
+        });
+        var callback = function(call) {
+            if ($.isFunction(params.callback)) {
+                params.callback.call(call.get(0));
+            }
+        };
+        var loading = function() {
+            var contHeight = params.container.height();
+            if ($(window).get(0) === window) {
+                contop = $(window).scrollTop();
+            } else {
+                contop = params.container.offset().top;
+            }
+            $.each(params.cache, function(i, data) {
+                var o = data.obj, tag = data.tag, url = data.url, post, posb;
+                if (o) {
+                    post = o.offset().top - contop, post + o.height();
+                    if (o.is(&#39;:visible&#39;) &amp;&amp; (post &gt;= 0 &amp;&amp; post &lt; contHeight) || (posb &gt; 0 &amp;&amp; posb &lt;= contHeight)) {
+                        if (url) {
+                            if (tag === &quot;img&quot;) {
+                                callback(o.attr(&quot;src&quot;, url));
+                            } else {
+                                o.load(url, {}, function() {
+                                    callback(o);
+                                });
+                            }
+                        } else {
+                            callback(o);
+                        }
+                        data.obj = null;
+                    }
+                }
+            });
+        };
+        loading();
+        params.container.bind(&quot;scroll&quot;, loading);
+    };
+})(jQuery);</code></pre>
+<h2 id="mouseover和mouseenter的区别"><a href="#mouseover和mouseenter的区别" class="headerlink" title="mouseover和mouseenter的区别"></a>mouseover和mouseenter的区别</h2><ul>
+<li>mouseover 事件具有冒泡特性，也就是说无论鼠标是从别的元素移动到element或者是从element的子元素移动到element都会触发mouseover事件。</li>
+<li>mouseenter 事件，该事件没有冒泡特性，也就是说只有鼠标穿过该事件的时候才会触发mouseenter</li>
+</ul>
+<h6 id="mouseover-模拟-mouseenter"><a href="#mouseover-模拟-mouseenter" class="headerlink" title="mouseover 模拟 mouseenter"></a>mouseover 模拟 mouseenter</h6><pre><code class="js">var selector = document.getElementById(&#39;test&#39;);
+  selector.addEventListener(&quot;mouseover&quot;, function( event ) {
+    var target = event.target,
+        related = event.relatedTarget,//触发事件前所在的节点
+        match;
+    // 通过触发事件节点找到绑定事件节点
+    while ( target &amp;&amp; target !== document &amp;&amp; target!== this ) {
+        target = target.parentNode;
+        if (target === this) {match = true;}
+    }
+    // 没找到绑定事件的节点
+    if ( !match ) { return; }
+    // 判断是不是冒泡触发的节点，如果是则related置为target
+    while ( related &amp;&amp; related != target &amp;&amp; related != document ) {
+        related = related.parentNode;
+    }
+    // 冒泡触发，也就是子节点触发
+    if ( related == target ) { return; }
+
+    //......mouseenter事件代码
+  }, false);
+</code></pre>
+<h2 id="闭包"><a href="#闭包" class="headerlink" title="闭包"></a>闭包</h2><pre><code class="js">function f1(){
+    var n = [1,2];
+    add = function(){
+        n.unshift(0);
+        return n;
+    }
+    function f2(){
+        n.push(3);
+        return n;
+    }
+    return f2;
+}
+var result1 = f1();//拷贝一份
+var result2 = f1();//拷贝一份
+var result3 = f1();//拷贝一份
+var a1 = result1();add();console.log(a1);//[1, 2, 3]
+var a2 = result2();add();console.log(a2);//[1, 2, 3]
+var a3 = result3();add();console.log(a3);//[0, 0, 0, 1, 2, 3]
+var a4 = add();
+console.log(a1 === a2);//false
+console.log(a2 === a3);//false
+console.log(a3 === a4);//true</code></pre>
+<h2 id="new-命令的原理"><a href="#new-命令的原理" class="headerlink" title="new 命令的原理"></a>new 命令的原理</h2><h5 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h5><p>使用new命令时，它后面的函数依次执行下面的步骤。</p>
+<ul>
+<li>创建一个空对象，作为将要返回的对象实例。</li>
+<li>将这个空对象的原型，指向构造函数的prototype属性。</li>
+<li>将这个空对象赋值给函数内部的this关键字。</li>
+<li>开始执行构造函数内部的代码。</li>
+</ul>
+<p>实现代码：</p>
+<pre><code class="js">function _new(/* 构造函数 */ constructor, /* 构造函数参数 */ params) {
+  // 将 arguments 对象转为数组
+  var args = [].slice.call(arguments);
+  // 取出构造函数
+  var constructor = args.shift();
+  // 创建一个空对象，继承构造函数的 prototype 属性
+  var context = Object.create(constructor.prototype);
+  // 执行构造函数
+  var result = constructor.apply(context, args);
+  // 如果返回结果是对象，就直接返回，否则返回 context 对象
+  return (typeof result === &#39;object&#39; &amp;&amp; result != null) ? result : context;
+}
+// 实例
+var actor = _new(Person, &#39;张三&#39;, 28);</code></pre>
+<h5 id="保证构造函数使用new"><a href="#保证构造函数使用new" class="headerlink" title="保证构造函数使用new"></a>保证构造函数使用new</h5><h6 id="方法一，严格模式"><a href="#方法一，严格模式" class="headerlink" title="方法一，严格模式"></a>方法一，严格模式</h6><pre><code class="js">function Fubar(foo, bar){
+  &#39;use strict&#39;;
+  this._foo = foo;
+  this._bar = bar;
+}
+Fubar()
+// TypeError: Cannot set property &#39;_foo&#39; of undefined</code></pre>
+<h6 id="方法二，new-target"><a href="#方法二，new-target" class="headerlink" title="方法二，new.target"></a>方法二，new.target</h6><pre><code class="js">function f() {
+  if (!new.target) {
+    throw new Error(&#39;请使用 new 命令调用！&#39;);
+  }
+  // ...
+}
+f() // Uncaught Error: 请使用 new 命令调用！</code></pre>
+<h2 id="call-、-apply-、bind-的实现"><a href="#call-、-apply-、bind-的实现" class="headerlink" title="call 、 apply 、bind 的实现"></a>call 、 apply 、bind 的实现</h2><h5 id="call-的实现"><a href="#call-的实现" class="headerlink" title="call 的实现"></a>call 的实现</h5><pre><code class="js">if(!Function.prototype.call){
+    Function.prototype.call = function(args){
+        if (typeof this !== &quot;function&quot;) {
+            throw Error(&quot;函数才能调用call方法&quot;);
+        }
+        //this绑定的指向
+        var context = arguments[0];
+        //调用call的函数
+        var fn = this;
+        //call调用时的传参
+        var param = Array.prototype.slice.call(arguments,1);
+        //创建一个唯一key;
+        var key = &#39;fn&#39; + Math.random();
+        if (context == undefined) {
+            //return eval(&quot;fn(&quot; + param + &quot;)&quot;);
+            return fn(...param);
+        }else{
+            //保证是对象
+            context = Object(context);
+            //将函数变为context的方法
+            context[key] = fn;
+            //通过对象方法的形式调用
+            //return eval(&quot;context[key](&quot; + param + &quot;)&quot;);
+            return context[key](...param);
+        }
+    }
+}</code></pre>
+<h5 id="apply-的实现"><a href="#apply-的实现" class="headerlink" title="apply 的实现"></a>apply 的实现</h5><pre><code class="js">if(!Function.prototype.apply){
+    Function.prototype.myapply = function(args){
+        if (typeof this !== &quot;function&quot;) {
+            throw Error(&quot;函数才能调用appy方法&quot;);
+        }
+        //this绑定的指向
+        var context = arguments[0];
+        //调用apply的函数
+        var fn = this;
+        //apply调用时的传参
+        var param = arguments[1] instanceof Array ? arguments[1] : [];
+        //创建一个唯一key;
+        var key = &#39;fn&#39; + Math.random();
+        if (context == undefined) {
+            //return eval(&quot;fn(&quot; + param + &quot;)&quot;);
+            return fn(...param);
+        }else{
+            //保证是对象
+            context = Object(context);
+            //将函数变为context的方法
+            context[key] = fn;
+            //通过对象方法的形式调用
+            //return eval(&quot;context[key](&quot; + param + &quot;)&quot;);
+            return context[key](...param);
+        }
+    }
+}</code></pre>
+<h5 id="bind-的实现"><a href="#bind-的实现" class="headerlink" title="bind 的实现"></a>bind 的实现</h5><pre><code class="js">if (!Function.prototype.bind) {
+    Function.prototype.mybind = function(args){
+        if (typeof this !== &quot;function&quot;) {
+            throw Error(&quot;函数才能调用bind方法&quot;);
+        }
+        //this绑定的指向
+        var context = arguments[0];
+        //调用bind的函数
+        var fn = this;
+        //bind调用时的传参
+        var param = Array.prototype.slice.call(arguments,1);
+        //返回的函数，等待下一步调用
+        var callback = function(){
+            //判断callback是直接调用还是new调用
+            fn.apply(this instanceof callback ? this : context,
+                //合并参数
+                param.concat(Array.prototype.slice.call(arguments))
+            );
+        }
+        //维护原型关系
+        if (fn.prototype) {
+            callback.prototype = Object.create(fn.prototype);
+        }
+        //返回待调用的函数
+        return callback;
+    }
+}</code></pre>
+<h2 id="异步加载js的方法"><a href="#异步加载js的方法" class="headerlink" title="异步加载js的方法"></a>异步加载js的方法</h2><p>defer属性和async属性到底应该使用哪一个？</p>
+<p>一般来说，如果脚本之间没有依赖关系，就使用async属性，如果脚本之间有依赖关系，就使用defer属性。</p>
+<p>如果同时使用async和defer属性，后者不起作用，浏览器行为由async属性决定。</p>
+<h5 id="defer："><a href="#defer：" class="headerlink" title="defer："></a>defer：</h5><p>有了defer属性，浏览器下载脚本文件的时候，不会阻塞页面渲染。下载的脚本文件在DOMContentLoaded事件触发前执行（即刚刚读取完</html>标签），而且可以保证执行顺序就是它们在页面上出现的顺序。</p>
+<p>对于内置而不是加载外部脚本的script标签，以及动态生成的script标签，defer属性不起作用。</p>
+<ul>
+<li>浏览器开始解析 HTML 网页。</li>
+<li>解析过程中，发现带有defer属性的script元素。</li>
+<li>浏览器继续往下解析 HTML 网页，同时并行下载script元素加载的外部脚本。</li>
+<li>浏览器完成解析 HTML 网页，此时再回过头执行已经下载完成的脚本。</li>
+</ul>
+<h5 id="async"><a href="#async" class="headerlink" title="async:"></a>async:</h5><p>async属性可以保证脚本下载的同时，浏览器继续渲染。需要注意的是，一旦采用这个属性，就无法保证脚本的执行顺序。哪个脚本先下载结束，就先执行那个脚本。</p>
+<ul>
+<li>浏览器开始解析 HTML 网页。</li>
+<li>解析过程中，发现带有async属性的script标签。</li>
+<li>浏览器继续往下解析 HTML 网页，同时并行下载script标签中的外部脚本。</li>
+<li>脚本下载完成，浏览器暂停解析 HTML 网页，开始执行下载的脚本。</li>
+<li>脚本执行完毕，浏览器恢复解析 HTML 网页。</li>
+</ul>
+<h5 id="ES6-模块-type-”module”"><a href="#ES6-模块-type-”module”" class="headerlink" title="ES6 模块(type=”module”)"></a>ES6 模块(type=”module”)</h5><p>浏览器对于带有type=”module”的<code>&lt;script&gt;</code>，都是异步加载，不会造成堵塞浏览器，即等到整个页面渲染完，再执行模块脚本，等同于打开了<code>&lt;script&gt;</code>标签的defer属性。</p>
+<p><code>&lt;script&gt;</code>标签的async属性也可以打开，这时只要加载完成，渲染引擎就会中断渲染立即执行。执行完成后，再恢复渲染。</p>
+<h5 id="动态创建script标签"><a href="#动态创建script标签" class="headerlink" title="动态创建script标签"></a>动态创建script标签</h5><h2 id="Ajax解决浏览器的缓存问题"><a href="#Ajax解决浏览器的缓存问题" class="headerlink" title="Ajax解决浏览器的缓存问题"></a>Ajax解决浏览器的缓存问题</h2><p>Ajax能提高页面载入速度的主要原因是通过Ajax减少了重复数据的载入，也即在载入数据的同时将数据缓存到内存中，一旦数据被加载，只要没有刷新页面，这些数据就会一直被缓存在内存中，当提交的URL与历史的URL一致时，就不需要提交给服务器，也即不需要从服务器获取数据，虽然降低了服务器的负载，提高了用户体验，但不能获取最新的数据。为了保证读取的信息都是最新的，需要禁止其缓存功能。</p>
+<ul>
+<li>在ajax发送请求前加上 anyAjaxObj.setRequestHeader(“If-Modified-Since”,”0”)。</li>
+<li>在ajax发送请求前加上 anyAjaxObj.setRequestHeader(“Cache-Control”,”no-cache”)。</li>
+<li>在URL后面加上一个随机数： “fresh=” + Math.random()。</li>
+<li>在URL后面加上时间搓：”nowtime=” + new Date().getTime()。</li>
+<li>如果是使用jQuery，直接这样就可以了 $.ajaxSetup({cache:false})。这样页面的所有ajax都会执行这条语句就是不需要保存缓存记录。</li>
+</ul>
+<h2 id="防抖与节流"><a href="#防抖与节流" class="headerlink" title="防抖与节流"></a>防抖与节流</h2><h5 id="防抖"><a href="#防抖" class="headerlink" title="防抖"></a>防抖</h5><p>根据用户输入信息发请求的时候，为了防止频繁触发请求，需要等待用户最后输入的时候再发送请求，也就是防抖：</p>
+<pre><code class="js">function debounce(fn,delay){
+    //利用闭包，保留定时器的指引
+    var timer = null;
+    return function(){
+        //每调用一次就取消上一次回调。
+        clearTimeout(timer);
+        //重新开启定时器，过一段时间后若无操作，则执行回调
+        timer = setTimeout(fn,delay)
+    }
+}
+var scroll = debounce(function(){
+    console.log(&#39;do something!!!&#39;)
+},500)
+window.onscroll = scroll;</code></pre>
+<h5 id="节流"><a href="#节流" class="headerlink" title="节流"></a>节流</h5><p>当滚动鼠标时，因为滚动事件触发间隔极短，需要限制其在某个时间段内，只执行一次。</p>
+<pre><code class="js">function throttle(fn,interval){
+    //设定初始时间
+    var begin = new Date();
+    //定时器指引
+    var timer = null;
+    return function(){
+        //总是清除上一次回调
+        clearTimeout(timer);
+        //获取当前时间
+        var now = new Date();
+        //当时间间隔大于设定，执行回调
+        if (now - begin &gt; interval) {
+            //重置开始时间
+            begin = now;
+            fn();
+        }else{
+            timer = setTimeout(function(){
+                //若距离上一次触发大于时间间隔，执行一次回调
+                begin = now;
+                fn();
+            },interval)
+        }
+    }
+}
+var scroll = throttle(function(){
+    console.log(&#39;do something!!!&#39;)
+},500)
+window.onscroll = scroll;</code></pre>
+<h2 id="js监听对象属性的改变"><a href="#js监听对象属性的改变" class="headerlink" title="js监听对象属性的改变"></a>js监听对象属性的改变</h2><h5 id="在ES5中可以通过Object-defineProperty来实现已有属性的监听"><a href="#在ES5中可以通过Object-defineProperty来实现已有属性的监听" class="headerlink" title="在ES5中可以通过Object.defineProperty来实现已有属性的监听"></a>在ES5中可以通过Object.defineProperty来实现已有属性的监听</h5><pre><code class="js">Object.defineProperty(user,&#39;name&#39;,{
+    set：function(key,value){
+    }
+})</code></pre>
+<p>缺点：如果属性不在user对象中，则不能监听该属性的变化</p>
+<h5 id="在ES6中可以通过Proxy来实现"><a href="#在ES6中可以通过Proxy来实现" class="headerlink" title="在ES6中可以通过Proxy来实现"></a>在ES6中可以通过Proxy来实现</h5><pre><code class="js">var  user = new Proxy({}，{
+ set：function(target,key,value,receiver){
+  }
+})</code></pre>
+<p>这样即使有属性在user中不存在，通过user.id来定义也同样可以这样监听这个属性的变化。</p>
+<h2 id="Object-is"><a href="#Object-is" class="headerlink" title="Object.is"></a>Object.is</h2><pre><code class="js">// 特例
+Object.is(0, -0);            // false
+Object.is(-0, -0);           // true
+Object.is(NaN, 0/0);         // true
+
+if (!Object.is) {
+  Object.is = function(x, y) {
+    if (x === y) {
+      // +0 != -0
+      return x !== 0 || 1 / x === 1 / y;
+    } else {
+      // NaN == NaN
+      return x !== x &amp;&amp; y !== y;
+    }
+  };
+}</code></pre>
+<h2 id="requestAnimationFrame-与-cancelAnimationFrame"><a href="#requestAnimationFrame-与-cancelAnimationFrame" class="headerlink" title="requestAnimationFrame 与 cancelAnimationFrame"></a>requestAnimationFrame 与 cancelAnimationFrame</h2><p>大多数电脑显示器的刷新频率是60Hz，大概相当于每秒钟重绘60次。大多数浏览器都会对重绘操作加以限制，不超过显示器的重绘频率，因为即使超过那个频率用户体验也不会有提升。因此，最平滑动画的最佳循环间隔是1000ms/60，约等于16.6ms</p>
+<p>而setTimeout和setInterval的问题是，它们都不精确。它们的内在运行机制决定了时间间隔参数实际上只是指定了把动画代码添加到浏览器UI线程队列中以等待执行的时间。如果队列前面已经加入了其他任务，那动画代码就要等前面的任务完成后再执行。</p>
+<p>requestAnimationFrame采用系统时间间隔，保持最佳绘制效率，不会因为间隔时间过短，造成过度绘制，增加开销；也不会因为间隔时间太长，使用动画卡顿不流畅，让各种网页动画效果能够有一个统一的刷新机制，从而节省系统资源，提高系统性能，改善视觉效果。</p>
+<p>特点</p>
+<ul>
+<li>requestAnimationFrame会把每一帧中的所有DOM操作集中起来，在一次重绘或回流中就完成，并且重绘或回流的时间间隔紧紧跟随浏览器的刷新频率</li>
+<li>在隐藏或不可见的元素中，requestAnimationFrame将不会进行重绘或回流，这当然就意味着更少的CPU、GPU和内存使用量</li>
+<li>requestAnimationFrame是由浏览器专门为动画提供的API，在运行时浏览器会自动优化方法的调用，并且如果页面不是激活状态下的话，动画会自动暂停，有效节省了CPU开销</li>
+</ul>
+<pre><code class="js">var a = 1;
+var cb = function(){
+    console.log(a++);
+    if (a &gt; 100) {
+        cancelAnimationFrame(timer);
+    }else{
+        requestAnimationFrame(cb)
+    }
+}
+var timer = requestAnimationFrame(cb);</code></pre>
+<h2 id="用-setTimeout-模拟-setInterval"><a href="#用-setTimeout-模拟-setInterval" class="headerlink" title="用 setTimeout 模拟 setInterval"></a>用 setTimeout 模拟 setInterval</h2><pre><code class="js">function interval(func, wait, times){
+    var interv = function(w, t){
+        return function(){
+            if(typeof t === &quot;undefined&quot; || t-- &gt; 0){
+                setTimeout(interv, w);
+                try{
+                    func.call(null);
+                }
+                catch(e){
+                    t = 0;
+                    throw e.toString();
+                }
+            }
+        };
+    }(wait, times);
+    setTimeout(interv, wait);
+};</code></pre>
+<h2 id="任务队列"><a href="#任务队列" class="headerlink" title="任务队列"></a>任务队列</h2><ul>
+<li>先主线程，后任务队列；</li>
+<li>先微任务（promise,nextTick），后宏任务(setTimeout)；</li>
+<li>先nextTick，后promise（then）</li>
+</ul>
+<h2 id="数组去重"><a href="#数组去重" class="headerlink" title="数组去重"></a>数组去重</h2><h6 id="利用对象的属性不能相同（有漏洞，数组值是引用类型时做键值会先调用toString）"><a href="#利用对象的属性不能相同（有漏洞，数组值是引用类型时做键值会先调用toString）" class="headerlink" title="利用对象的属性不能相同（有漏洞，数组值是引用类型时做键值会先调用toString）"></a>利用对象的属性不能相同（有漏洞，数组值是引用类型时做键值会先调用toString）</h6><pre><code class="js">Array.prototype.distinct = function (){
+ var arr = this,
+  i,
+  obj = {},
+  result = [],
+  len = arr.length;
+ for(i = 0; i&lt; arr.length; i++){
+  if(!obj[arr[i]]){ //如果能查找到，证明数组元素重复了
+   obj[arr[i]] = 1;
+   result.push(arr[i]);
+  }
+ }
+ return result;
+};
+var a = [1,2,3,4,5,6,5,3,2,4,56,4,1,2,1,1,1,1,1,1,];
+var b = a.distinct();</code></pre>
+<h6 id="利用indexOf以及forEach"><a href="#利用indexOf以及forEach" class="headerlink" title="利用indexOf以及forEach"></a>利用indexOf以及forEach</h6><h6 id="利用数组sort方法先排序"><a href="#利用数组sort方法先排序" class="headerlink" title="利用数组sort方法先排序"></a>利用数组sort方法先排序</h6><pre><code class="js">Array.prototype.distinct = function(){
+ var len = this.length,res = [];
+ if(len &lt; 2){ return this;}
+ this.sort(); //先排序
+ for(var i = 0; i &lt; len - 1; i++){
+  if(this[i] !== this[i+1]){
+   res.push(this[i]);
+  }
+ }
+ //最后那位不会重复
+ res.push(this[this.length-1])
+ return res;
+}</code></pre>
+<h6 id="利用ES6的set"><a href="#利用ES6的set" class="headerlink" title="利用ES6的set"></a>利用ES6的set</h6><pre><code class="js">//利用Array.from将Set结构转换成数组
+function dedupe(array){
+ return Array.from(new Set(array));
+}
+dedupe([1,1,2,3]);
+
+//拓展运算符(...)内部使用for...of循环
+let arr = [1,2,3,3];
+let resultarr = [...new Set(arr)];
+console.log(resultarr); //[1,2,3]</code></pre>
+<pre><code class="js">Array.prototype.distinct = function (){
+ var arr = this,
+  result = [],
+  len = arr.length;
+ arr.forEach(function(v, i ,arr){  //这里利用map，filter方法也可以实现
+  var bool = arr.indexOf(v,i+1);  //从传入参数的下一个索引值开始寻找是否存在重复
+  if(bool === -1){
+   result.push(v);
+  }
+ })
+ return result;
+};
+var a = [1,1,1,1,1,1,1,2,3,2,3,2,3];
+var b = a.distinct();</code></pre>
+<h2 id="排序算法"><a href="#排序算法" class="headerlink" title="排序算法"></a>排序算法</h2><h5 id="冒泡排序"><a href="#冒泡排序" class="headerlink" title="冒泡排序"></a>冒泡排序</h5><pre><code class="js">function swap(arr,i,j){
+    var temp = arr[i];
+    arr[i] = arr[j];
+    arr[j] = temp;
+}
+
+//冒泡排序
+function bubbleSort(arr){
+    for (var i = arr.length - 1; i &gt; 0; i--) {
+        for (var j = 0; j &lt; i; j++) {
+            if (arr[j] &gt; arr[j+1]) {
+                swap(arr,j,j+1)
+            }
+        }
+    }
+    return arr;
+}</code></pre>
+<h5 id="选择排序"><a href="#选择排序" class="headerlink" title="选择排序"></a>选择排序</h5><pre><code class="js">//选择排序
+function selectionSort(arr){
+    for (var i = 0; i &lt; arr.length - 1; i++) {
+        var index = i;
+        for (var j = i + 1; j &lt; arr.length; j++) {
+            if (arr[j] &lt; arr[index]) {
+                index = j;
+            }
+        }
+        swap(arr,i,index);
+    }
+    return arr;
+}</code></pre>
+<h5 id="插入排序"><a href="#插入排序" class="headerlink" title="插入排序"></a>插入排序</h5><pre><code class="js">//插入排序
+function insertionSort(arr){
+    for (var i = 1; i &lt; arr.length; i++) {
+        var temp = arr[i];
+        var j = i;
+        while(j &gt; 0 &amp;&amp; arr[j - 1] &gt; temp){
+            swap(arr,j,j-1);
+            j--;
+        }
+    }
+    return arr;
+}</code></pre>
+<h5 id="希尔排序"><a href="#希尔排序" class="headerlink" title="希尔排序"></a>希尔排序</h5><pre><code class="js">//希尔排序
+function shellSort(arr){
+    var interval = Math.floor(arr.length/2);
+    while(interval &gt; 0){
+        for (var i = 0; i &lt; interval; i++) {
+            for (var j = i + interval; j &lt; arr.length; j = j + interval) {
+                var temp = arr[j];
+                var index = j;
+                while(index &gt; 0 &amp;&amp; arr[index - interval] &gt; temp){
+                    swap(arr,index,index - interval);
+                    index = index - interval;
+                }
+            }
+        }
+        if (interval == 1) {
+            return arr;
+        }
+        interval = Math.floor(interval/3) + 1;
+    }
+    return arr;
+}</code></pre>
+<h5 id="归并排序"><a href="#归并排序" class="headerlink" title="归并排序"></a>归并排序</h5><pre><code class="js">//归并排序
+
+function mergeSort(arr){
+    if (arr.length &lt; 2) {return;}
+    var step = 1;
+    var left,right;
+    while(step &lt; arr.length){
+        left = 0;
+        right = step;
+        while(right + step &lt;= arr.length) {
+            mergeArr(arr,left,left+step,right,right+step);
+            left = right + step;
+            right = left + step;
+        }
+        if (right &lt; arr.length) {
+            mergeArr(arr,left,left+step,right,arr.length)
+        }
+        step *= 2;
+    }
+    return arr;
+}
+
+function mergeArr(arr, startLeft, stopLeft, startRight, stopRight){
+    var leftArr = new Array(stopLeft - startLeft + 1);
+    var rightArr = new Array(stopRight - startRight + 1);
+    var k = startLeft;
+    for (var i = 0; i &lt; leftArr.length; i++) {
+        leftArr[i] = arr[k++];
+    }
+    k = startRight;
+    for (var i = 0; i &lt; rightArr.length; i++) {
+        rightArr[i] = arr[k++];
+    }
+    rightArr[rightArr.length-1] = Infinity; // 哨兵值
+    leftArr[leftArr.length-1] = Infinity; // 哨兵值
+    var n = 0,m = 0;
+    for (var i = startLeft; i &lt; stopRight; i++) {
+        if (leftArr[m] &gt; rightArr[n]) {
+            arr[i] = rightArr[n++];
+        }else{
+            arr[i] = leftArr[m++];
+        }
+    }
+}</code></pre>
+<h5 id="快速排序"><a href="#快速排序" class="headerlink" title="快速排序"></a>快速排序</h5><pre><code class="js">//快速排序
+function qSort(list) {
+    if (list.length == 0) {
+        return [];
+    }
+    var lesser = [];
+    var greater = [];
+    var pivot = list[0];
+    for (var i = 1; i &lt; list.length; i++) {
+        if (list[i] &lt; pivot) {
+            lesser.push(list[i]);
+        } else {
+            greater.push(list[i]);
+        }
+    }
+    return qSort(lesser).concat(pivot, qSort(greater));
+}
+
+//递归型
+function recurQuickSort(arr,startIndex,endIndex){
+    if (startIndex &gt;= endIndex) {return;}
+    var pivotIndex = partition(arr,startIndex,endIndex);
+    recurQuickSort(arr,startIndex,pivotIndex);
+    recurQuickSort(arr,pivotIndex + 1,endIndex);
+    return arr;
+}
+
+//非递归型
+function  quickSort(arr){
+    var stack = [];
+    var param = {
+        start:0,
+        end:arr.length - 1
+    }
+    stack.push(param);
+    while(stack.length &gt; 0){
+        var curParam = stack.pop();
+        var pivotIndex = partition(arr,curParam.start,curParam.end);
+        if (curParam.start &lt; pivotIndex) {
+            stack.push({
+                start:curParam.start,
+                end:pivotIndex
+            })
+        }
+        if (curParam.end &gt; pivotIndex) {
+            stack.push({
+                start:pivotIndex + 1,
+                end:curParam.end
+            })
+        }
+    }
+    return arr;
+}
+
+//交换左右位置
+function partition(arr,startIndex,endIndex){
+    var pivot = arr[startIndex];
+    var start = startIndex,end = endIndex;
+    while(start &lt; end){
+        while(start &lt; end){
+            if (arr[end] &lt; pivot) {
+                break;
+            }else{
+                end--;
+            }
+        }
+        while(start &lt; end){
+            if (arr[start] &gt; pivot) {
+                break;
+            }else{
+                start++;
+            }
+        }
+        swap(arr,start,end);
+    }
+    swap(arr,startIndex,start);
+    return start;
+}</code></pre>
+<h2 id="javascript-中常见的内存泄露陷阱"><a href="#javascript-中常见的内存泄露陷阱" class="headerlink" title="javascript 中常见的内存泄露陷阱"></a><a href="http://web.jobbole.com/88463/" target="_blank" rel="noopener">javascript 中常见的内存泄露陷阱</a></h2><ul>
+<li>意外的全局变量</li>
+<li>被遗漏的定时器和回调函数，回调函数中保持着外部变量的引用</li>
+<li>js对DOM 的引用，即使该DOM节点被移除，若依然保持着引用，则该DOM节点依然在内存中</li>
+<li>闭包</li>
+</ul>
+<h2 id="babel把ES6转成ES5或者ES3之类的原理"><a href="#babel把ES6转成ES5或者ES3之类的原理" class="headerlink" title="babel把ES6转成ES5或者ES3之类的原理"></a>babel把ES6转成ES5或者ES3之类的原理</h2><p>它就是个编译器，输入语言是ES6+，编译目标语言是ES5。</p>
+<ul>
+<li>解析：将代码字符串解析成抽象语法树</li>
+<li>变换：对抽象语法树进行变换操作</li>
+<li>再建：根据变换后的抽象语法树再生成代码字符串</li>
+</ul>
+<h2 id="前端工程与性能优化"><a href="#前端工程与性能优化" class="headerlink" title="前端工程与性能优化"></a>前端工程与性能优化</h2><table>
+<thead>
+<tr>
+<th>优化方向</th>
+<th>优化手段</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>请求数量</td>
+<td>合并脚本和样式表，CSS Sprites，拆分初始化负载，划分主域</td>
+</tr>
+<tr>
+<td>请求带宽</td>
+<td>开启GZip，精简JavaScript，移除重复脚本，图像优化</td>
+</tr>
+<tr>
+<td>缓存利用</td>
+<td>使用CDN，使用外部JavaScript和CSS，添加Expires头，减少DNS查找，配置ETag，使AjaX可缓存</td>
+</tr>
+<tr>
+<td>页面结构</td>
+<td>将样式表放在顶部，将脚本放在底部，尽早刷新文档的输出</td>
+</tr>
+<tr>
+<td>代码校验</td>
+<td>避免CSS表达式，避免重定向</td>
+</tr>
+</tbody></table>
+<h2 id="ES6模块与CommonJS模块的差异"><a href="#ES6模块与CommonJS模块的差异" class="headerlink" title="ES6模块与CommonJS模块的差异"></a>ES6模块与CommonJS模块的差异</h2><ul>
+<li>CommonJs 模块输出的是一个值的拷贝，ES6模块输出的是一个值的引用</li>
+<li>CommonJS 模块是运行时加载，ES6模块是编译时输出接口</li>
+<li>ES6输入的模块变量，只是一个符号链接，所以这个变量是只读的，对它进行重新赋值就会报错</li>
+</ul>
+<p>CommonJs所谓值的拷贝类似于对module.exports对象的一个浅拷贝，基本类型值无法被修改，引用类型值则依然保存着对模块的引用，类似闭包。</p>
+<p>ES6模块输出的是值的引用，指的是import的对象保存着对模块的作用域的引用，并且该作用域是可以共享的。换句话说ES6模块export唯一一个实例，被所有import的对象共享。</p>
+<h5 id="ES6-模块加载-CommonJS-模块"><a href="#ES6-模块加载-CommonJS-模块" class="headerlink" title="ES6 模块加载 CommonJS 模块"></a>ES6 模块加载 CommonJS 模块</h5><p>Node 的import命令加载 CommonJS 模块，Node 会自动将module.exports属性，当作模块的默认输出，即等同于export default xxx。</p>
+<pre><code class="js">// a.js
+module.exports = {
+  foo: &#39;hello&#39;,
+  bar: &#39;world&#39;
+};
+// 等同于
+export default {
+  foo: &#39;hello&#39;,
+  bar: &#39;world&#39;
+};</code></pre>
+<h5 id="CommonJS-模块加载-ES6-模块"><a href="#CommonJS-模块加载-ES6-模块" class="headerlink" title="CommonJS 模块加载 ES6 模块"></a>CommonJS 模块加载 ES6 模块</h5><p>CommonJS 模块加载 ES6 模块，不能使用require命令，而要使用import()函数。ES6 模块的所有输出接口，会成为输入对象的属性。</p>
+<pre><code class="js">// es.js
+export let foo = { bar:&#39;my-default&#39; };
+export { foo as bar };
+export function f() {};
+export class c {};
+
+// cjs.js
+const es_namespace = await import(&#39;./es&#39;);
+// es_namespace = {
+//   get foo() {return foo;}
+//   get bar() {return foo;}
+//   get f() {return f;}
+//   get c() {return c;}
+// }</code></pre>
+<h2 id="浅拷贝和深拷贝的问题"><a href="#浅拷贝和深拷贝的问题" class="headerlink" title="浅拷贝和深拷贝的问题"></a>浅拷贝和深拷贝的问题</h2><ul>
+<li>深拷贝和浅拷贝是只针对Object和Array这样的复杂类型的</li>
+<li>也就是说a和b指向了同一块内存，所以修改其中任意的值，另一个值都会随之变化，这就是浅拷贝</li>
+<li>浅拷贝， ”Object.assign() 方法用于将所有可枚举的属性的值从一个或多个源对象复制到目标对象。它将返回目标对象</li>
+<li>深拷贝，JSON.parse()和JSON.stringify()给了我们一个基本的解决办法。但是函数不能被正确处理</li>
+</ul>
+<h2 id="函数柯里化"><a href="#函数柯里化" class="headerlink" title="函数柯里化"></a>函数柯里化</h2><pre><code class="js">function curry(fn){
+    var args = Array.prototype.slice.call(arguments, 1);
+    return function(){
+        var innerArgs = Array.prototype.slice.call(arguments);
+        var finalArgs = args.concat(innerArgs);
+        return fn.apply(null, finalArgs);
+    };
+}</code></pre>
+<h2 id="原生Ajax书写"><a href="#原生Ajax书写" class="headerlink" title="原生Ajax书写"></a>原生Ajax书写</h2><pre><code class="js">function createXHR(){
+    if (typeof XMLHttpRequest != &quot;undefined&quot;){
+        return new XMLHttpRequest();
+    } else if (typeof ActiveXObject != &quot;undefined&quot;){
+        var versions = [ &quot;MSXML2.XMLHttp.6.0&quot;, &quot;MSXML2.XMLHttp.3.0&quot;, &quot;MSXML2.XMLHttp&quot;],
+        i, len,xml;
+        for (i=0,len=versions.length; i &lt; len; i++){
+            try {
+                xml = new ActiveXObject(versions[i]);
+                break;
+            } catch (ex){//跳过
+            }
+        }
+        return xml;
+    } else {
+        throw new Error(&quot;No XHR object available.&quot;);
+    }
+}
+var xhr = createXHR();
+xhr.onreadystatechange = function(){
+    // 通信成功时，状态值为4
+    if (xhr.readyState === 4){
+          if (xhr.status === 200){
+              console.log(xhr.responseText);
+          } else {
+              console.error(xhr.statusText);
+          }
+    }
+};
+xhr.onerror = function (e) {
+    console.error(xhr.statusText);
+};
+xhr.open(&#39;GET&#39;, &#39;/endpoint&#39;, true);
+xhr.send(null);</code></pre>
+<h2 id="ES5继承与Class继承的区别"><a href="#ES5继承与Class继承的区别" class="headerlink" title="ES5继承与Class继承的区别"></a>ES5继承与Class继承的区别</h2><p>ES5 的继承，实质是先创造子类的实例对象this，然后再将父类的方法添加到this上面（Parent.apply(this)）。</p>
+<p>ES6 的继承机制完全不同，实质是先将父类实例对象的属性和方法，加到this上面（所以必须先调用super方法），然后再用子类的构造函数修改this。</p>
+<p>如果子类没有定义constructor方法，这个方法会被默认添加。也就是说，不管有没有显式定义，任何一个子类都有constructor方法。</p>
+
+            <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
+            <audio id="audio" loop="1" preload="auto" controls="controls"
+                data-autoplay="false">
+                <source type="audio/mpeg" src="">
+            </audio>
+            
+            <ul id="audio-list" style="display:none">
+                
+                
+                <li title='0' data-url='/statics/chengdu.mp3'></li>
+                
+                    
+            </ul>
+            
+            
+            
+    <div id='gitalk-container' class="comment link"
+        data-ae='true'
+        data-ci='ad0ec68ac6b80ef0adbd'
+        data-cs='bcf8895a95f3e128f12210a56df3cedd7d09a17d'
+        data-r='coderhaotf.github.io'
+        data-o='coderhaotf'
+        data-a='coderhaotf'
+        data-d=''
+    >Comments</div>
+
+
+            
+            
+        </div>
+        <div class="sidebar">
+            <div class="box animated fadeInRight">
+                <div class="subbox">
+                    <img src="https://res.cloudinary.com/tridiamond/image/upload/v1573019751/TriDiamond_logo_ui_xeublz.jpg" height=300 width=300></img>
+                    <p>haotf</p>
+                    <span>Think like an artist, develop like an artisan</span>
+                    <dl>
+                        <dd><a href="https://github.com/coderhaotf" target="_blank"><span
+                                    class=" iconfont icon-github"></span></a></dd>
+                        <dd><a href="https://twitter.com/" target="_blank"><span
+                                    class=" iconfont icon-twitter"></span></a></dd>
+                        <dd><a href="https://stackoverflow.com/" target="_blank"><span
+                                    class=" iconfont icon-stack-overflow"></span></a></dd>
+                    </dl>
+                </div>
+                <ul>
+                    <li><a href="/">31 <p>Articles</p></a></li>
+                    <li><a href="/categories">0 <p>Categories</p></a></li>
+                    <li><a href="/tags">0 <p>Tags</p></a></li>
+                </ul>
+            </div>
+            
+            
+            
+            <div class="box sticky animated fadeInRight faster">
+                <div id="toc" class="subbox">
+                    <h4>Contents</h4>
+                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#对象的属性"><span class="toc-number">1.</span> <span class="toc-text">对象的属性</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#事件委托"><span class="toc-number">2.</span> <span class="toc-text">事件委托</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#图片预加载与懒加载"><span class="toc-number">3.</span> <span class="toc-text">图片预加载与懒加载</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#mouseover和mouseenter的区别"><span class="toc-number">4.</span> <span class="toc-text">mouseover和mouseenter的区别</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#闭包"><span class="toc-number">5.</span> <span class="toc-text">闭包</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#new-命令的原理"><span class="toc-number">6.</span> <span class="toc-text">new 命令的原理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#call-、-apply-、bind-的实现"><span class="toc-number">7.</span> <span class="toc-text">call 、 apply 、bind 的实现</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#异步加载js的方法"><span class="toc-number">8.</span> <span class="toc-text">异步加载js的方法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Ajax解决浏览器的缓存问题"><span class="toc-number">9.</span> <span class="toc-text">Ajax解决浏览器的缓存问题</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#防抖与节流"><span class="toc-number">10.</span> <span class="toc-text">防抖与节流</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#js监听对象属性的改变"><span class="toc-number">11.</span> <span class="toc-text">js监听对象属性的改变</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Object-is"><span class="toc-number">12.</span> <span class="toc-text">Object.is</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#requestAnimationFrame-与-cancelAnimationFrame"><span class="toc-number">13.</span> <span class="toc-text">requestAnimationFrame 与 cancelAnimationFrame</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#用-setTimeout-模拟-setInterval"><span class="toc-number">14.</span> <span class="toc-text">用 setTimeout 模拟 setInterval</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#任务队列"><span class="toc-number">15.</span> <span class="toc-text">任务队列</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#数组去重"><span class="toc-number">16.</span> <span class="toc-text">数组去重</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#排序算法"><span class="toc-number">17.</span> <span class="toc-text">排序算法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#javascript-中常见的内存泄露陷阱"><span class="toc-number">18.</span> <span class="toc-text">javascript 中常见的内存泄露陷阱</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#babel把ES6转成ES5或者ES3之类的原理"><span class="toc-number">19.</span> <span class="toc-text">babel把ES6转成ES5或者ES3之类的原理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#前端工程与性能优化"><span class="toc-number">20.</span> <span class="toc-text">前端工程与性能优化</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ES6模块与CommonJS模块的差异"><span class="toc-number">21.</span> <span class="toc-text">ES6模块与CommonJS模块的差异</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#浅拷贝和深拷贝的问题"><span class="toc-number">22.</span> <span class="toc-text">浅拷贝和深拷贝的问题</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#函数柯里化"><span class="toc-number">23.</span> <span class="toc-text">函数柯里化</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#原生Ajax书写"><span class="toc-number">24.</span> <span class="toc-text">原生Ajax书写</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ES5继承与Class继承的区别"><span class="toc-number">25.</span> <span class="toc-text">ES5继承与Class继承的区别</span></a></li></ol>
+                </div>
+            </div>
+            
+            
+        </div>
+    </div>
+</div>
+
+    </div>
+</div>
+    <div id="back-to-top" class="animated fadeIn faster">
+        <div class="flow"></div>
+        <span class="percentage animated fadeIn faster">0%</span>
+        <span class="iconfont icon-top02 animated fadeIn faster"></span>
+    </div>
+</body>
+<footer>
+    <p class="copyright" id="copyright">
+        &copy; 2020
+        <span class="gradient-text">
+            haotf
+        </span>.
+        Designed && Powerd  by <a href="http://hexo.io/" title="Hexo" target="_blank" rel="noopener">Hexo</a>
+        <p>Copyright© 2018 早起不吃虫的博客 粤ICP备18104892号</p>
+        <!-- Theme
+        <span class="gradient-text">
+            <a href="https://github.com/TriDiamond/hexo-theme-obsidian" title="Obsidian" target="_blank" rel="noopener">Obsidian</a>
+        </span>
+        <small><a href="https://github.com/TriDiamond/hexo-theme-obsidian/blob/master/CHANGELOG.md" title="v1.4.3" target="_blank" rel="noopener">v1.4.3</a></small> -->
+    </p>
+</footer>
+
+<script type="text/javascript" src="https://cdn.bootcss.com/mathjax/2.7.6/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<script>
+  MathJax.Hub.Config({
+    "HTML-CSS": {
+      preferredFont: "TeX",
+      availableFonts: ["STIX", "TeX"],
+      linebreaks: {
+        automatic: true
+      },
+      EqnChunk: (MathJax.Hub.Browser.isMobile ? 10 : 50)
+    },
+    tex2jax: {
+      inlineMath: [
+        ["$", "$"],
+        ["\\(", "\\)"]
+      ],
+      processEscapes: true,
+      ignoreClass: "tex2jax_ignore|dno",
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    TeX: {
+      noUndefined: {
+        attributes: {
+          mathcolor: "red",
+          mathbackground: "#FFEEEE",
+          mathsize: "90%"
+        }
+      },
+      Macros: {
+        href: "{}"
+      }
+    },
+    messageStyle: "none"
+  });
+</script>
+<script>
+  function initialMathJax() {
+    MathJax.Hub.Queue(function () {
+      var all = MathJax.Hub.getAllJax(),
+        i;
+      // console.log(all);
+      for (i = 0; i < all.length; i += 1) {
+        console.log(all[i].SourceElement().parentNode)
+        all[i].SourceElement().parentNode.className += ' has-jax';
+      }
+    });
+  }
+
+  function reprocessMathJax() {
+    if (typeof MathJax !== 'undefined') {
+      MathJax.Hub.Queue(["Typeset", MathJax.Hub]);
+    }
+  }
+</script>
+
+
+
+    
+<link rel="stylesheet" href="//cdn.bootcss.com/gitalk/1.5.0/gitalk.min.css">
+
+    
+<script src="//cdn.bootcss.com/gitalk/1.5.0/gitalk.min.js"></script>
+
+
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="/js/plugin.js"></script>
+<script src="/js/obsidian.js"></script>
+<script src="/js/jquery.truncate.js"></script>
+<script src="/js/search.js"></script>
+
+
+<script src="//cdn.bootcss.com/typed.js/2.0.10/typed.min.js"></script>
+
+
+<script src="//cdn.bootcss.com/blueimp-md5/2.12.0/js/md5.min.js"></script>
+
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/social-share.js/1.0.16/js/social-share.min.js"></script>
+
+
+<script src="https://cdn.bootcss.com/codemirror/5.48.4/codemirror.min.js"></script>
+
+    
+<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/javascript/javascript.min.js"></script>
+
+
+    
+<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/css/css.min.js"></script>
+
+
+    
+<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/xml/xml.min.js"></script>
+
+
+    
+<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/htmlmixed/htmlmixed.min.js"></script>
+
+
+    
+<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/clike/clike.min.js"></script>
+
+
+    
+<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/php/php.min.js"></script>
+
+
+    
+<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/shell/shell.min.js"></script>
+
+
+    
+<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/python/python.min.js"></script>
+
+
+
+
+    
+<script src="/js/busuanzi.min.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            if ($('span[id^="busuanzi_"]').length) {
+                initialBusuanzi();
+            }
+        });
+    </script>
+
+
+
+<link rel="stylesheet" href="//cdn.bootcss.com/photoswipe/4.1.3/photoswipe.min.css">
+<link rel="stylesheet" href="//cdn.bootcss.com/photoswipe/4.1.3/default-skin/default-skin.min.css">
+
+
+<script src="//cdn.bootcss.com/photoswipe/4.1.3/photoswipe.min.js"></script>
+<script src="//cdn.bootcss.com/photoswipe/4.1.3/photoswipe-ui-default.min.js"></script>
+
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+            <div class="pswp__top-bar">
+                <!--  Controls are self-explanatory. Order can be changed. -->
+                <div class="pswp__counter"></div>
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                      <div class="pswp__preloader__cut">
+                        <div class="pswp__preloader__donut"></div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div> 
+            </div>
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="//www.googletagmanager.com/gtag/js?id=UA-149874671-1"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', 'UA-149874671-1');
+    </script>
+
+
+
+
+
+<script>
+    function initialTyped () {
+        var typedTextEl = $('.typed-text');
+        if (typedTextEl && typedTextEl.length > 0) {
+            var typed = new Typed('.typed-text', {
+                strings: ["Think like an artist, develop like an artisan", "艺术家思维去思考问题，工匠创造精神去开发"],
+                typeSpeed: 90,
+                loop: true,
+                loopCount: Infinity,
+                backSpeed: 20,
+            });
+        }
+    }
+
+    if ($('.article-header') && $('.article-header').length) {
+        $(document).ready(function () {
+            initialTyped();
+        });
+    }
+</script>
+
+
+
+
+</html>

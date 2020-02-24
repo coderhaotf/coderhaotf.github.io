@@ -1,0 +1,626 @@
+
+<!DOCTYPE html>
+<html lang="en" class="loading">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>大话西游之原型与继承-上 - 早起不吃虫</title>
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="google" content="notranslate" />
+    <meta name="keywords" content="coderhaotf,"> 
+    <meta name="description" content="前言今天心血来潮，随手翻了翻红宝书，突然发现其中有个面向对象的章节（时隔久远，目录记不清了），于是一鼓作气，花了几个小时细细重读一遍，深感收获匪浅，之前一直无法理解的地方也觉得通透了很多。深怕时间一,"> 
+    <meta name="author" content="haotf"> 
+    <link rel="alternative" href="atom.xml" title="早起不吃虫" type="application/atom+xml"> 
+    <link rel="icon" href="/img/favicon.png"> 
+    <link href="https://fonts.loli.net/css?family=Roboto+Mono|Rubik&display=swap" rel="stylesheet">
+    
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1429596_nzgqgvnmkjb.css">
+
+    
+<link rel="stylesheet" href="//cdn.bootcss.com/animate.css/3.7.2/animate.min.css">
+
+    
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/social-share.js/1.0.16/css/share.min.css">
+
+    
+<link rel="stylesheet" href="//cdn.bootcss.com/codemirror/5.48.4/codemirror.min.css">
+
+    
+<link rel="stylesheet" href="//cdn.bootcss.com/codemirror/5.48.4/theme/dracula.css">
+
+    
+<link rel="stylesheet" href="/css/obsidian.css">
+
+    
+<link rel="stylesheet" href="/css/ball-atom.min.css">
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+
+<body class="loading">
+    <div class="loader">
+        <div class="la-ball-atom la-2x">
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+    </div>
+    <span id="config-title" style="display:none">早起不吃虫</span>
+    <div id="loader"></div>
+    <div id="single">
+    <div class="scrollbar gradient-bg-rev"></div>
+<div id="top" style="display: block;">
+    <div class="bar" style="width: 0;"></div>
+    <div class="navigation animated fadeIn fast delay-1s">
+        <img id="home-icon" class="icon-home" src="/img/favicon.png" alt="" data-url="https://coderhaotf.github.io">
+        <div id="play-icon" title="Play/Pause" class="iconfont icon-play"></div>
+        <h3 class="subtitle">大话西游之原型与继承-上</h3>
+        <div class="social">
+            <!--        <div class="like-icon">-->
+            <!--            <a href="javascript:;" class="likeThis active"><span class="icon-like"></span><span class="count">76</span></a>-->
+            <!--        </div>-->
+            <div>
+                <div class="share">
+                    
+                        <a href="javascript:;" class="iconfont icon-share1"></a>
+                        <div class="share-component-cc" data-disabled="facebook,douban,linkedin,diandian,tencent,google"></div>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+    <div class="section">
+        <div class=article-header-wrapper>
+    <div class="article-header">
+        <div class="article-cover animated fadeIn" style="
+            animation-delay: 600ms;
+            animation-duration: 1.2s;
+            background-image: 
+                radial-gradient(ellipse closest-side, rgba(0, 0, 0, 0.65), #100e17),
+                url(/img/cover.jpg);">
+        </div>
+        <div class="else">
+            <p class="animated fadeInDown">
+                
+                <a href="javascript:;"><b>「 </b>Article<b> 」</b></a>
+                
+                January 28, 2020
+            </p>
+            <h3 class="post-title animated fadeInDown"><a href="/article/2020/01/28/%E5%A4%A7%E8%AF%9D%E8%A5%BF%E6%B8%B8%E4%B9%8B%E5%8E%9F%E5%9E%8B%E4%B8%8E%E7%BB%A7%E6%89%BF-%E4%B8%8A.html" title="大话西游之原型与继承-上" class="">大话西游之原型与继承-上</a>
+            </h3>
+            
+            <p class="post-count animated fadeInDown">
+                
+                <span>
+                    <b class="iconfont icon-text2"></b> <i>Words count</i>
+                    7.9k
+                </span>
+                
+                
+                <span>
+                    <b class="iconfont icon-timer__s"></b> <i>Reading time</i>
+                    7 mins.
+                </span>
+                
+                
+                
+                <span id="busuanzi_container_page_pv">
+                    <b class="iconfont icon-read"></b> <i>Read count</i>
+                    <span id="busuanzi_value_page_pv">0</span>
+                </span>
+                
+            </p>
+            
+            
+        </div>
+    </div>
+</div>
+
+<div class="screen-gradient-after">
+    <div class="screen-gradient-content">
+        <div class="screen-gradient-content-inside">
+            <div class="bold-underline-links screen-gradient-sponsor">
+                <p>
+                    <span class="animated fadeIn delay-1s"></span>
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="article">
+    <div class='main'>
+        <div class="content markdown animated fadeIn">
+            <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>今天心血来潮，随手翻了翻红宝书，突然发现其中有个面向对象的章节（时隔久远，目录记不清了），于是一鼓作气，花了几个小时细细重读一遍，深感收获匪浅，之前一直无法理解的地方也觉得通透了很多。深怕时间一长，复蹈前辙，故有此篇。</p>
+<h2 id="如何继承？"><a href="#如何继承？" class="headerlink" title="如何继承？"></a>如何继承？</h2><p>这么弱智的问题，提问的我也觉得耳根有些发烫。不过很多时候，我们对一种事物的认识，就是在这一个个这样看似简单的问题中逐渐深化的。</p>
+<p>而且相信你也有这样的感觉，越是简单的问题，越是感觉难以回答。</p>
+<p>好了，我之所以提出这个问题，只是为了提提神，毕竟疑问句更能引起大伙兴趣而已（打人别打脸！）</p>
+<p>我们只需记住一点，ECMAScript 的继承主要是依靠原型链来实现的（我也不知道为啥要加上主要两字，难道还有别的方式不成？）。</p>
+<h2 id="原型链"><a href="#原型链" class="headerlink" title="原型链"></a>原型链</h2><p>啥是原型链？（老毛病又发了）</p>
+<p>在JavaScript中，万物皆对象。有没有人进一步想过，既然皆对象，有没有啥共同点？</p>
+<p>猫狗鸟树叶花有没有共同点？当然有啦，小学生都知道它们都是原子组成了（现在小学生很厉害了）</p>
+<p>作为努力超越上帝的人类创造的JavaScript，如果它的子民互相没有共同点，你敢信吗？</p>
+<pre><code class="js">(&quot;hello&quot;). __proto__ ; //String {&quot;&quot;, length: 0, constructor: ƒ,  …}
+(1). __proto__ ; //Number {0, constructor: ƒ, toExponential: ƒ,  …}
+[]. __proto__ ; // [constructor: ƒ, concat: ƒ, find: ƒ, …]
+(Math). __proto__ ; //{constructor: ƒ, __defineGetter__: ƒ, …}</code></pre>
+<p>显而易见，无论引用类型还是基本类型（先转内置对象），都能访问到一个 <code>__proto__</code> 属性。</p>
+<p>这是何方神圣呢？接下来的一段描述非常重要：</p>
+<pre><code class="js">
+万物皆对象 - - &gt; 对象皆有 `__proto__` - - &gt; `__proto__` 指向原型 - - &gt; 原型也是对象 - -&gt; Object原型的原型是null 。
+</code></pre>
+<p>请各位小伙伴把这段描述多看几遍，细细体会（大佬略过）。</p>
+<p>这段描述最重要的一个作用，就是教会我们要用宏观的视角来看JavaScript的原型链。</p>
+<p>在JavaScript中，每一个对象的背后，都有一个 <code>__proto__</code> 的属性牵引，互相关联，层层递进，直到原型链的终点 - - <code>null</code>。</p>
+<p>对终点有疑问的小伙伴可以看下面代码：</p>
+<pre><code class="js">Object.prototype.__proto__ === null; //true</code></pre>
+<p><code>Object.prototype</code> 是Object构造函数的原型，原型也是对象，对象就有 <code>__proto__</code> , 结果指向了 <code>null</code> ！</p>
+<p>没错，原型链其实就是一张树状的网，它的顶点就是null。</p>
+<h2 id="原型（prototype）与-ptoto-与-constructor"><a href="#原型（prototype）与-ptoto-与-constructor" class="headerlink" title="原型（prototype）与 __ptoto__ 与 constructor"></a>原型（prototype）与 <code>__ptoto__</code> 与 constructor</h2><p>学习原型的小伙伴，总会被这三个东西搞的七荤八素，即使暂时搞懂了，过几天又忘得一干二净了（本人深受其害）。</p>
+<h5 id="虚心问道"><a href="#虚心问道" class="headerlink" title="虚心问道"></a>虚心问道</h5><p>这次我们索性就不管那些教科书式的定义了，先来一番头脑风暴吧！</p>
+<p>“你觉得什么是js的核心？” 问题有点笼统，换个说法，</p>
+<p>“在目前阶段，你觉得如果能搞懂什么知识点，你就敢说掌握了js？”</p>
+<p>好吧，问题还是不够清晰，因为答案可能太多，看终极问题：</p>
+<p>“道生一，一生二，二生三，三生万物。什么是JavaScript中的道？”</p>
+<p>小伙伴情绪有点高涨，“对象？”，“函数？”，“null?”，”原型？”。。。。</p>
+<p>好吧，虽然答案很多，但是当我反问一句为什么时，空气突然安静了。</p>
+<h5 id="大话胡扯"><a href="#大话胡扯" class="headerlink" title="大话胡扯"></a>大话胡扯</h5><p>我个人理解，构造函数。</p>
+<p>记住，不是函数，是构造函数。（虽然每个函数都可以变成构造函数，详见<a href="http://codedoges.com/article/1535898754108" target="_blank" rel="noopener">疯狂的链式调用</a>）</p>
+<p>我们看看JavaScript给了我们什么构造函数：</p>
+<pre><code class="js">String;
+Boolean;
+Number;
+Object;
+Array;
+RegExp;
+Date;
+Map;
+Set;
+Symbol;</code></pre>
+<p>没错，内置的构造函数就这些了。</p>
+<p>有的小伙伴就急了，这么多，让我怎么学啊！！</p>
+<p>别急，听我一句劝，一个都不用学。</p>
+<p>“真的假的？吹牛逼！”</p>
+<p>“你唯一要做的，是搞懂什么是构造函数！”（重点重点重点！！！）</p>
+<h5 id="什么是构造函数"><a href="#什么是构造函数" class="headerlink" title="什么是构造函数"></a>什么是构造函数</h5><p>这是十万个为什么专场么？（保证是最后一个为什么了！）</p>
+<p>构造函数，顾名思义，就是专门用来构造的函数。构造什么呢？一切。（重点重点重点！！！）</p>
+<ul>
+<li>碰到数字，找Number构造函数；</li>
+<li>碰到对象，找Object构造函数；</li>
+<li>碰到数组，找Array构造函数；</li>
+<li>碰到正则，找RegExp构造函数；。。。。</li>
+</ul>
+<p>为什么要找构造函数？（好吧，又一个为什么）</p>
+<p>因为每个构造函数上面都有一个原型 <code>prototype</code> 。它里面包含了<strong>被构造者</strong>所有能用的方法跟属性。</p>
+<p>啥是被构造者（一般也叫实例）？</p>
+<p>好啦，请回看一开始那句话：<strong>构造函数，构造一切！</strong></p>
+<p>所以，你js中的每一个对象，字符串，数组，。。。都是被构造者。</p>
+<p>那有些小伙伴疑问了，那构造函数也是被构造者？</p>
+<p>没错，只不过是被原型链上的更高一层构造而已。</p>
+<pre><code class="js">[] instanceof Array;//true
+Array instanceof Function; //true
+Function instanceof Object;//true</code></pre>
+<p>显而易见，<code>Object</code> 是终极的构造函数，它构造出了内置的构造函数，再由内置构造函数，构造出我们js代码中的所有对象，正所谓构造一切！</p>
+<h5 id="连接一切"><a href="#连接一切" class="headerlink" title="连接一切"></a>连接一切</h5><p>到这里，大伙已经了解了构造函数构造一切的磅礴气势，现在还剩下一个问题，构造完了之后，难道就撒手不管了么？</p>
+<p>当然不是，构造函数肩负道的重任，提起裤子不认人的事情是不可能的！</p>
+<p>构造函数在构造一切的同时，也默默连接了一切。</p>
+<p>如何连接？其实上面已经讲过了，<code>__proto__</code> 与 <code>prototype</code> 肩负此重任。</p>
+<p>请记住下面公式：</p>
+<pre><code class="js">(&#39;被构造者&#39;).__proto__  ===  (&#39;构造者&#39;).prototype</code></pre>
+<p>验证：</p>
+<pre><code class="js">(&#39;hello&#39;).__proto__ === String.prototype ;//true
+String.__proto__ === Function.prototype; //true
+//高能！！！
+Function.__proto__ === Function.prototype;//true
+Function.prototype.__proto__ === Object.prototype;//true</code></pre>
+<p>上面有两个极其重要的知识点！！！</p>
+<ul>
+<li><code>Function</code> 构造函数是由 <code>Function</code> 构造的！！！</li>
+<li><code>Function.prototype</code> 是对象，所以自然而然是由 <code>Object</code> 构造的。</li>
+</ul>
+<h2 id="如何找原型"><a href="#如何找原型" class="headerlink" title="如何找原型"></a>如何找原型</h2><p>根据小伙伴们的反馈，之前的阐述确实还有所不足，特补加一段。</p>
+<h5 id="费解之处"><a href="#费解之处" class="headerlink" title="费解之处"></a>费解之处</h5><p>前面说过, Object原型的原型是null,小伙伴们就蒙蔽了，你不是说原型是对象么，如果按照你上面的公式，对象的原型应该是指向对象的构造函数的原型呀？如下：</p>
+<pre><code class="js">Object.prototype.__proto__ === null; //true
+//Object.prototype是对象，怎么不是指向构造器Object.prototype ?
+Object.prototype.__proto__ === Object.prototype; //false 蒙蔽！</code></pre>
+<h5 id="被谁构造？"><a href="#被谁构造？" class="headerlink" title="被谁构造？"></a>被谁构造？</h5><p>寻找原型的法则，其实还是看上面的公式：</p>
+<pre><code class="js">(&#39;被构造者&#39;).__proto__  ===  (&#39;构造者&#39;).prototype</code></pre>
+<p>这里很多人会走入一个误区，就是以为<code>Object</code>既然是最大的boss，正所谓普天之下，莫非王土；率土之滨，莫非王臣，就把上面的这个公式自作主张改成了下面的：</p>
+<pre><code class="js">(&#39;被构造者&#39;).__proto__  ===  (Object).prototype;//Object 构造一切！
+//结果被打脸
+[].__proto__ === (Object).prototype; //false
+(&#39;hello&#39;).__proto__ === (Object).prototype; //false</code></pre>
+<p>好吧，追根溯源，锅还是我背，毕竟还是因为我没有讲清楚，其实上面的公式，实质是这样的：</p>
+<pre><code class="js">(&#39;被构造者&#39;).__proto__  ===  (&#39;直接构造者&#39;).prototype</code></pre>
+<p>没错，就是只需加上两个字。小伙伴们气歪了，我们的大boss呢，说好的构造一切呢！</p>
+<p>说句实在话，你见过事必躬亲的大boss么？你见过亲自种粮食的帝王么？没看到马云爸爸都准备退休了么？真正的大boss，都是托管的好吧！</p>
+<pre><code class="js">function A(){};
+var a = new A();
+//a是由A构造
+a.__proto__ === A.prototype; //true
+//声明A时，内置的Function构造函数默默帮你构造了
+A.__proto__ === Function.prototype;//true
+//Function这哥们是自己构造了自己，没办法，谁让自己的工作就是来生成函数呢，难道自己是面包师，就不能吃面包了？
+Function.__proto__ === Function.prototype; //true</code></pre>
+<p>小伙伴还是有点蒙，那怎么才能接触到大boss <code>Object</code> 呢？</p>
+<p>让我们重新回味一个词，<strong>原型链</strong>。</p>
+<p>我们都知道了，构造函数，构造一切。但是很不幸，这句话其实就是约等于， “劳动者最光荣”。真正的掌权者，还是原型链啊。</p>
+<pre><code class="js">function A(){};
+//A.prototype是Object构造的对象，直达权力最高层
+A.prototype.__proto__ === Object.prototype;//true
+//{}是Object构造的对象，直达权力最高层
+({}).__proto__ === Object.prototype;//true
+//已经到最高层，空虚寂寞冷
+Object.prototype.__proto__ === null;//true</code></pre>
+<p>所以说，大boss即使是托管，但是还是抓主线，抓战略方向的。</p>
+<h5 id="延伸权力机构"><a href="#延伸权力机构" class="headerlink" title="延伸权力机构"></a>延伸权力机构</h5><p>从上面可以看出，目前权力机构显然不够庞大，力量有所不足。这时候，直通高层的A就开始发展自己的势力了。</p>
+<pre><code class="js">function A(){}
+//直通高层
+console.log(A.prototype.__proto__ === Object.prototype);//true
+//原型是权力所在
+A.prototype.sayName = function(){
+    console.log(&#39;我是大佬A&#39;)
+}
+//构造一个，才能继承权力
+var a = new A();
+function B(){}
+//无依无靠的B（其实也是直通高层，只是目光短浅，只想找A做靠山）
+console.log(B.prototype.__proto__ === Object.prototype);//true
+//找到靠山了，a的权力就是B的权力了
+B.prototype = a;
+//投靠之后不能直通高层了
+console.log(B.prototype.__proto__ === A.prototype); //true
+//构造一个，继承权力
+var b = new B();
+//可以狐假虎威了
+b.sayName(); //我是大佬A</code></pre>
+<h5 id="当代吕奉先"><a href="#当代吕奉先" class="headerlink" title="当代吕奉先"></a>当代吕奉先</h5><p>上面栗子说了，B本来有直通高层的机会，却选择了投靠直通高层的A；那是不是意味着B从此就忠心耿耿了呢？</p>
+<p>当然不是，B连高层都可以舍弃，更何况小小的A了。</p>
+<pre><code class="js">function A(){}
+A.prototype.sayName = function(){
+    console.log(&#39;我是大佬A&#39;)
+}
+var a = new A();
+function C(){}
+C.prototype.sayName = function(){
+    console.log(&#39;我是大佬C&#39;)
+}
+var c = new C();
+function B(){}
+
+//投靠A
+B.prototype = a;
+var b1 = new B();
+//可以狐假虎威了
+b1.sayName(); //我是大佬A
+
+//投靠C
+B.prototype = c;
+var b2 = new B();
+//可以狐假虎威了
+b2.sayName(); //我是大佬C</code></pre>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>说来可能大伙不信，在写本篇开始，解释原型本不在计划只能，是想写继承的几种方式的，结果越写越觉得很有必要，一不留神就写了这么多了，所以这篇暂定为上篇吧，下篇写继承。</p>
+
+            <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
+            <audio id="audio" loop="1" preload="auto" controls="controls"
+                data-autoplay="false">
+                <source type="audio/mpeg" src="">
+            </audio>
+            
+            <ul id="audio-list" style="display:none">
+                
+                
+                <li title='0' data-url='/statics/chengdu.mp3'></li>
+                
+                    
+            </ul>
+            
+            
+            
+    <div id='gitalk-container' class="comment link"
+        data-ae='true'
+        data-ci='ad0ec68ac6b80ef0adbd'
+        data-cs='bcf8895a95f3e128f12210a56df3cedd7d09a17d'
+        data-r='coderhaotf.github.io'
+        data-o='coderhaotf'
+        data-a='coderhaotf'
+        data-d=''
+    >Comments</div>
+
+
+            
+            
+        </div>
+        <div class="sidebar">
+            <div class="box animated fadeInRight">
+                <div class="subbox">
+                    <img src="https://res.cloudinary.com/tridiamond/image/upload/v1573019751/TriDiamond_logo_ui_xeublz.jpg" height=300 width=300></img>
+                    <p>haotf</p>
+                    <span>Think like an artist, develop like an artisan</span>
+                    <dl>
+                        <dd><a href="https://github.com/coderhaotf" target="_blank"><span
+                                    class=" iconfont icon-github"></span></a></dd>
+                        <dd><a href="https://twitter.com/" target="_blank"><span
+                                    class=" iconfont icon-twitter"></span></a></dd>
+                        <dd><a href="https://stackoverflow.com/" target="_blank"><span
+                                    class=" iconfont icon-stack-overflow"></span></a></dd>
+                    </dl>
+                </div>
+                <ul>
+                    <li><a href="/">31 <p>Articles</p></a></li>
+                    <li><a href="/categories">0 <p>Categories</p></a></li>
+                    <li><a href="/tags">0 <p>Tags</p></a></li>
+                </ul>
+            </div>
+            
+            
+            
+            <div class="box sticky animated fadeInRight faster">
+                <div id="toc" class="subbox">
+                    <h4>Contents</h4>
+                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#前言"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#如何继承？"><span class="toc-number">2.</span> <span class="toc-text">如何继承？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#原型链"><span class="toc-number">3.</span> <span class="toc-text">原型链</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#原型（prototype）与-ptoto-与-constructor"><span class="toc-number">4.</span> <span class="toc-text">原型（prototype）与 __ptoto__ 与 constructor</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#如何找原型"><span class="toc-number">5.</span> <span class="toc-text">如何找原型</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#总结"><span class="toc-number">6.</span> <span class="toc-text">总结</span></a></li></ol>
+                </div>
+            </div>
+            
+            
+        </div>
+    </div>
+</div>
+
+    </div>
+</div>
+    <div id="back-to-top" class="animated fadeIn faster">
+        <div class="flow"></div>
+        <span class="percentage animated fadeIn faster">0%</span>
+        <span class="iconfont icon-top02 animated fadeIn faster"></span>
+    </div>
+</body>
+<footer>
+    <p class="copyright" id="copyright">
+        &copy; 2020
+        <span class="gradient-text">
+            haotf
+        </span>.
+        Designed && Powerd  by <a href="http://hexo.io/" title="Hexo" target="_blank" rel="noopener">Hexo</a>
+        <p>Copyright© 2018 早起不吃虫的博客 粤ICP备18104892号</p>
+        <!-- Theme
+        <span class="gradient-text">
+            <a href="https://github.com/TriDiamond/hexo-theme-obsidian" title="Obsidian" target="_blank" rel="noopener">Obsidian</a>
+        </span>
+        <small><a href="https://github.com/TriDiamond/hexo-theme-obsidian/blob/master/CHANGELOG.md" title="v1.4.3" target="_blank" rel="noopener">v1.4.3</a></small> -->
+    </p>
+</footer>
+
+<script type="text/javascript" src="https://cdn.bootcss.com/mathjax/2.7.6/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<script>
+  MathJax.Hub.Config({
+    "HTML-CSS": {
+      preferredFont: "TeX",
+      availableFonts: ["STIX", "TeX"],
+      linebreaks: {
+        automatic: true
+      },
+      EqnChunk: (MathJax.Hub.Browser.isMobile ? 10 : 50)
+    },
+    tex2jax: {
+      inlineMath: [
+        ["$", "$"],
+        ["\\(", "\\)"]
+      ],
+      processEscapes: true,
+      ignoreClass: "tex2jax_ignore|dno",
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    TeX: {
+      noUndefined: {
+        attributes: {
+          mathcolor: "red",
+          mathbackground: "#FFEEEE",
+          mathsize: "90%"
+        }
+      },
+      Macros: {
+        href: "{}"
+      }
+    },
+    messageStyle: "none"
+  });
+</script>
+<script>
+  function initialMathJax() {
+    MathJax.Hub.Queue(function () {
+      var all = MathJax.Hub.getAllJax(),
+        i;
+      // console.log(all);
+      for (i = 0; i < all.length; i += 1) {
+        console.log(all[i].SourceElement().parentNode)
+        all[i].SourceElement().parentNode.className += ' has-jax';
+      }
+    });
+  }
+
+  function reprocessMathJax() {
+    if (typeof MathJax !== 'undefined') {
+      MathJax.Hub.Queue(["Typeset", MathJax.Hub]);
+    }
+  }
+</script>
+
+
+
+    
+<link rel="stylesheet" href="//cdn.bootcss.com/gitalk/1.5.0/gitalk.min.css">
+
+    
+<script src="//cdn.bootcss.com/gitalk/1.5.0/gitalk.min.js"></script>
+
+
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="/js/plugin.js"></script>
+<script src="/js/obsidian.js"></script>
+<script src="/js/jquery.truncate.js"></script>
+<script src="/js/search.js"></script>
+
+
+<script src="//cdn.bootcss.com/typed.js/2.0.10/typed.min.js"></script>
+
+
+<script src="//cdn.bootcss.com/blueimp-md5/2.12.0/js/md5.min.js"></script>
+
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/social-share.js/1.0.16/js/social-share.min.js"></script>
+
+
+<script src="https://cdn.bootcss.com/codemirror/5.48.4/codemirror.min.js"></script>
+
+    
+<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/javascript/javascript.min.js"></script>
+
+
+    
+<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/css/css.min.js"></script>
+
+
+    
+<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/xml/xml.min.js"></script>
+
+
+    
+<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/htmlmixed/htmlmixed.min.js"></script>
+
+
+    
+<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/clike/clike.min.js"></script>
+
+
+    
+<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/php/php.min.js"></script>
+
+
+    
+<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/shell/shell.min.js"></script>
+
+
+    
+<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/python/python.min.js"></script>
+
+
+
+
+    
+<script src="/js/busuanzi.min.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            if ($('span[id^="busuanzi_"]').length) {
+                initialBusuanzi();
+            }
+        });
+    </script>
+
+
+
+<link rel="stylesheet" href="//cdn.bootcss.com/photoswipe/4.1.3/photoswipe.min.css">
+<link rel="stylesheet" href="//cdn.bootcss.com/photoswipe/4.1.3/default-skin/default-skin.min.css">
+
+
+<script src="//cdn.bootcss.com/photoswipe/4.1.3/photoswipe.min.js"></script>
+<script src="//cdn.bootcss.com/photoswipe/4.1.3/photoswipe-ui-default.min.js"></script>
+
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+            <div class="pswp__top-bar">
+                <!--  Controls are self-explanatory. Order can be changed. -->
+                <div class="pswp__counter"></div>
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                      <div class="pswp__preloader__cut">
+                        <div class="pswp__preloader__donut"></div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div> 
+            </div>
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="//www.googletagmanager.com/gtag/js?id=UA-149874671-1"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', 'UA-149874671-1');
+    </script>
+
+
+
+
+
+<script>
+    function initialTyped () {
+        var typedTextEl = $('.typed-text');
+        if (typedTextEl && typedTextEl.length > 0) {
+            var typed = new Typed('.typed-text', {
+                strings: ["Think like an artist, develop like an artisan", "艺术家思维去思考问题，工匠创造精神去开发"],
+                typeSpeed: 90,
+                loop: true,
+                loopCount: Infinity,
+                backSpeed: 20,
+            });
+        }
+    }
+
+    if ($('.article-header') && $('.article-header').length) {
+        $(document).ready(function () {
+            initialTyped();
+        });
+    }
+</script>
+
+
+
+
+</html>

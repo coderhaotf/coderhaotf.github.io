@@ -1,0 +1,716 @@
+
+<!DOCTYPE html>
+<html lang="en" class="loading">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>异步回调的前世今生 - 早起不吃虫</title>
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="google" content="notranslate" />
+    <meta name="keywords" content="coderhaotf,"> 
+    <meta name="description" content="前言连续写了五篇jQuery源码的文章，相信很多小伙伴都看吐啦，再好吃的伙食也禁不住天天吃（何况还不一定是好的），今天我们就换个口味，来聊聊JavaScript中的异步回调。
+异步回调的黑背景说起异,"> 
+    <meta name="author" content="haotf"> 
+    <link rel="alternative" href="atom.xml" title="早起不吃虫" type="application/atom+xml"> 
+    <link rel="icon" href="/img/favicon.png"> 
+    <link href="https://fonts.loli.net/css?family=Roboto+Mono|Rubik&display=swap" rel="stylesheet">
+    
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1429596_nzgqgvnmkjb.css">
+
+    
+<link rel="stylesheet" href="//cdn.bootcss.com/animate.css/3.7.2/animate.min.css">
+
+    
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/social-share.js/1.0.16/css/share.min.css">
+
+    
+<link rel="stylesheet" href="//cdn.bootcss.com/codemirror/5.48.4/codemirror.min.css">
+
+    
+<link rel="stylesheet" href="//cdn.bootcss.com/codemirror/5.48.4/theme/dracula.css">
+
+    
+<link rel="stylesheet" href="/css/obsidian.css">
+
+    
+<link rel="stylesheet" href="/css/ball-atom.min.css">
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+
+<body class="loading">
+    <div class="loader">
+        <div class="la-ball-atom la-2x">
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+    </div>
+    <span id="config-title" style="display:none">早起不吃虫</span>
+    <div id="loader"></div>
+    <div id="single">
+    <div class="scrollbar gradient-bg-rev"></div>
+<div id="top" style="display: block;">
+    <div class="bar" style="width: 0;"></div>
+    <div class="navigation animated fadeIn fast delay-1s">
+        <img id="home-icon" class="icon-home" src="/img/favicon.png" alt="" data-url="https://coderhaotf.github.io">
+        <div id="play-icon" title="Play/Pause" class="iconfont icon-play"></div>
+        <h3 class="subtitle">异步回调的前世今生</h3>
+        <div class="social">
+            <!--        <div class="like-icon">-->
+            <!--            <a href="javascript:;" class="likeThis active"><span class="icon-like"></span><span class="count">76</span></a>-->
+            <!--        </div>-->
+            <div>
+                <div class="share">
+                    
+                        <a href="javascript:;" class="iconfont icon-share1"></a>
+                        <div class="share-component-cc" data-disabled="facebook,douban,linkedin,diandian,tencent,google"></div>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+    <div class="section">
+        <div class=article-header-wrapper>
+    <div class="article-header">
+        <div class="article-cover animated fadeIn" style="
+            animation-delay: 600ms;
+            animation-duration: 1.2s;
+            background-image: 
+                radial-gradient(ellipse closest-side, rgba(0, 0, 0, 0.65), #100e17),
+                url(/img/cover.jpg);">
+        </div>
+        <div class="else">
+            <p class="animated fadeInDown">
+                
+                <a href="javascript:;"><b>「 </b>Article<b> 」</b></a>
+                
+                January 28, 2020
+            </p>
+            <h3 class="post-title animated fadeInDown"><a href="/article/2020/01/28/%E5%BC%82%E6%AD%A5%E5%9B%9E%E8%B0%83%E7%9A%84%E5%89%8D%E4%B8%96%E4%BB%8A%E7%94%9F.html" title="异步回调的前世今生" class="">异步回调的前世今生</a>
+            </h3>
+            
+            <p class="post-count animated fadeInDown">
+                
+                <span>
+                    <b class="iconfont icon-text2"></b> <i>Words count</i>
+                    11k
+                </span>
+                
+                
+                <span>
+                    <b class="iconfont icon-timer__s"></b> <i>Reading time</i>
+                    10 mins.
+                </span>
+                
+                
+                
+                <span id="busuanzi_container_page_pv">
+                    <b class="iconfont icon-read"></b> <i>Read count</i>
+                    <span id="busuanzi_value_page_pv">0</span>
+                </span>
+                
+            </p>
+            
+            
+        </div>
+    </div>
+</div>
+
+<div class="screen-gradient-after">
+    <div class="screen-gradient-content">
+        <div class="screen-gradient-content-inside">
+            <div class="bold-underline-links screen-gradient-sponsor">
+                <p>
+                    <span class="animated fadeIn delay-1s"></span>
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="article">
+    <div class='main'>
+        <div class="content markdown animated fadeIn">
+            <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>连续写了五篇jQuery源码的文章，相信很多小伙伴都看吐啦，再好吃的伙食也禁不住天天吃（何况还不一定是好的），今天我们就换个口味，来聊聊JavaScript中的异步回调。</p>
+<h2 id="异步回调的黑背景"><a href="#异步回调的黑背景" class="headerlink" title="异步回调的黑背景"></a>异步回调的黑背景</h2><p>说起异步回调，很多小伙伴肯定就很熟悉啦！</p>
+<p>譬如定时器：</p>
+<pre><code class="js">setTimeout(function(){
+    console.log(&quot;我是异步回调&quot;)
+},1000);
+console.log(&quot;我是个好人&quot;);
+//&quot;我是个好人&quot;
+//&quot;我是异步回调&quot;</code></pre>
+<p>譬如绑定事件：</p>
+<pre><code class="js">document.onclick = function(){
+    console.log(&quot;不点是狗熊&quot;)
+}
+console.log(&quot;我是个好人&quot;);
+//&quot;我是个好人&quot;
+//&quot;不点是狗熊&quot;</code></pre>
+<p>为什么会这样呢？小伙伴很生气，小伙伴大佬很不屑。</p>
+<p>好吧，因为我是个好人，我还是要给不知道的某个小伙伴说一下：因为JavaScript是单线程的，而且JavaScript是自上而下执行的。</p>
+<p>这时候，角落有个小伙伴眼神有点迷离，所以呢？额，你上过大马路吗？即使我是个好人，也有点不耐烦了：</p>
+<ul>
+<li>车行道（<strong>主线程</strong>）：同步任务（synchronous）执行的通道，只有前一个任务执行完毕，才能执行后一个任务。</li>
+<li>人行道（<strong>任务队列</strong>）：异步任务（asynchronous）等候的通道（不执行）。</li>
+</ul>
+<p>这就是JavaScript为了解决“人车同道”难题而诞生的解决方案 - -  <strong>“事件循环”机制（Event Loop）</strong>。</p>
+<p>注意，异步任务在任务队列通道只是等候，执行时还是会切换到主线程来，所以把人行道改为斑马线可能更为准确一些。</p>
+<p>所以，同步任务跟异步任务并不是隔绝的，到底是同步还是异步，是可以控制的。例如Ajax操作的时候，我们可以既可以把它定义为异步，也可以定义为同步操作。两者的不同是前者不阻塞代码，而后者会阻塞而已。</p>
+<h2 id="一个栗子引发的血案"><a href="#一个栗子引发的血案" class="headerlink" title="一个栗子引发的血案"></a>一个栗子引发的血案</h2><p>看个有趣的题目（请用代码实现）：</p>
+<p>按照顺序输出：“开始” - -&gt; “吃饭”  - -&gt;  “睡觉”  - -&gt; “打豆豆” ，每次输出间隔2s。</p>
+<p>先思考一秒钟。</p>
+<h2 id="传统回调"><a href="#传统回调" class="headerlink" title="传统回调"></a>传统回调</h2><p>话音未落，已经有小伙伴抢答了：</p>
+<pre><code class="js">console.log(&quot;开始&quot; + &quot; -- &quot; + new Date().getSeconds())
+setTimeout(function(){
+    console.log(&quot;吃饭&quot; + &quot; -- &quot; + new Date().getSeconds());
+    setTimeout(function(){
+        console.log(&quot;睡觉&quot; + &quot; -- &quot; + new Date().getSeconds())
+        setTimeout(function(){
+            console.log(&quot;打豆豆&quot; + &quot; -- &quot; + new Date().getSeconds())
+        },2000)
+    },2000)
+},2000)</code></pre>
+<p>好啦，虽然这程序成功地完成了任务，但是在写程序的过程中，该小伙伴多次漏写了大括号或者小括号，而且因为睡懒觉刚进教室的另一个小伙伴，花了大半天才看懂了他的程序。</p>
+<p>为什么呢？</p>
+<p>现在程序的任务只是打印一句话，如果是打印一百句不同的话呢？这个时候看这程序最大的障碍就变成了找准对应的大小括号了，如果无意中漏掉了一个大括号，想要马上补全也是一个艰巨的工程。</p>
+<p>这时，答题的小伙伴有点不甘了：我可以把打印的代码抽离出来封装成一个函数啊！</p>
+<p>嗯，是个不错的解决方法，不过又有一个不足，就是我们这时就要跳着看代码了，如果抽离的函数放的距离远一些，跳来跳去的过程中，我们的思路也要不断的中断切换，中断切换。。。</p>
+<h2 id="优雅的-Promise"><a href="#优雅的-Promise" class="headerlink" title="优雅的 Promise"></a>优雅的 Promise</h2><p>还有没有更好的方法？我提高了声音。</p>
+<p>“有”，睡懒觉迟到的小伙伴满脸兴奋，“我昨晚熬夜学到了另一种方案！”</p>
+<pre><code class="js">console.log(&quot;开始&quot; + &quot; -- &quot; + new Date().getSeconds());
+new Promise(function(resolve,reject){
+    setTimeout(function(){
+        console.log(&quot;吃饭&quot; + &quot; -- &quot; + new Date().getSeconds());
+        resolve();
+    },2000);
+}).then(function(){
+    return new Promise(function(resolve,reject){
+        setTimeout(function(){
+            console.log(&quot;睡觉&quot; + &quot; -- &quot; + new Date().getSeconds());
+            resolve();
+        },2000)
+    });
+}).then(function(){
+    return new Promise(function(resolve,reject){
+        setTimeout(function(){
+            console.log(&quot;打豆豆&quot; + &quot; -- &quot; + new Date().getSeconds());
+            resolve();
+        },2000)
+    });
+})</code></pre>
+<p>这代码看起来既陌生又熟悉，你看，一排排的，多整齐！</p>
+<p>迟到的小伙伴有点得意，写传统回调的小伙伴满脸羡慕：“这下再也不用担心大括号的对齐的问题了呀”，“里面定时器的代码我也能写出来！！”，。。。“就是那个 <code>Promise</code> , <code>then</code> 不知道啥意思” 。。。</p>
+<p>没错，<code>Promise</code> 有啥特殊呢？</p>
+<p>其实吧，没啥特殊的，就像写传统回调那位小伙伴说的，操作代码那一段他也能写！！</p>
+<p>而 <code>Promise</code> 的作用呢？就是一个全新的包装而已！！它把异步的代码包装起来，形成了一个包含异步任务的容器。</p>
+<p>“ 那 <code>then</code> 又是啥呀？” ， 小伙伴显得有点楚楚可怜。</p>
+<p>“ <code>then</code> 呀，就是 <code>Promise</code> 容器对象的一个出口呀，容器里面的代码执行之后，就接着执行 <code>then</code> 里面的方法 ”。</p>
+<p>” 那 <code>then</code> 怎么知道容器里面的代码执行结束了呀？ “，小伙伴快要哭了。</p>
+<p>” 哎，你别哭，不是还有 <code>resolve</code> 吗？“， ”当容器里面的 <code>resolve</code> 调用后，<code>then</code> 就开始执行了呀！ “</p>
+<h4 id="Promise-容器范式"><a href="#Promise-容器范式" class="headerlink" title="Promise 容器范式"></a>Promise 容器范式</h4><p>既然都说 Promise 只是一种包装，那包装总是有标准的嘛：</p>
+<pre><code class="js">// 第一式，先 new 个对象
+new Promise(function(resolve,reject){//第二式，定义成功状态函数与失败失败函数
+    //第三式， 执行异步代码
+    setTimeout(function(){
+        console.log(&quot;我是异步代码&quot;);
+        //第四式， 确定是成功还是失败状态
+        if(true){
+            resolve(&quot;成功&quot;);
+        }else{
+            reject(&quot;失败&quot;);
+        }
+    },1000)
+}).then(function(res){//第五式，根据状态执行代码
+    console.log(res);
+},function(err){
+    console.log(err);
+}).catch(function(e){//第六式，捕获报错信息
+    console.log(e)
+})</code></pre>
+<h4 id="then-方法的返回值"><a href="#then-方法的返回值" class="headerlink" title="then 方法的返回值"></a>then 方法的返回值</h4><p>值得注意的一点是，<code>then</code> 方法的返回值是一个 Promise 对象。</p>
+<pre><code class="js">var promise = new Promise(function(resolve,reject){
+    resolve(&quot;成功&quot;);
+});
+
+var then = promise.then(function(res){
+    console.log(res);
+});
+console.log(then instanceof Promise); //true
+console.log(then  === promise); //false</code></pre>
+<p>我们发现一个非常重要的知识点，then 方法返回一个全新的 Promise !!!</p>
+<p>这有什么值得关注的呢？传统回调的小伙伴这时也疑惑的看着我。</p>
+<ul>
+<li>因为 <code>then</code> 总是能够返回一个全新的 Promise 对象，所以可以通过 <code>then</code> 进行永无止境的链式调用。</li>
+<li>若 <code>then</code> 方法里面 <code>return</code> 一个 Promise 对象，则可以开启新一段异步任务。</li>
+</ul>
+<p>上面的例子就是利用了这两点，接连开启了三个异步任务。如果省略了其中的 <code>return</code> ，则后面两个异步任务变为同时开启（睡觉跟打豆豆同时打印出来），有疑问的小伙伴可以亲自验证一番。</p>
+<h2 id="太平盛世-async-await"><a href="#太平盛世-async-await" class="headerlink" title="太平盛世 async/await"></a>太平盛世 async/await</h2><p>通过上面例子的对比，Promise 似乎取得了巨大的进步，代码可以按照顺序愉快的阅读了，也不用费心对齐大括号了，还能随心所欲的连续开启无数个异步任务，多么的美妙！！！</p>
+<p>”有没有更更更好的方法呢？“，我也激动了起来，声音提高到了最高分贝。</p>
+<p>众小伙伴陷入了沉思。。。</p>
+<p>”你们在干嘛呀？“，在这已经快要到饭点的时候，小伙伴大佬走了进来，”霍，谁写的异步回调？“，”第一个是猪吗” , ”这样多麻烦呀，也不优雅！“，”现在流行这样写啦！“</p>
+<pre><code class="js">console.log(&quot;开始&quot; + &quot; -- &quot; + new Date().getSeconds());
+async function dadoudou(){
+    await new Promise(function(resolve,reject){
+        setTimeout(function(){
+            console.log(&quot;吃饭&quot; + &quot; -- &quot; + new Date().getSeconds());
+            resolve();
+        },2000);
+    });
+    await new Promise(function(resolve,reject){
+        setTimeout(function(){
+            console.log(&quot;睡觉&quot; + &quot; -- &quot; + new Date().getSeconds());
+            resolve();
+        },2000)
+    });
+    await new Promise(function(resolve,reject){
+        setTimeout(function(){
+            console.log(&quot;打豆豆&quot; + &quot; -- &quot; + new Date().getSeconds());
+            resolve();
+        },2000)
+    });
+}
+dadoudou();</code></pre>
+<p>这是什么呀，怎么又冒出 <code>async/await</code>, 什么鬼？？竟然还真的成功执行了？？？</p>
+<p>这里只解释一句，async/await 是 <code>Generator</code> 函数的语法糖。</p>
+<p>至于Generator函数是什么东东，我们留待下篇再进行详细的描述，本篇只需关注它语法糖在异步回调中的特性。</p>
+<p>语法糖又是啥？</p>
+<p>翻译一下，让人用的开心的语法。</p>
+<p>好了，既然是一种语法，我们就必须知道，这是没有道理可讲的事情了。所以，我们只需关注它为什么能让我们开心了，这必须是个好事情。</p>
+<p>就像上例 Promise 一样，语法都是包装，都有范式：</p>
+<pre><code class="js">//第一式：定义一个函数，前面加上async
+async function fn(){
+    //第二式： await(断点) + Promise实例 
+    let value = await new Promise(function(resolve,reject){
+        //第三式： 执行异步代码，确定成功或者失败状态
+        setTimeout(function(){
+            resolve(&quot;成功&quot;);
+        },2000);
+    });
+    // 第四式： 返回异步代码的返回值
+    return value;
+}
+
+// 第五式：调用async函数，返回一个 Promise 对象
+fn().then(function(res){
+    console.log(res); // &quot;成功&quot;
+},function(err){
+    console.log(err);
+}).catch(function(e){//第六式，捕获报错信息
+    console.log(e)
+})</code></pre>
+<h4 id="神奇的断点"><a href="#神奇的断点" class="headerlink" title="神奇的断点"></a>神奇的断点</h4><p>小伙伴们最疑惑的可能就是 <code>await</code> 这个新事物了，毕竟 <code>async</code> 飘在函数外面，看起来还规规矩矩的，也不影响理解，可它算是个什么东西呢？（影视剧口吻）</p>
+<ul>
+<li>await 命令后面是一个 Promise 对象。如果不是，会被转成一个立即resolve的 Promise 对象</li>
+<li>当前一个 await 命令后面的 Promise 对象调用 resolve 状态函数后，才执行下一个 await 命令下的 Promise 异步任务；</li>
+<li>await 命令下的 Promise 调用 reject 状态函数时，后面的 await 命令将不再执行，async 函数返回一个 Promise 对象</li>
+</ul>
+<p>让我们来看一看代码验证一下：</p>
+<pre><code class="js">async function fn1() {
+  let value = await new Promise(function(){});
+  console.log(value);//验证第二点，上面 Promise 没有 resolve ，这一句永远不会执行。
+  return value;
+}
+fn1().then(v =&gt; console.log(v));</code></pre>
+<pre><code class="js">async function fn2() {
+  let value = await 123;
+  console.log(value); //验证第一点，非 Promise 对象，会被转成一个立即resolve的 Promise 对象
+  return value;
+}
+fn2().then(v =&gt; console.log(v)); // 123</code></pre>
+<pre><code class="js">async function fn3() {
+  await Promise.reject(&quot;失败&quot;);
+  await Promise.resolve(&quot;成功&quot;); //这一句不会执行，验证第三点
+}
+fn3().then(v =&gt; console.log(v),e =&gt; console.log(e)); // &quot;失败&quot;</code></pre>
+<p>好啦，到这里我们应该了解 <code>await</code> 的用法了，其实它就是生成器中的 <code>yeild</code> ，但是目前我们无需理会，知道如何使用它就足够了。</p>
+<h2 id="如何继发传值"><a href="#如何继发传值" class="headerlink" title="如何继发传值"></a>如何继发传值</h2><p>说到这里，我们理解了 <code>await</code> 的执行顺序，不过还忽略了一个比较重要的问题：不同段异步任务如何传值？</p>
+<p>真实的开发中，不同异步任务不仅仅只有执行顺序的要求，往往也需要值的传递，这是必不可少的一环。现在是时候总结一波啦！</p>
+<h4 id="传统回调的传值"><a href="#传统回调的传值" class="headerlink" title="传统回调的传值"></a>传统回调的传值</h4><p>这个是不是不要太简单呢？理解JavaScript作用域的小伙伴都能轻而易举的实现：</p>
+<pre><code class="js">setTimeout(function(){
+    var level = 1;
+    console.log(&quot;我是第一个异步任务&quot;);
+    setTimeout(function(){
+        console.log(&quot;我是第二个异步任务，接收第 &quot; + level + &quot; 个任务的传值&quot;);
+    },2000);
+},2000);</code></pre>
+<p>有的小伙伴说，我要把代码抽离出来：</p>
+<pre><code class="js">setTimeout(function(){
+    var level = 1;
+    console.log(&quot;我是第一个异步任务&quot;);
+    next(level); //传值
+},2000);
+
+function next(val){
+    setTimeout(function(){
+        console.log(&quot;我是第二个异步任务，接收第 &quot; + val + &quot; 个任务的传值&quot;);
+    },2000);
+}</code></pre>
+<h4 id="Promise的传值"><a href="#Promise的传值" class="headerlink" title="Promise的传值"></a>Promise的传值</h4><p>看过前面代码的小伙伴也发现，Promise 传值好像更简单啊！</p>
+<pre><code class="js">new Promise(function(resolve,reject){
+    setTimeout(() =&gt; {
+        resolve(&quot;我来自第一个异步任务&quot;)
+    },2000);
+}).then(res =&gt; {
+    console.log(&quot;在第二个任务中打印：  &quot; + res);
+    return new Promise(function(resolve,reject){
+        setTimeout(() =&gt; {
+            resolve(&quot;我来自第二个异步任务&quot;)
+        },2000);
+    })
+}).then(res =&gt; { console.log(&quot;在第三个任务中打印：  &quot; + res)});</code></pre>
+<p>没错，确实更简单了，只需要在 <code>resolve</code> 或 <code>reject</code> 状态函数调用时传参就可以了。</p>
+<h4 id="async-await-的传值"><a href="#async-await-的传值" class="headerlink" title="async/await 的传值"></a>async/await 的传值</h4><p>传统回调挺简单，Promise 更简单，那 async/await 岂不是更更更简单啦？？？</p>
+<p>额，好吧，确实是这样！</p>
+<pre><code class="js">async function fn(){
+    let value1 = await new Promise((resolve,reject) =&gt; {
+        setTimeout(() =&gt; {
+            resolve(&quot;我来自第一个异步任务&quot;);
+        },2000)
+    });
+    let value2 = await new Promise((resolve,reject) =&gt; {
+        console.log(&quot;在第二个任务中打印：  &quot; + value1)
+        setTimeout(() =&gt; {
+            resolve(&quot;我来自第二个异步任务&quot;);
+        },2000)
+    });
+    let value3 = await new Promise((resolve,reject) =&gt; {
+        console.log(&quot;在第三个任务中打印：  &quot; + value2)
+        setTimeout(() =&gt; {
+            resolve(&quot;我来自第三个异步任务&quot;);
+        },2000)
+    });
+    return value3;
+}
+fn().then(res =&gt; {
+    console.log(&quot;在then中打印：  &quot; + res)
+});</code></pre>
+<h2 id="结尾"><a href="#结尾" class="headerlink" title="结尾"></a>结尾</h2><p>好啦，认真从头到尾看到这里的小伙伴，应该再也不需要担心实践中异步回调的问题了（有问题向我反馈如何改进）。</p>
+<p>不过，依然有一些小伙伴雄心勃勃，觉得这些太简单啦，“能不能搞点大事情？？！”</p>
+<p>说实话，如果仅仅是实际开发，知道这些就足够了。只需要熟悉上面的代码范式，完成各种异步回调操作完全没有问题了。</p>
+<p>若是想进一步了解 <code>async/await</code> 呢，也是无可厚非的，毕竟目前它看起来完全是个黑匣子。所以呢，后面应该还会写一篇 <code>async/await</code> 内幕的文章，敬请期待吧！就酱。</p>
+
+            <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
+            <audio id="audio" loop="1" preload="auto" controls="controls"
+                data-autoplay="false">
+                <source type="audio/mpeg" src="">
+            </audio>
+            
+            <ul id="audio-list" style="display:none">
+                
+                
+                <li title='0' data-url='/statics/chengdu.mp3'></li>
+                
+                    
+            </ul>
+            
+            
+            
+    <div id='gitalk-container' class="comment link"
+        data-ae='true'
+        data-ci='ad0ec68ac6b80ef0adbd'
+        data-cs='bcf8895a95f3e128f12210a56df3cedd7d09a17d'
+        data-r='coderhaotf.github.io'
+        data-o='coderhaotf'
+        data-a='coderhaotf'
+        data-d=''
+    >Comments</div>
+
+
+            
+            
+        </div>
+        <div class="sidebar">
+            <div class="box animated fadeInRight">
+                <div class="subbox">
+                    <img src="https://res.cloudinary.com/tridiamond/image/upload/v1573019751/TriDiamond_logo_ui_xeublz.jpg" height=300 width=300></img>
+                    <p>haotf</p>
+                    <span>Think like an artist, develop like an artisan</span>
+                    <dl>
+                        <dd><a href="https://github.com/coderhaotf" target="_blank"><span
+                                    class=" iconfont icon-github"></span></a></dd>
+                        <dd><a href="https://twitter.com/" target="_blank"><span
+                                    class=" iconfont icon-twitter"></span></a></dd>
+                        <dd><a href="https://stackoverflow.com/" target="_blank"><span
+                                    class=" iconfont icon-stack-overflow"></span></a></dd>
+                    </dl>
+                </div>
+                <ul>
+                    <li><a href="/">31 <p>Articles</p></a></li>
+                    <li><a href="/categories">0 <p>Categories</p></a></li>
+                    <li><a href="/tags">0 <p>Tags</p></a></li>
+                </ul>
+            </div>
+            
+            
+            
+            <div class="box sticky animated fadeInRight faster">
+                <div id="toc" class="subbox">
+                    <h4>Contents</h4>
+                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#前言"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#异步回调的黑背景"><span class="toc-number">2.</span> <span class="toc-text">异步回调的黑背景</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#一个栗子引发的血案"><span class="toc-number">3.</span> <span class="toc-text">一个栗子引发的血案</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#传统回调"><span class="toc-number">4.</span> <span class="toc-text">传统回调</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#优雅的-Promise"><span class="toc-number">5.</span> <span class="toc-text">优雅的 Promise</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#太平盛世-async-await"><span class="toc-number">6.</span> <span class="toc-text">太平盛世 async&#x2F;await</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#如何继发传值"><span class="toc-number">7.</span> <span class="toc-text">如何继发传值</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#结尾"><span class="toc-number">8.</span> <span class="toc-text">结尾</span></a></li></ol>
+                </div>
+            </div>
+            
+            
+        </div>
+    </div>
+</div>
+
+    </div>
+</div>
+    <div id="back-to-top" class="animated fadeIn faster">
+        <div class="flow"></div>
+        <span class="percentage animated fadeIn faster">0%</span>
+        <span class="iconfont icon-top02 animated fadeIn faster"></span>
+    </div>
+</body>
+<footer>
+    <p class="copyright" id="copyright">
+        &copy; 2020
+        <span class="gradient-text">
+            haotf
+        </span>.
+        Designed && Powerd  by <a href="http://hexo.io/" title="Hexo" target="_blank" rel="noopener">Hexo</a>
+        <p>Copyright© 2018 早起不吃虫的博客 粤ICP备18104892号</p>
+        <!-- Theme
+        <span class="gradient-text">
+            <a href="https://github.com/TriDiamond/hexo-theme-obsidian" title="Obsidian" target="_blank" rel="noopener">Obsidian</a>
+        </span>
+        <small><a href="https://github.com/TriDiamond/hexo-theme-obsidian/blob/master/CHANGELOG.md" title="v1.4.3" target="_blank" rel="noopener">v1.4.3</a></small> -->
+    </p>
+</footer>
+
+<script type="text/javascript" src="https://cdn.bootcss.com/mathjax/2.7.6/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<script>
+  MathJax.Hub.Config({
+    "HTML-CSS": {
+      preferredFont: "TeX",
+      availableFonts: ["STIX", "TeX"],
+      linebreaks: {
+        automatic: true
+      },
+      EqnChunk: (MathJax.Hub.Browser.isMobile ? 10 : 50)
+    },
+    tex2jax: {
+      inlineMath: [
+        ["$", "$"],
+        ["\\(", "\\)"]
+      ],
+      processEscapes: true,
+      ignoreClass: "tex2jax_ignore|dno",
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    TeX: {
+      noUndefined: {
+        attributes: {
+          mathcolor: "red",
+          mathbackground: "#FFEEEE",
+          mathsize: "90%"
+        }
+      },
+      Macros: {
+        href: "{}"
+      }
+    },
+    messageStyle: "none"
+  });
+</script>
+<script>
+  function initialMathJax() {
+    MathJax.Hub.Queue(function () {
+      var all = MathJax.Hub.getAllJax(),
+        i;
+      // console.log(all);
+      for (i = 0; i < all.length; i += 1) {
+        console.log(all[i].SourceElement().parentNode)
+        all[i].SourceElement().parentNode.className += ' has-jax';
+      }
+    });
+  }
+
+  function reprocessMathJax() {
+    if (typeof MathJax !== 'undefined') {
+      MathJax.Hub.Queue(["Typeset", MathJax.Hub]);
+    }
+  }
+</script>
+
+
+
+    
+<link rel="stylesheet" href="//cdn.bootcss.com/gitalk/1.5.0/gitalk.min.css">
+
+    
+<script src="//cdn.bootcss.com/gitalk/1.5.0/gitalk.min.js"></script>
+
+
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="/js/plugin.js"></script>
+<script src="/js/obsidian.js"></script>
+<script src="/js/jquery.truncate.js"></script>
+<script src="/js/search.js"></script>
+
+
+<script src="//cdn.bootcss.com/typed.js/2.0.10/typed.min.js"></script>
+
+
+<script src="//cdn.bootcss.com/blueimp-md5/2.12.0/js/md5.min.js"></script>
+
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/social-share.js/1.0.16/js/social-share.min.js"></script>
+
+
+<script src="https://cdn.bootcss.com/codemirror/5.48.4/codemirror.min.js"></script>
+
+    
+<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/javascript/javascript.min.js"></script>
+
+
+    
+<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/css/css.min.js"></script>
+
+
+    
+<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/xml/xml.min.js"></script>
+
+
+    
+<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/htmlmixed/htmlmixed.min.js"></script>
+
+
+    
+<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/clike/clike.min.js"></script>
+
+
+    
+<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/php/php.min.js"></script>
+
+
+    
+<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/shell/shell.min.js"></script>
+
+
+    
+<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/python/python.min.js"></script>
+
+
+
+
+    
+<script src="/js/busuanzi.min.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            if ($('span[id^="busuanzi_"]').length) {
+                initialBusuanzi();
+            }
+        });
+    </script>
+
+
+
+<link rel="stylesheet" href="//cdn.bootcss.com/photoswipe/4.1.3/photoswipe.min.css">
+<link rel="stylesheet" href="//cdn.bootcss.com/photoswipe/4.1.3/default-skin/default-skin.min.css">
+
+
+<script src="//cdn.bootcss.com/photoswipe/4.1.3/photoswipe.min.js"></script>
+<script src="//cdn.bootcss.com/photoswipe/4.1.3/photoswipe-ui-default.min.js"></script>
+
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+            <div class="pswp__top-bar">
+                <!--  Controls are self-explanatory. Order can be changed. -->
+                <div class="pswp__counter"></div>
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                      <div class="pswp__preloader__cut">
+                        <div class="pswp__preloader__donut"></div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div> 
+            </div>
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="//www.googletagmanager.com/gtag/js?id=UA-149874671-1"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', 'UA-149874671-1');
+    </script>
+
+
+
+
+
+<script>
+    function initialTyped () {
+        var typedTextEl = $('.typed-text');
+        if (typedTextEl && typedTextEl.length > 0) {
+            var typed = new Typed('.typed-text', {
+                strings: ["Think like an artist, develop like an artisan", "艺术家思维去思考问题，工匠创造精神去开发"],
+                typeSpeed: 90,
+                loop: true,
+                loopCount: Infinity,
+                backSpeed: 20,
+            });
+        }
+    }
+
+    if ($('.article-header') && $('.article-header').length) {
+        $(document).ready(function () {
+            initialTyped();
+        });
+    }
+</script>
+
+
+
+
+</html>

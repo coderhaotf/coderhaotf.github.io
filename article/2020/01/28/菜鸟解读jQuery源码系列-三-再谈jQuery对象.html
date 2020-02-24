@@ -1,0 +1,575 @@
+
+<!DOCTYPE html>
+<html lang="en" class="loading">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>菜鸟解读jQuery源码系列-三-再谈jQuery对象 - 早起不吃虫</title>
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="google" content="notranslate" />
+    <meta name="keywords" content="coderhaotf,"> 
+    <meta name="description" content="引言&amp;emsp;&amp;emsp;经过前两个系列的洗礼，小伙伴们大概都大概了解jQuery对象是个啥了。两个系列通篇口水，总结下来无非就是两句话：系列一讲jQuery是如何通过构造函数生成，系列二讲的是j,"> 
+    <meta name="author" content="haotf"> 
+    <link rel="alternative" href="atom.xml" title="早起不吃虫" type="application/atom+xml"> 
+    <link rel="icon" href="/img/favicon.png"> 
+    <link href="https://fonts.loli.net/css?family=Roboto+Mono|Rubik&display=swap" rel="stylesheet">
+    
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1429596_nzgqgvnmkjb.css">
+
+    
+<link rel="stylesheet" href="//cdn.bootcss.com/animate.css/3.7.2/animate.min.css">
+
+    
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/social-share.js/1.0.16/css/share.min.css">
+
+    
+<link rel="stylesheet" href="//cdn.bootcss.com/codemirror/5.48.4/codemirror.min.css">
+
+    
+<link rel="stylesheet" href="//cdn.bootcss.com/codemirror/5.48.4/theme/dracula.css">
+
+    
+<link rel="stylesheet" href="/css/obsidian.css">
+
+    
+<link rel="stylesheet" href="/css/ball-atom.min.css">
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+
+<body class="loading">
+    <div class="loader">
+        <div class="la-ball-atom la-2x">
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+    </div>
+    <span id="config-title" style="display:none">早起不吃虫</span>
+    <div id="loader"></div>
+    <div id="single">
+    <div class="scrollbar gradient-bg-rev"></div>
+<div id="top" style="display: block;">
+    <div class="bar" style="width: 0;"></div>
+    <div class="navigation animated fadeIn fast delay-1s">
+        <img id="home-icon" class="icon-home" src="/img/favicon.png" alt="" data-url="https://coderhaotf.github.io">
+        <div id="play-icon" title="Play/Pause" class="iconfont icon-play"></div>
+        <h3 class="subtitle">菜鸟解读jQuery源码系列-三-再谈jQuery对象</h3>
+        <div class="social">
+            <!--        <div class="like-icon">-->
+            <!--            <a href="javascript:;" class="likeThis active"><span class="icon-like"></span><span class="count">76</span></a>-->
+            <!--        </div>-->
+            <div>
+                <div class="share">
+                    
+                        <a href="javascript:;" class="iconfont icon-share1"></a>
+                        <div class="share-component-cc" data-disabled="facebook,douban,linkedin,diandian,tencent,google"></div>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+    <div class="section">
+        <div class=article-header-wrapper>
+    <div class="article-header">
+        <div class="article-cover animated fadeIn" style="
+            animation-delay: 600ms;
+            animation-duration: 1.2s;
+            background-image: 
+                radial-gradient(ellipse closest-side, rgba(0, 0, 0, 0.65), #100e17),
+                url(/img/cover.jpg);">
+        </div>
+        <div class="else">
+            <p class="animated fadeInDown">
+                
+                <a href="javascript:;"><b>「 </b>Article<b> 」</b></a>
+                
+                January 28, 2020
+            </p>
+            <h3 class="post-title animated fadeInDown"><a href="/article/2020/01/28/%E8%8F%9C%E9%B8%9F%E8%A7%A3%E8%AF%BBjQuery%E6%BA%90%E7%A0%81%E7%B3%BB%E5%88%97-%E4%B8%89-%E5%86%8D%E8%B0%88jQuery%E5%AF%B9%E8%B1%A1.html" title="菜鸟解读jQuery源码系列-三-再谈jQuery对象" class="">菜鸟解读jQuery源码系列-三-再谈jQuery对象</a>
+            </h3>
+            
+            <p class="post-count animated fadeInDown">
+                
+                <span>
+                    <b class="iconfont icon-text2"></b> <i>Words count</i>
+                    5.8k
+                </span>
+                
+                
+                <span>
+                    <b class="iconfont icon-timer__s"></b> <i>Reading time</i>
+                    5 mins.
+                </span>
+                
+                
+                
+                <span id="busuanzi_container_page_pv">
+                    <b class="iconfont icon-read"></b> <i>Read count</i>
+                    <span id="busuanzi_value_page_pv">0</span>
+                </span>
+                
+            </p>
+            
+            
+        </div>
+    </div>
+</div>
+
+<div class="screen-gradient-after">
+    <div class="screen-gradient-content">
+        <div class="screen-gradient-content-inside">
+            <div class="bold-underline-links screen-gradient-sponsor">
+                <p>
+                    <span class="animated fadeIn delay-1s"></span>
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="article">
+    <div class='main'>
+        <div class="content markdown animated fadeIn">
+            <h2 id="引言"><a href="#引言" class="headerlink" title="引言"></a>引言</h2><p>&emsp;&emsp;经过前两个系列的洗礼，小伙伴们大概都大概了解jQuery对象是个啥了。两个系列通篇口水，总结下来无非就是两句话：系列一讲jQuery是如何通过构造函数生成，系列二讲的是jQuery为啥能链式调用。稍微用点心思，认真一点读一遍的小伙伴，应该都能读懂了，哈哈哈（难道还要质疑我的写作能力？?）。</p>
+<h2 id="灵魂拷问"><a href="#灵魂拷问" class="headerlink" title="灵魂拷问"></a>灵魂拷问</h2><p>我笑音未落，旁边一个小伙伴脸色铁青，咬着牙气狠狠地对我吼道：你骗人！！！啥？啥？？正当我百思不得其解时，天空飘来一段代码：</p>
+<pre><code class="js">//系列一，系列二的代码
+var $ = jQuery;
+$().find().css(); //find方法调用  //css方法调用
+
+//实践中的jq代码
+$(&quot;ul&quot;).find(&quot;li&quot;).css(&quot;background&quot;,&quot;red&quot;);</code></pre>
+<p>“你骗人！！！”，旁边小伙伴的怒火有点大，我不禁捂住了耳朵，“我没骗人！！！”，“那你狗屁代码怎么跟人家正宗的不一样？？”，“那。。那是因为我还没写完！！！”我长舒了一口气，有点傲然地撇了一眼脸胀的通红的小伙伴，紧接着低咳了两声，“接下来才是见证奇迹的时刻！！”。</p>
+<h5 id="问题所在"><a href="#问题所在" class="headerlink" title="问题所在"></a>问题所在</h5><p>之前的问题在哪呢？一眼可见，之前实现的代码，方法是正常调用了，jQuery对象原型上的方法也能愉快的继承下来了，但是还没解决两个问题：</p>
+<ul>
+<li>第一个问题，jQuery原型倒是继承下来，实例对象呢？实例对象长啥样？</li>
+<li>第二个问题，方法中的<code>DOM</code>元素是如何选中并进行操作的？</li>
+</ul>
+<p>好吧，其实是我啰嗦了，这看似是两个问题，其实只是一个问题，接下来，就让我们去收割真正的<code>jQuery</code>对象吧！</p>
+<h2 id="闭关修炼"><a href="#闭关修炼" class="headerlink" title="闭关修炼"></a>闭关修炼</h2><p>通过前两个系列，我们已经知道<code>$()</code>返回的是一个jQuery实例对象，既然这样，我们就先打印一下该实例对象：</p>
+<pre><code>//...省略代码
+&lt;ul&gt;
+    &lt;li&gt;&lt;/li&gt;
+    &lt;li&gt;&lt;/li&gt;
+    &lt;li&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;script&gt;
+console.log($(&quot;li&quot;));
+/*{
+    0:li,
+    1:li,
+    2:li,
+    context:document,
+    length:3,
+    selector:&quot;li&quot;,
+    prevObject：init [document, context: document]//上一个jQuery实例
+    //...
+}*/
+//为了避免使用图片，我就手打代码了，大伙可以自行打印一下。
+&lt;/script&gt;
+//...省略代码</code></pre><p>这，，，这不是传说中的类数组对象吗？让我们再看一段代码：</p>
+<pre><code class="js">//get方法即是传说中把jQuery对象转换成DOM对象的方法
+$(&quot;li&quot;).get(0).nodeType;
+//1 ; 元素节点</code></pre>
+<p>显而易见，实例对象里面，把选择到的元素节点，一个个都存起来了啊！！！<br>旁边的小伙伴怒气稍减，脸也没那么红了，“有点意思，但是怎么实现呢？”<br>好吧，看来不拿出真本事是不行了，直接看代码吧（看不懂回看<a href="http://codedoges.com/article/1535898268557" target="_blank" rel="noopener" title="jQuery对象的诞生记">系列一</a>）：</p>
+<pre><code class="js">// 定义jQuery构造函数
+jQuery = function( selector, context ) {
+    //返回一个新函数
+    return new jQuery.fn.init( selector /**, context, rootjQuery **/);
+};
+jQuery.fn = jQuery.prototype = {
+    constructor: jQuery,
+    init: function( selector /** , context, rootjQuery **/){
+        if(typeof selector === &quot;string&quot;){//假设这里只传标签名字符串，实际上会有多种情况需要判断
+            var arr = document.getElementsByTagName(selector);
+            for(var i = 0; i &lt; arr.length; i++){
+                this[i] = arr[i];
+            }
+        }
+        return this;//第一种this；
+    },
+    get: function(index){//伪造的测试方法
+        return this[index];//第二种this
+    },
+    //...
+}
+// init其实就是继承jQuery的新函数(Fn)，所以需要手动添加继承
+jQuery.fn.init.prototype = jQuery.fn;
+var $ = jQuery;
+$(&quot;body&quot;).get(0).nodeName; //&quot;BODY&quot;</code></pre>
+<p>nice ！！！<br>整个系列走到这里，jQuery对象的神秘面纱终于被彻底揭开了！！！<br>这时，旁边的小伙伴由怒转喜，一猛扑就想要过来抱我大腿，我吓得猛地跳开，用手直指正在角落打瞌睡的John Resig，“是他，是他，大佬就是他！！”</p>
+<p>正当场面一片喧闹时，一反常态已沉默许久的小伙伴大佬突然发话了，“你所说的好像挺有道理的，不过，jQuery对象里面的那个<code>prevObject</code>是啥回事？”</p>
+<p>其他小伙伴这时也缓过神来了，顿时七嘴八舌起来，“对啊，啥回事捏，怎么刚刚没见说？？？又想掺水么？”</p>
+<p>眼看刚刚营造的和谐氛围马上就要荡然无存，我也急了，“大家安静，安静，听我继续说！”</p>
+<h2 id="渡劫化神"><a href="#渡劫化神" class="headerlink" title="渡劫化神"></a>渡劫化神</h2><p>好吧，其实每次小标题都是乱起的，发现内容严重不符还请手下留情。接下来请看一段代码：</p>
+<pre><code class="js">//实践中的用法，大伙自行验证效果
+$(&#39;ul&#39;).find(&#39;li&#39;).css(&#39;background&#39;,&#39;red&#39;).end().css(&#39;border&#39;,&#39;1px solid #000000&#39;);//重点关注 .end() 方法；</code></pre>
+<p>这段代码的结果就是<code>li</code>元素背景变红，<code>ul</code>元素则加上了边框。</p>
+<p>这是为什么呢？按照链式调用，<code>css</code>方法调用时，方法内的<code>this</code>不是指向<code>li</code>元素的么（暂且这么理解，实质是指向包含<code>li</code>元素的jQuery对象）？</p>
+<p>疑点的指向小伙伴们应该都能够猜到了，这一切都是<code>.end()</code>方法搞的鬼！</p>
+<p>现在就让我们看看<code>end</code>方法是如何做到这一点的：</p>
+<pre><code class="js">// 定义jQuery构造函数
+jQuery = function( selector, context ) {
+    //返回一个新函数
+    return new jQuery.fn.init( selector /**, context, rootjQuery **/);
+};
+jQuery.fn = jQuery.prototype = {
+    constructor: jQuery,
+    init: function( selector /** , context, rootjQuery **/){
+        this[0] = selector; //假装选中该元素（模拟一下就好啦，不要打我！）
+        return this;//第一种this；
+    },
+    find: function(selector){//伪造的测试方法
+        var ret = $(selector);//假装选中了子元素，生成全新的jQuery对象；
+        //此时的this是指向上一个jQuery对象的，此处把它存起来！
+        ret[&#39;prevObject&#39;] = this;//关键点！！！
+        return ret;//返回了包装子元素的jQuery对象
+    },
+    end: function(){//伪造的测试方法
+        return this.prevObject;//很简单，把当前jQuery对象存的上一个对象返回；
+    },
+    //...
+}
+// init其实就是继承jQuery的新函数(Fn)，所以需要手动添加继承
+jQuery.fn.init.prototype = jQuery.fn;
+var $ = jQuery;
+//赶紧测试一下吧！！！看看里面的结构。
+console.log($(&quot;body&quot;).find(&#39;ul&#39;).find(&#39;li&#39;));
+//jQuery对象通过end方法进行回溯调用
+var obj = $(&quot;body&quot;).find(&#39;ul&#39;);
+obj.find(&#39;li&#39;).end() === obj;//true !!!</code></pre>
+<p>讲到这里，相信一路看下来的小伙伴应该都差不多明白了，所谓的<code>prevObject</code>属性其实就是存储了当前jQuery对象的上一个jQuery对象，并通过<code>end</code>方法进行回溯查找，从而实现了传说中的链式调用的灵活使用。</p>
+<p>这时，方才还在打瞌睡的John Resig适时睡醒了，在众多小伙伴的注视下走了过来，用手轻轻拍了我的肩膀，说道，“盗版虽好，不可贪杯哦”。</p>
+<h2 id="羽化登仙"><a href="#羽化登仙" class="headerlink" title="羽化登仙"></a>羽化登仙</h2><p>(｡･∀･)ﾉﾞ嗨！上面的小伙伴，你们还好吗？<br>好吧，其实我只是想多水两句。不过，如果是神情还有点恍惚的小伙伴，还请移步系列一，把这三部曲按照顺序看一遍，相信对传说中的jQuery对象就能够有一个深入的理解了。有没有信心？</p>
+<h5 id="为什么这么水？"><a href="#为什么这么水？" class="headerlink" title="为什么这么水？"></a>为什么这么水？</h5><p>我也不想啊！！！<br>好吧，虽然听起来有点言不由衷，不过确实是有苦衷的。</p>
+<ul>
+<li>苦衷一：个人切身体验。在深入理解jQuery源码之前，给我最大神秘感的，最难以理解的，其实就是这个<code>jQuery</code>对象，它是如何产生的？里面包含了写什么？是结构是怎样的？。。。这些问题一直是我心中最大的疑惑；</li>
+<li>苦衷二：理解源码之门槛。啥？门槛不是那些无穷无尽的API吗？是的，真正的门槛其实就是理解<code>jQuery</code>对象，它才是贯穿整个源码的主线，其他无穷无尽的API，都不过是游戏中的一个个副本而已。所以理解它是重中之重；</li>
+<li>苦衷三：本人控水能力不足（做欲哭状，旁边小伙伴呕吐声，叫骂声不绝于耳）；</li>
+</ul>
+<h5 id="结尾"><a href="#结尾" class="headerlink" title="结尾"></a>结尾</h5><p>系列一到系列三，其实讲的是都是jQuery对象，只不过采取的是循序渐进的方式而已，所以小伙伴们最好是放一起来阅读，小伙伴大佬则请自便。</p>
+<p>接下来的系列则是关于一系列API的另类解读，敬请期待哈！</p>
+
+            <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
+            <audio id="audio" loop="1" preload="auto" controls="controls"
+                data-autoplay="false">
+                <source type="audio/mpeg" src="">
+            </audio>
+            
+            <ul id="audio-list" style="display:none">
+                
+                
+                <li title='0' data-url='/statics/chengdu.mp3'></li>
+                
+                    
+            </ul>
+            
+            
+            
+    <div id='gitalk-container' class="comment link"
+        data-ae='true'
+        data-ci='ad0ec68ac6b80ef0adbd'
+        data-cs='bcf8895a95f3e128f12210a56df3cedd7d09a17d'
+        data-r='coderhaotf.github.io'
+        data-o='coderhaotf'
+        data-a='coderhaotf'
+        data-d=''
+    >Comments</div>
+
+
+            
+            
+        </div>
+        <div class="sidebar">
+            <div class="box animated fadeInRight">
+                <div class="subbox">
+                    <img src="https://res.cloudinary.com/tridiamond/image/upload/v1573019751/TriDiamond_logo_ui_xeublz.jpg" height=300 width=300></img>
+                    <p>haotf</p>
+                    <span>Think like an artist, develop like an artisan</span>
+                    <dl>
+                        <dd><a href="https://github.com/coderhaotf" target="_blank"><span
+                                    class=" iconfont icon-github"></span></a></dd>
+                        <dd><a href="https://twitter.com/" target="_blank"><span
+                                    class=" iconfont icon-twitter"></span></a></dd>
+                        <dd><a href="https://stackoverflow.com/" target="_blank"><span
+                                    class=" iconfont icon-stack-overflow"></span></a></dd>
+                    </dl>
+                </div>
+                <ul>
+                    <li><a href="/">31 <p>Articles</p></a></li>
+                    <li><a href="/categories">0 <p>Categories</p></a></li>
+                    <li><a href="/tags">0 <p>Tags</p></a></li>
+                </ul>
+            </div>
+            
+            
+            
+            <div class="box sticky animated fadeInRight faster">
+                <div id="toc" class="subbox">
+                    <h4>Contents</h4>
+                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#引言"><span class="toc-number">1.</span> <span class="toc-text">引言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#灵魂拷问"><span class="toc-number">2.</span> <span class="toc-text">灵魂拷问</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#闭关修炼"><span class="toc-number">3.</span> <span class="toc-text">闭关修炼</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#渡劫化神"><span class="toc-number">4.</span> <span class="toc-text">渡劫化神</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#羽化登仙"><span class="toc-number">5.</span> <span class="toc-text">羽化登仙</span></a></li></ol>
+                </div>
+            </div>
+            
+            
+        </div>
+    </div>
+</div>
+
+    </div>
+</div>
+    <div id="back-to-top" class="animated fadeIn faster">
+        <div class="flow"></div>
+        <span class="percentage animated fadeIn faster">0%</span>
+        <span class="iconfont icon-top02 animated fadeIn faster"></span>
+    </div>
+</body>
+<footer>
+    <p class="copyright" id="copyright">
+        &copy; 2020
+        <span class="gradient-text">
+            haotf
+        </span>.
+        Designed && Powerd  by <a href="http://hexo.io/" title="Hexo" target="_blank" rel="noopener">Hexo</a>
+        <p>Copyright© 2018 早起不吃虫的博客 粤ICP备18104892号</p>
+        <!-- Theme
+        <span class="gradient-text">
+            <a href="https://github.com/TriDiamond/hexo-theme-obsidian" title="Obsidian" target="_blank" rel="noopener">Obsidian</a>
+        </span>
+        <small><a href="https://github.com/TriDiamond/hexo-theme-obsidian/blob/master/CHANGELOG.md" title="v1.4.3" target="_blank" rel="noopener">v1.4.3</a></small> -->
+    </p>
+</footer>
+
+<script type="text/javascript" src="https://cdn.bootcss.com/mathjax/2.7.6/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<script>
+  MathJax.Hub.Config({
+    "HTML-CSS": {
+      preferredFont: "TeX",
+      availableFonts: ["STIX", "TeX"],
+      linebreaks: {
+        automatic: true
+      },
+      EqnChunk: (MathJax.Hub.Browser.isMobile ? 10 : 50)
+    },
+    tex2jax: {
+      inlineMath: [
+        ["$", "$"],
+        ["\\(", "\\)"]
+      ],
+      processEscapes: true,
+      ignoreClass: "tex2jax_ignore|dno",
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    TeX: {
+      noUndefined: {
+        attributes: {
+          mathcolor: "red",
+          mathbackground: "#FFEEEE",
+          mathsize: "90%"
+        }
+      },
+      Macros: {
+        href: "{}"
+      }
+    },
+    messageStyle: "none"
+  });
+</script>
+<script>
+  function initialMathJax() {
+    MathJax.Hub.Queue(function () {
+      var all = MathJax.Hub.getAllJax(),
+        i;
+      // console.log(all);
+      for (i = 0; i < all.length; i += 1) {
+        console.log(all[i].SourceElement().parentNode)
+        all[i].SourceElement().parentNode.className += ' has-jax';
+      }
+    });
+  }
+
+  function reprocessMathJax() {
+    if (typeof MathJax !== 'undefined') {
+      MathJax.Hub.Queue(["Typeset", MathJax.Hub]);
+    }
+  }
+</script>
+
+
+
+    
+<link rel="stylesheet" href="//cdn.bootcss.com/gitalk/1.5.0/gitalk.min.css">
+
+    
+<script src="//cdn.bootcss.com/gitalk/1.5.0/gitalk.min.js"></script>
+
+
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="/js/plugin.js"></script>
+<script src="/js/obsidian.js"></script>
+<script src="/js/jquery.truncate.js"></script>
+<script src="/js/search.js"></script>
+
+
+<script src="//cdn.bootcss.com/typed.js/2.0.10/typed.min.js"></script>
+
+
+<script src="//cdn.bootcss.com/blueimp-md5/2.12.0/js/md5.min.js"></script>
+
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/social-share.js/1.0.16/js/social-share.min.js"></script>
+
+
+<script src="https://cdn.bootcss.com/codemirror/5.48.4/codemirror.min.js"></script>
+
+    
+<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/javascript/javascript.min.js"></script>
+
+
+    
+<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/css/css.min.js"></script>
+
+
+    
+<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/xml/xml.min.js"></script>
+
+
+    
+<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/htmlmixed/htmlmixed.min.js"></script>
+
+
+    
+<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/clike/clike.min.js"></script>
+
+
+    
+<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/php/php.min.js"></script>
+
+
+    
+<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/shell/shell.min.js"></script>
+
+
+    
+<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/python/python.min.js"></script>
+
+
+
+
+    
+<script src="/js/busuanzi.min.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            if ($('span[id^="busuanzi_"]').length) {
+                initialBusuanzi();
+            }
+        });
+    </script>
+
+
+
+<link rel="stylesheet" href="//cdn.bootcss.com/photoswipe/4.1.3/photoswipe.min.css">
+<link rel="stylesheet" href="//cdn.bootcss.com/photoswipe/4.1.3/default-skin/default-skin.min.css">
+
+
+<script src="//cdn.bootcss.com/photoswipe/4.1.3/photoswipe.min.js"></script>
+<script src="//cdn.bootcss.com/photoswipe/4.1.3/photoswipe-ui-default.min.js"></script>
+
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+            <div class="pswp__top-bar">
+                <!--  Controls are self-explanatory. Order can be changed. -->
+                <div class="pswp__counter"></div>
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                      <div class="pswp__preloader__cut">
+                        <div class="pswp__preloader__donut"></div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div> 
+            </div>
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="//www.googletagmanager.com/gtag/js?id=UA-149874671-1"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', 'UA-149874671-1');
+    </script>
+
+
+
+
+
+<script>
+    function initialTyped () {
+        var typedTextEl = $('.typed-text');
+        if (typedTextEl && typedTextEl.length > 0) {
+            var typed = new Typed('.typed-text', {
+                strings: ["Think like an artist, develop like an artisan", "艺术家思维去思考问题，工匠创造精神去开发"],
+                typeSpeed: 90,
+                loop: true,
+                loopCount: Infinity,
+                backSpeed: 20,
+            });
+        }
+    }
+
+    if ($('.article-header') && $('.article-header').length) {
+        $(document).ready(function () {
+            initialTyped();
+        });
+    }
+</script>
+
+
+
+
+</html>

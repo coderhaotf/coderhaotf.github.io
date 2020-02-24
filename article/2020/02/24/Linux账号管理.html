@@ -1,0 +1,633 @@
+
+<!DOCTYPE html>
+<html lang="en" class="loading">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Linux账号管理 - 早起不吃虫</title>
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="google" content="notranslate" />
+    <meta name="keywords" content="coderhaotf,"> 
+    <meta name="description" content="查看用户信息查看账号[root@localhost ~]# head -n 4 /etc/passwd
+root:x:0:0:root:/root:/bin/bash
+bin:x:1:1:bin:/,"> 
+    <meta name="author" content="haotf"> 
+    <link rel="alternative" href="atom.xml" title="早起不吃虫" type="application/atom+xml"> 
+    <link rel="icon" href="/img/favicon.png"> 
+    <link href="https://fonts.loli.net/css?family=Roboto+Mono|Rubik&display=swap" rel="stylesheet">
+    
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1429596_nzgqgvnmkjb.css">
+
+    
+<link rel="stylesheet" href="//cdn.bootcss.com/animate.css/3.7.2/animate.min.css">
+
+    
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/social-share.js/1.0.16/css/share.min.css">
+
+    
+<link rel="stylesheet" href="//cdn.bootcss.com/codemirror/5.48.4/codemirror.min.css">
+
+    
+<link rel="stylesheet" href="//cdn.bootcss.com/codemirror/5.48.4/theme/dracula.css">
+
+    
+<link rel="stylesheet" href="/css/obsidian.css">
+
+    
+<link rel="stylesheet" href="/css/ball-atom.min.css">
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+
+<body class="loading">
+    <div class="loader">
+        <div class="la-ball-atom la-2x">
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+    </div>
+    <span id="config-title" style="display:none">早起不吃虫</span>
+    <div id="loader"></div>
+    <div id="single">
+    <div class="scrollbar gradient-bg-rev"></div>
+<div id="top" style="display: block;">
+    <div class="bar" style="width: 0;"></div>
+    <div class="navigation animated fadeIn fast delay-1s">
+        <img id="home-icon" class="icon-home" src="/img/favicon.png" alt="" data-url="https://coderhaotf.github.io">
+        <div id="play-icon" title="Play/Pause" class="iconfont icon-play"></div>
+        <h3 class="subtitle">Linux账号管理</h3>
+        <div class="social">
+            <!--        <div class="like-icon">-->
+            <!--            <a href="javascript:;" class="likeThis active"><span class="icon-like"></span><span class="count">76</span></a>-->
+            <!--        </div>-->
+            <div>
+                <div class="share">
+                    
+                        <a href="javascript:;" class="iconfont icon-share1"></a>
+                        <div class="share-component-cc" data-disabled="facebook,douban,linkedin,diandian,tencent,google"></div>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+    <div class="section">
+        <div class=article-header-wrapper>
+    <div class="article-header">
+        <div class="article-cover animated fadeIn" style="
+            animation-delay: 600ms;
+            animation-duration: 1.2s;
+            background-image: 
+                radial-gradient(ellipse closest-side, rgba(0, 0, 0, 0.65), #100e17),
+                url(/img/cover.jpg);">
+        </div>
+        <div class="else">
+            <p class="animated fadeInDown">
+                
+                <a href="javascript:;"><b>「 </b>Article<b> 」</b></a>
+                
+                February 24, 2020
+            </p>
+            <h3 class="post-title animated fadeInDown"><a href="/article/2020/02/24/Linux%E8%B4%A6%E5%8F%B7%E7%AE%A1%E7%90%86.html" title="Linux账号管理" class="">Linux账号管理</a>
+            </h3>
+            
+            <p class="post-count animated fadeInDown">
+                
+                <span>
+                    <b class="iconfont icon-text2"></b> <i>Words count</i>
+                    7.1k
+                </span>
+                
+                
+                <span>
+                    <b class="iconfont icon-timer__s"></b> <i>Reading time</i>
+                    6 mins.
+                </span>
+                
+                
+                
+                <span id="busuanzi_container_page_pv">
+                    <b class="iconfont icon-read"></b> <i>Read count</i>
+                    <span id="busuanzi_value_page_pv">0</span>
+                </span>
+                
+            </p>
+            
+            
+        </div>
+    </div>
+</div>
+
+<div class="screen-gradient-after">
+    <div class="screen-gradient-content">
+        <div class="screen-gradient-content-inside">
+            <div class="bold-underline-links screen-gradient-sponsor">
+                <p>
+                    <span class="animated fadeIn delay-1s"></span>
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="article">
+    <div class='main'>
+        <div class="content markdown animated fadeIn">
+            <h2 id="查看用户信息"><a href="#查看用户信息" class="headerlink" title="查看用户信息"></a>查看用户信息</h2><h5 id="查看账号"><a href="#查看账号" class="headerlink" title="查看账号"></a>查看账号</h5><pre><code class="linux">[root@localhost ~]# head -n 4 /etc/passwd
+root:x:0:0:root:/root:/bin/bash
+bin:x:1:1:bin:/bin:/sbin/nologin
+daemon:x:2:2:daemon:/sbin:/sbin/nologin
+adm:x:3:4:adm:/var/adm:/sbin/nologin</code></pre>
+<ul>
+<li><ol>
+<li>帐号名称</li>
+</ol>
+</li>
+<li><ol start="2">
+<li>密码： 具体密码放在/etc/shadow 中了，所以这里只会看到一个“ x ”</li>
+</ol>
+</li>
+<li><ol start="3">
+<li>UID： 这个就是使用者识别码；0（系统管理员）| 1<del>999（系统帐号） | 1000</del>60000（可登陆帐号）给一般使用者用的。</li>
+</ol>
+</li>
+<li><ol start="4">
+<li>GID： 这个与 /etc/group 有关；</li>
+</ol>
+</li>
+<li><ol start="5">
+<li>使用者信息说明栏;</li>
+</ol>
+</li>
+<li><ol start="6">
+<li>主文件夹： 这是使用者的主文件夹;</li>
+</ol>
+</li>
+<li><ol start="7">
+<li>Shell： 当使用者登陆系统后就会取得一个 Shell 来与系统的核心沟通以进行使用者的操作任务。</li>
+</ol>
+</li>
+</ul>
+<h5 id="查看密码"><a href="#查看密码" class="headerlink" title="查看密码"></a>查看密码</h5><pre><code class="linux">[root@localhost ~]# head -n 4 /etc/shadow
+root:$1$PVouuTVF$M9aj8PmDWwU4026X2VAAe0:18026:0:99999:7:::
+bin:*:16659:0:99999:7:::
+daemon:*:16659:0:99999:7:::
+adm:*:16659:0:99999:7:::
+
+// 查看上一次修改密码的日期
+[root@localhost ~]# date -u -d &quot;1970-01-01 UTC $((18026 * 86400 )) seconds&quot;
+Fri May 10 00:00:00 UTC 2019</code></pre>
+<ul>
+<li><ol>
+<li>帐号名称;</li>
+</ol>
+</li>
+<li><ol start="2">
+<li>密码： 这个字段内的数据才是真正的密码，而且是经过编码的密码;</li>
+</ol>
+</li>
+<li><ol start="3">
+<li>最近更动密码的日期;</li>
+</ol>
+</li>
+<li><ol start="4">
+<li>密码不可被更动的天数；</li>
+</ol>
+</li>
+</ul>
+<h2 id="查看群组信息"><a href="#查看群组信息" class="headerlink" title="查看群组信息"></a>查看群组信息</h2><p>用户帐号相关的两个文件是 /etc/passwd 与 /etc/shadow ，与此类似，群组相关信息在 /etc/group 与 /etc/gshadow 文件中；</p>
+<h5 id="查看群组"><a href="#查看群组" class="headerlink" title="查看群组"></a>查看群组</h5><pre><code class="linux">[root@localhost ~]# head -n 4 /etc/group
+root:x:0:
+bin:x:1:
+daemon:x:2:
+sys:x:3:</code></pre>
+<h5 id="查看密码-1"><a href="#查看密码-1" class="headerlink" title="查看密码"></a>查看密码</h5><pre><code class="linux">[root@localhost ~]# head -n 4 /etc/gshadow
+root:::
+bin:::
+daemon:::
+sys:::</code></pre>
+<ul>
+<li><ol>
+<li>群组名称</li>
+</ol>
+</li>
+<li><ol start="2">
+<li>密码栏，同样的，开头为 ! 表示无合法密码，所以无群组管理员</li>
+</ol>
+</li>
+<li><ol start="3">
+<li>群组管理员的帐号 （相关信息在 gpasswd 中介绍）</li>
+</ol>
+</li>
+<li><ol start="4">
+<li>有加入该群组支持的所属帐号 （与 /etc/group 内容相同！）</li>
+</ol>
+</li>
+</ul>
+<h2 id="账号管理"><a href="#账号管理" class="headerlink" title="账号管理"></a>账号管理</h2><h5 id="新增用户"><a href="#新增用户" class="headerlink" title="新增用户"></a>新增用户</h5><pre><code class="linux">[root@localhost ~]# useradd user1
+[root@localhost ~]# grep user1 /etc/passwd /etc/shadow /etc/group
+/etc/passwd:user1:x:1001:1001::/home/user1:/bin/bash
+/etc/shadow:user1:!!:18027
+/etc/group:user1:x:1001:  // 默认会创建一个与帐号一模一样的群组名
+
+[root@localhost ~]# su user1
+[user1@localhost root]$ cd ~
+[user1@localhost ~]$ pwd
+/home/user1   // 默认在home目录下创建一个同名用户目录
+
+// -D 查看该命令的默认配置
+[root@localhost user1]# useradd -D
+GROUP=100
+HOME=/home  // 使用者主文件夹的基准目录（basedir）
+INACTIVE=-1
+EXPIRE=
+SHELL=/bin/bash
+SKEL=/etc/skel
+CREATE_MAIL_SPOOL=yes</code></pre>
+<h5 id="修改密码"><a href="#修改密码" class="headerlink" title="修改密码"></a>修改密码</h5><p>使用 useradd 创建了帐号之后，在默认的情况下，该帐号是暂时被封锁的， 也就是说，该帐号是无法登陆的，你可以去瞧一瞧 /etc/shadow 内的第二个字段就知道了（<code>/etc/shadow:user1:!!:18027</code>）。</p>
+<pre><code class="linux">[root@localhost user1]# passwd --stdin user1
+Changing password for user user1.
+user1
+passwd: all authentication tokens updated successfully.
+[root@localhost user1]# grep user1 /etc/shadow
+user1:$1$zQ.ACG7G$BOzh/LS6Zfa7uBIwjlV1j1:18027:0:99999:7:::</code></pre>
+<p>passwd 的使用真的要很注意，要帮一般帐号创建密码需要使用“ passwd 帐号 ”的格式，使用“ passwd ”表示修改自己的密码！</p>
+<h5 id="锁定账号"><a href="#锁定账号" class="headerlink" title="锁定账号"></a>锁定账号</h5><pre><code class="linux">// -l 锁定账号
+[root@localhost ~]# passwd -l user1
+Locking password for user user1.
+passwd: Success
+
+// -S 查看账号密码状态，需要root权限
+[root@localhost ~]# passwd -S user1
+user1 LK 2019-05-10 0 99999 7 -1 (Password locked.)
+
+// 密码前面加上!!
+[root@localhost ~]# grep user1 /etc/shadow
+user1:!!$1$zQ.ACG7G$BOzh/LS6Zfa7uBIwjlV1j1:18027:0:99999:7:::
+
+// -u 解锁账号
+[root@localhost ~]# passwd -u user1
+Unlocking password for user user1.
+passwd: Success
+
+// !! 去掉了
+[root@localhost ~]# grep user1 /etc/shadow
+user1:$1$zQ.ACG7G$BOzh/LS6Zfa7uBIwjlV1j1:18027:0:99999:7:::</code></pre>
+<h5 id="查看密码状态"><a href="#查看密码状态" class="headerlink" title="查看密码状态"></a>查看密码状态</h5><p>上例用到了<code>passwd -S username</code>来查看密码状态，但是显然信息太过简略了，下面介绍一个新命令chage:</p>
+<pre><code class="linux">[root@localhost ~]# chage -l user1
+Last password change                                : May 11, 2019
+Password expires                                    : never
+Password inactive                                   : never
+Account expires                                     : never
+Minimum number of days between password change      : 0
+Maximum number of days between password change      : 99999
+Number of days of warning before password expires   : 7</code></pre>
+<p>选项与参数：<br>    -l ：列出该帐号的详细密码参数；<br>    -d ：后面接日期，修改 shadow 第三字段（最近一次更改密码的日期），格式 YYYY-MM-DD<br>    -E ：后面接日期，修改 shadow 第八字段（帐号失效日），格式 YYYY-MM-DD<br>    -I ：后面接天数，修改 shadow 第七字段（密码失效日期）<br>    -m ：后面接天数，修改 shadow 第四字段（密码最短保留天数）<br>    -M ：后面接天数，修改 shadow 第五字段（密码多久需要进行变更）<br>    -W ：后面接天数，修改 shadow 第六字段（密码过期前警告日期）</p>
+<h5 id="修改用户"><a href="#修改用户" class="headerlink" title="修改用户"></a>修改用户</h5><p>所谓这“人有失手，马有乱蹄”，有的时候在useradd 的时候加入了错误的设置数据。或者是，在使用 useradd 后，发现某些地方还可以进行细部修改。 此时，当然我们可以直接到 /etc/passwd 或 /etc/shadow 去修改相对应字段的数据， 或者使用命令<code>usermod</code> 。</p>
+<p>值得注意的是，修改用户时需要退出相关进程：</p>
+<pre><code class="linux">[root@localhost ~]# usermod -l user11 user1
+usermod: user user1 is currently used by process 3060
+
+[root@localhost ~]# pkill -9 -u user1
+[root@localhost ~]# Killed
+[root@localhost ~]# exit
+
+[root@localhost ~]# usermod -l user11 user1
+[root@localhost ~]# grep user /etc/passwd
+user11:x:1001:1001::/home/user1:/bin/bash  // 用户名变为user11</code></pre>
+<p>选项与参数：<br>    -c ：后面接帐号的说明，即 /etc/passwd 第五栏的说明栏，可以加入一些帐号的说明。<br>    -d ：后面接帐号的主文件夹，即修改 /etc/passwd 的第六栏；<br>    -e ：后面接日期，格式是 YYYY-MM-DD 也就是在 /etc/shadow 内的第八个字段数据啦！<br>    -f ：后面接天数，为 shadow 的第七字段。<br>    -g ：后面接初始群组，修改 /etc/passwd 的第四个字段，亦即是 GID 的字段！<br>    -G ：后面接次要群组，修改这个使用者能够支持的群组，修改的是 /etc/group 啰～<br>    -a ：与 -G 合用，可“增加次要群组的支持”而非“设置”喔！<br>    -l ：后面接帐号名称。亦即是修改帐号名称， /etc/passwd 的第一栏！<br>    -s ：后面接 Shell 的实际文件，例如 /bin/bash 或 /bin/csh 等等。<br>    -u ：后面接 UID 数字啦！即 /etc/passwd 第三栏的数据；<br>    -L ：暂时将使用者的密码冻结，让他无法登陆。其实仅改 /etc/shadow 的密码栏。<br>    -U ：将 /etc/shadow 密码栏的 ! 拿掉，解冻啦！</p>
+<h5 id="删除用户"><a href="#删除用户" class="headerlink" title="删除用户"></a>删除用户</h5><p><code>userdel</code>指令的目的在删除使用者的相关数据，而使用者的数据有：</p>
+<ul>
+<li>使用者帐号/密码相关参数：/etc/passwd, /etc/shadow</li>
+<li>使用者群组相关参数：/etc/group, /etc/gshadow</li>
+<li>使用者个人文件数据： /home/username, /var/spool/mail/username..</li>
+</ul>
+<pre><code class="linux">[root@localhost ~]# userdel -r user1
+[root@localhost ~]# grep user1 /etc/passwd
+[root@localhost ~]# </code></pre>
+<p>选项与参数：<br>-r ：连同使用者的主文件夹也一起删除</p>
+<p>如果想要完整的将某个帐号完整的移除，最好可以在下达 userdel -r username 之前， 先以“ find / -user username ”查出整个系统内属于 username 的文件，然后再加以删除。</p>
+
+            <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
+            <audio id="audio" loop="1" preload="auto" controls="controls"
+                data-autoplay="false">
+                <source type="audio/mpeg" src="">
+            </audio>
+            
+            <ul id="audio-list" style="display:none">
+                
+                
+                <li title='0' data-url='/statics/chengdu.mp3'></li>
+                
+                    
+            </ul>
+            
+            
+            
+    <div id='gitalk-container' class="comment link"
+        data-ae='true'
+        data-ci='ad0ec68ac6b80ef0adbd'
+        data-cs='bcf8895a95f3e128f12210a56df3cedd7d09a17d'
+        data-r='coderhaotf.github.io'
+        data-o='coderhaotf'
+        data-a='coderhaotf'
+        data-d=''
+    >Comments</div>
+
+
+            
+            
+        </div>
+        <div class="sidebar">
+            <div class="box animated fadeInRight">
+                <div class="subbox">
+                    <img src="https://res.cloudinary.com/tridiamond/image/upload/v1573019751/TriDiamond_logo_ui_xeublz.jpg" height=300 width=300></img>
+                    <p>haotf</p>
+                    <span>Think like an artist, develop like an artisan</span>
+                    <dl>
+                        <dd><a href="https://github.com/coderhaotf" target="_blank"><span
+                                    class=" iconfont icon-github"></span></a></dd>
+                        <dd><a href="https://twitter.com/" target="_blank"><span
+                                    class=" iconfont icon-twitter"></span></a></dd>
+                        <dd><a href="https://stackoverflow.com/" target="_blank"><span
+                                    class=" iconfont icon-stack-overflow"></span></a></dd>
+                    </dl>
+                </div>
+                <ul>
+                    <li><a href="/">31 <p>Articles</p></a></li>
+                    <li><a href="/categories">0 <p>Categories</p></a></li>
+                    <li><a href="/tags">0 <p>Tags</p></a></li>
+                </ul>
+            </div>
+            
+            
+            
+            <div class="box sticky animated fadeInRight faster">
+                <div id="toc" class="subbox">
+                    <h4>Contents</h4>
+                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#查看用户信息"><span class="toc-number">1.</span> <span class="toc-text">查看用户信息</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#查看群组信息"><span class="toc-number">2.</span> <span class="toc-text">查看群组信息</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#账号管理"><span class="toc-number">3.</span> <span class="toc-text">账号管理</span></a></li></ol>
+                </div>
+            </div>
+            
+            
+        </div>
+    </div>
+</div>
+
+    </div>
+</div>
+    <div id="back-to-top" class="animated fadeIn faster">
+        <div class="flow"></div>
+        <span class="percentage animated fadeIn faster">0%</span>
+        <span class="iconfont icon-top02 animated fadeIn faster"></span>
+    </div>
+</body>
+<footer>
+    <p class="copyright" id="copyright">
+        &copy; 2020
+        <span class="gradient-text">
+            haotf
+        </span>.
+        Designed && Powerd  by <a href="http://hexo.io/" title="Hexo" target="_blank" rel="noopener">Hexo</a>
+        <p>Copyright© 2018 早起不吃虫的博客 粤ICP备18104892号</p>
+        <!-- Theme
+        <span class="gradient-text">
+            <a href="https://github.com/TriDiamond/hexo-theme-obsidian" title="Obsidian" target="_blank" rel="noopener">Obsidian</a>
+        </span>
+        <small><a href="https://github.com/TriDiamond/hexo-theme-obsidian/blob/master/CHANGELOG.md" title="v1.4.3" target="_blank" rel="noopener">v1.4.3</a></small> -->
+    </p>
+</footer>
+
+<script type="text/javascript" src="https://cdn.bootcss.com/mathjax/2.7.6/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<script>
+  MathJax.Hub.Config({
+    "HTML-CSS": {
+      preferredFont: "TeX",
+      availableFonts: ["STIX", "TeX"],
+      linebreaks: {
+        automatic: true
+      },
+      EqnChunk: (MathJax.Hub.Browser.isMobile ? 10 : 50)
+    },
+    tex2jax: {
+      inlineMath: [
+        ["$", "$"],
+        ["\\(", "\\)"]
+      ],
+      processEscapes: true,
+      ignoreClass: "tex2jax_ignore|dno",
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    TeX: {
+      noUndefined: {
+        attributes: {
+          mathcolor: "red",
+          mathbackground: "#FFEEEE",
+          mathsize: "90%"
+        }
+      },
+      Macros: {
+        href: "{}"
+      }
+    },
+    messageStyle: "none"
+  });
+</script>
+<script>
+  function initialMathJax() {
+    MathJax.Hub.Queue(function () {
+      var all = MathJax.Hub.getAllJax(),
+        i;
+      // console.log(all);
+      for (i = 0; i < all.length; i += 1) {
+        console.log(all[i].SourceElement().parentNode)
+        all[i].SourceElement().parentNode.className += ' has-jax';
+      }
+    });
+  }
+
+  function reprocessMathJax() {
+    if (typeof MathJax !== 'undefined') {
+      MathJax.Hub.Queue(["Typeset", MathJax.Hub]);
+    }
+  }
+</script>
+
+
+
+    
+<link rel="stylesheet" href="//cdn.bootcss.com/gitalk/1.5.0/gitalk.min.css">
+
+    
+<script src="//cdn.bootcss.com/gitalk/1.5.0/gitalk.min.js"></script>
+
+
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="/js/plugin.js"></script>
+<script src="/js/obsidian.js"></script>
+<script src="/js/jquery.truncate.js"></script>
+<script src="/js/search.js"></script>
+
+
+<script src="//cdn.bootcss.com/typed.js/2.0.10/typed.min.js"></script>
+
+
+<script src="//cdn.bootcss.com/blueimp-md5/2.12.0/js/md5.min.js"></script>
+
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/social-share.js/1.0.16/js/social-share.min.js"></script>
+
+
+<script src="https://cdn.bootcss.com/codemirror/5.48.4/codemirror.min.js"></script>
+
+    
+<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/javascript/javascript.min.js"></script>
+
+
+    
+<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/css/css.min.js"></script>
+
+
+    
+<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/xml/xml.min.js"></script>
+
+
+    
+<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/htmlmixed/htmlmixed.min.js"></script>
+
+
+    
+<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/clike/clike.min.js"></script>
+
+
+    
+<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/php/php.min.js"></script>
+
+
+    
+<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/shell/shell.min.js"></script>
+
+
+    
+<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/python/python.min.js"></script>
+
+
+
+
+    
+<script src="/js/busuanzi.min.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            if ($('span[id^="busuanzi_"]').length) {
+                initialBusuanzi();
+            }
+        });
+    </script>
+
+
+
+<link rel="stylesheet" href="//cdn.bootcss.com/photoswipe/4.1.3/photoswipe.min.css">
+<link rel="stylesheet" href="//cdn.bootcss.com/photoswipe/4.1.3/default-skin/default-skin.min.css">
+
+
+<script src="//cdn.bootcss.com/photoswipe/4.1.3/photoswipe.min.js"></script>
+<script src="//cdn.bootcss.com/photoswipe/4.1.3/photoswipe-ui-default.min.js"></script>
+
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+            <div class="pswp__top-bar">
+                <!--  Controls are self-explanatory. Order can be changed. -->
+                <div class="pswp__counter"></div>
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                      <div class="pswp__preloader__cut">
+                        <div class="pswp__preloader__donut"></div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div> 
+            </div>
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="//www.googletagmanager.com/gtag/js?id=UA-149874671-1"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', 'UA-149874671-1');
+    </script>
+
+
+
+
+
+<script>
+    function initialTyped () {
+        var typedTextEl = $('.typed-text');
+        if (typedTextEl && typedTextEl.length > 0) {
+            var typed = new Typed('.typed-text', {
+                strings: ["Think like an artist, develop like an artisan", "艺术家思维去思考问题，工匠创造精神去开发"],
+                typeSpeed: 90,
+                loop: true,
+                loopCount: Infinity,
+                backSpeed: 20,
+            });
+        }
+    }
+
+    if ($('.article-header') && $('.article-header').length) {
+        $(document).ready(function () {
+            initialTyped();
+        });
+    }
+</script>
+
+
+
+
+</html>

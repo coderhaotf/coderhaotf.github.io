@@ -1,0 +1,548 @@
+
+<!DOCTYPE html>
+<html lang="en" class="loading">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Linux文件压缩 - 早起不吃虫</title>
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="google" content="notranslate" />
+    <meta name="keywords" content="coderhaotf,"> 
+    <meta name="description" content="文件压缩是Linux环境下非常常见的操作，我们可以通过一个常用的常见来熟悉相关命令。
+查看文件[root@localhost ~]# ll -hS /etc/* | head -n 3
+// -h:,"> 
+    <meta name="author" content="haotf"> 
+    <link rel="alternative" href="atom.xml" title="早起不吃虫" type="application/atom+xml"> 
+    <link rel="icon" href="/img/favicon.png"> 
+    <link href="https://fonts.loli.net/css?family=Roboto+Mono|Rubik&display=swap" rel="stylesheet">
+    
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1429596_nzgqgvnmkjb.css">
+
+    
+<link rel="stylesheet" href="//cdn.bootcss.com/animate.css/3.7.2/animate.min.css">
+
+    
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/social-share.js/1.0.16/css/share.min.css">
+
+    
+<link rel="stylesheet" href="//cdn.bootcss.com/codemirror/5.48.4/codemirror.min.css">
+
+    
+<link rel="stylesheet" href="//cdn.bootcss.com/codemirror/5.48.4/theme/dracula.css">
+
+    
+<link rel="stylesheet" href="/css/obsidian.css">
+
+    
+<link rel="stylesheet" href="/css/ball-atom.min.css">
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+
+<body class="loading">
+    <div class="loader">
+        <div class="la-ball-atom la-2x">
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+    </div>
+    <span id="config-title" style="display:none">早起不吃虫</span>
+    <div id="loader"></div>
+    <div id="single">
+    <div class="scrollbar gradient-bg-rev"></div>
+<div id="top" style="display: block;">
+    <div class="bar" style="width: 0;"></div>
+    <div class="navigation animated fadeIn fast delay-1s">
+        <img id="home-icon" class="icon-home" src="/img/favicon.png" alt="" data-url="https://coderhaotf.github.io">
+        <div id="play-icon" title="Play/Pause" class="iconfont icon-play"></div>
+        <h3 class="subtitle">Linux文件压缩</h3>
+        <div class="social">
+            <!--        <div class="like-icon">-->
+            <!--            <a href="javascript:;" class="likeThis active"><span class="icon-like"></span><span class="count">76</span></a>-->
+            <!--        </div>-->
+            <div>
+                <div class="share">
+                    
+                        <a href="javascript:;" class="iconfont icon-share1"></a>
+                        <div class="share-component-cc" data-disabled="facebook,douban,linkedin,diandian,tencent,google"></div>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+    <div class="section">
+        <div class=article-header-wrapper>
+    <div class="article-header">
+        <div class="article-cover animated fadeIn" style="
+            animation-delay: 600ms;
+            animation-duration: 1.2s;
+            background-image: 
+                radial-gradient(ellipse closest-side, rgba(0, 0, 0, 0.65), #100e17),
+                url(/img/cover.jpg);">
+        </div>
+        <div class="else">
+            <p class="animated fadeInDown">
+                
+                <a href="javascript:;"><b>「 </b>Article<b> 」</b></a>
+                
+                February 24, 2020
+            </p>
+            <h3 class="post-title animated fadeInDown"><a href="/article/2020/02/24/Linux%E6%96%87%E4%BB%B6%E5%8E%8B%E7%BC%A9.html" title="Linux文件压缩" class="">Linux文件压缩</a>
+            </h3>
+            
+            <p class="post-count animated fadeInDown">
+                
+                <span>
+                    <b class="iconfont icon-text2"></b> <i>Words count</i>
+                    4.8k
+                </span>
+                
+                
+                <span>
+                    <b class="iconfont icon-timer__s"></b> <i>Reading time</i>
+                    4 mins.
+                </span>
+                
+                
+                
+                <span id="busuanzi_container_page_pv">
+                    <b class="iconfont icon-read"></b> <i>Read count</i>
+                    <span id="busuanzi_value_page_pv">0</span>
+                </span>
+                
+            </p>
+            
+            
+        </div>
+    </div>
+</div>
+
+<div class="screen-gradient-after">
+    <div class="screen-gradient-content">
+        <div class="screen-gradient-content-inside">
+            <div class="bold-underline-links screen-gradient-sponsor">
+                <p>
+                    <span class="animated fadeIn delay-1s"></span>
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="article">
+    <div class='main'>
+        <div class="content markdown animated fadeIn">
+            <p>文件压缩是Linux环境下非常常见的操作，我们可以通过一个常用的常见来熟悉相关命令。</p>
+<h4 id="查看文件"><a href="#查看文件" class="headerlink" title="查看文件"></a>查看文件</h4><pre><code class="linux">[root@localhost ~]# ll -hS /etc/* | head -n 3
+// -h: 显示默认单位
+// -S： 按照大小排序
+// -n: 从头显示前3行
+-rw-r--r--.  1 root root 655K Jun  7  2013 /etc/services
+-rw-r--r--.  1 root root  25K Aug  5  2015 /etc/dnsmasq.conf
+-rw-r--r--.  1 root root  19K Mar 31 07:47 /etc/ld.so.cache</code></pre>
+<h4 id="拷贝文件"><a href="#拷贝文件" class="headerlink" title="拷贝文件"></a>拷贝文件</h4><pre><code class="linux">[root@localhost ~]# ll /home/user1
+total 0
+-rw-rw-r--. 1 user1 user1 0 Apr 18 09:00 a
+[root@localhost ~]# cp -ai /etc/services  /home/user1/services.cp
+- a 保留链接和文件属性，递归拷贝目录，相当于下面的d、p、r三个选项组合。
+- d 拷贝时保留链接。
+- f 删除已经存在目标文件而不提示。
+- i 覆盖目标文件前将给出确认提示，属交互式拷贝。
+- p 复制源文件内容后，还将把其修改时间和访问权限也复制到新文件中。
+- r 若源文件是一目录文件，此时cp将递归复制该目录下所有的子目录和文件
+[root@localhost ~]# ll /home/user1/
+// total后面的数字是指当前目录下所有文件所占用的空间总和
+total 656
+-rw-rw-r--. 1 user1 user1      0 Apr 18 09:00 a
+-rw-r--r--. 1 root  root  670293 Jun  7  2013 services.cp</code></pre>
+<h4 id="打包与压缩"><a href="#打包与压缩" class="headerlink" title="打包与压缩"></a>打包与压缩</h4><p>首先要弄清两个概念：打包和压缩。</p>
+<p>打包是指将一大堆文件或目录变成一个总的文件；</p>
+<p>压缩则是将一个大的文件通过一些压缩算法变成一个小文件。</p>
+<p>为什么要区分这两个概念呢？这源于Linux中很多压缩程序只能针对一个文件进行压缩，这样当你想要压缩一大堆文件时，你得先将这一大堆文件先打成一个包（tar命令），然后再用压缩程序进行压缩（gzip bzip2命令）。</p>
+<h6 id="准备拷贝文件"><a href="#准备拷贝文件" class="headerlink" title="准备拷贝文件"></a>准备拷贝文件</h6><pre><code class="linux">// 拷贝两份文件
+[root@localhost user1]# cp services.cp services.cp01
+[root@localhost user1]# cp services.cp services.cp02</code></pre>
+<h6 id="打包压缩"><a href="#打包压缩" class="headerlink" title="打包压缩"></a>打包压缩</h6><pre><code class="linux">// 打包
+[root@localhost user1]# tar -cvf 1.tar services.cp services.cp01 services.cp02
+
+// 打包与压缩
+[root@localhost user1]# tar -zcvf 1.tar.gz services.cp services.cp01
+// 打包与压缩
+[root@localhost user1]# tar -jcvf 1.tar.bz2 services.cp services.cp02
+选项与参数：
+-c ：创建打包文件，可搭配 -v 来察看过程中被打包的文件名（filename）
+-t ：察看打包文件的内容含有哪些文件名，重点在察看“文件名”就是了；
+-x ：解打包或解压缩的功能，可以搭配 -C （大写） 在特定目录解开
+特别留意的是， -c, -t, -x 不可同时出现在一串命令行中。
+-z ：通过 gzip 的支持进行压缩/解压缩：此时文件名最好为 *.tar.gz
+-j ：通过 bzip2 的支持进行压缩/解压缩：此时文件名最好为 *.tar.bz2
+-v ：在压缩/解压缩的过程中，将正在处理的文件名显示出来！
+-f filename：-f 后面要立刻接要被处理的文件名！建议 -f 单独写一个选项啰！
+-C 目录 ：这个选项用在解压缩，若要在特定目录解压缩，可以使用这个选项。
+
+-p（小写） ：保留备份数据的原本权限与属性，常用于备份（-c）重要的配置文件
+-P（大写） ：保留绝对路径，亦即允许备份数据中含有根目录存在之意；
+--exclude=FILE：在压缩的过程中，不要将 FILE 打包！</code></pre>
+<h6 id="查看打包效果"><a href="#查看打包效果" class="headerlink" title="查看打包效果"></a>查看打包效果</h6><pre><code class="linux">// 查看打包与压缩效果
+[root@localhost user1]# ll -hS
+total 84K
+-rw-r--r--. 1 root root 40K Apr 24 10:35 1.tar
+-rw-r--r--. 1 root root 10K Apr 24 10:07 services.cp
+-rw-r--r--. 1 root root 10K Apr 24 10:34 services.cp01
+-rw-r--r--. 1 root root 10K Apr 24 10:34 services.cp02
+-rw-r--r--. 1 root root 161 Apr 24 10:38 1.tar.gz
+-rw-r--r--. 1 root root 148 Apr 24 10:38 1.tar.bz2</code></pre>
+<h6 id="查看打包后包含文件"><a href="#查看打包后包含文件" class="headerlink" title="查看打包后包含文件"></a>查看打包后包含文件</h6><pre><code class="linux">[root@localhost user1]# tar -tvf 1.tar
+-rw-r--r-- root/root     10240 2019-04-24 10:07 services.cp
+-rw-r--r-- root/root     10240 2019-04-24 10:34 services.cp01
+-rw-r--r-- root/root     10240 2019-04-24 10:34 services.cp02
+
+[root@localhost user1]# tar -tvf 1.tar.gz
+-rw-r--r-- root/root     10240 2019-04-24 10:07 services.cp
+-rw-r--r-- root/root     10240 2019-04-24 10:34 services.cp01
+
+[root@localhost user1]# tar -tvf 1.tar.bz2
+-rw-r--r-- root/root     10240 2019-04-24 10:07 services.cp
+-rw-r--r-- root/root     10240 2019-04-24 10:34 services.cp02</code></pre>
+<h4 id="解压"><a href="#解压" class="headerlink" title="解压"></a>解压</h4><h6 id="解压打包文件"><a href="#解压打包文件" class="headerlink" title="解压打包文件"></a>解压打包文件</h6><pre><code class="linux">[root@localhost user1]# mkdir untar
+[root@localhost user1]# tar -xvf 1.tar -C ./untar/
+services.cp
+services.cp01
+services.cp02
+[root@localhost user1]# ll ./untar/
+total 36
+-rw-r--r--. 1 root root 10240 Apr 24 10:07 services.cp
+-rw-r--r--. 1 root root 10240 Apr 24 10:34 services.cp01
+-rw-r--r--. 1 root root 10240 Apr 24 10:34 services.cp02</code></pre>
+<h6 id="解压压缩文件"><a href="#解压压缩文件" class="headerlink" title="解压压缩文件"></a>解压压缩文件</h6><pre><code class="linux">[root@localhost user1]# mkdir untar.gz
+[root@localhost user1]# tar -xvf 1.tar.gz -C ./untar.gz/
+// 也可以加上压缩类型 -zxvf , -jxvf
+services.cp
+services.cp01
+[root@localhost user1]# ll ./untar.gz/
+total 24
+-rw-r--r--. 1 root root 10240 Apr 24 10:07 services.cp
+-rw-r--r--. 1 root root 10240 Apr 24 10:34 services.cp01</code></pre>
+<h6 id="解压部分文件"><a href="#解压部分文件" class="headerlink" title="解压部分文件"></a>解压部分文件</h6><pre><code class="linux">[root@localhost user1]# mkdir untar.bz2
+[root@localhost user1]# tar -jxvf 1.tar.bz2 services.cp02 -C ./untar.bz2/
+services.cp02
+[root@localhost user1]# ll ./untar.bz2/
+total 0 ???为什么没有解压过来？</code></pre>
+
+            <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
+            <audio id="audio" loop="1" preload="auto" controls="controls"
+                data-autoplay="false">
+                <source type="audio/mpeg" src="">
+            </audio>
+            
+            <ul id="audio-list" style="display:none">
+                
+                
+                <li title='0' data-url='/statics/chengdu.mp3'></li>
+                
+                    
+            </ul>
+            
+            
+            
+    <div id='gitalk-container' class="comment link"
+        data-ae='true'
+        data-ci='ad0ec68ac6b80ef0adbd'
+        data-cs='bcf8895a95f3e128f12210a56df3cedd7d09a17d'
+        data-r='coderhaotf.github.io'
+        data-o='coderhaotf'
+        data-a='coderhaotf'
+        data-d=''
+    >Comments</div>
+
+
+            
+            
+        </div>
+        <div class="sidebar">
+            <div class="box animated fadeInRight">
+                <div class="subbox">
+                    <img src="https://res.cloudinary.com/tridiamond/image/upload/v1573019751/TriDiamond_logo_ui_xeublz.jpg" height=300 width=300></img>
+                    <p>haotf</p>
+                    <span>Think like an artist, develop like an artisan</span>
+                    <dl>
+                        <dd><a href="https://github.com/coderhaotf" target="_blank"><span
+                                    class=" iconfont icon-github"></span></a></dd>
+                        <dd><a href="https://twitter.com/" target="_blank"><span
+                                    class=" iconfont icon-twitter"></span></a></dd>
+                        <dd><a href="https://stackoverflow.com/" target="_blank"><span
+                                    class=" iconfont icon-stack-overflow"></span></a></dd>
+                    </dl>
+                </div>
+                <ul>
+                    <li><a href="/">31 <p>Articles</p></a></li>
+                    <li><a href="/categories">0 <p>Categories</p></a></li>
+                    <li><a href="/tags">0 <p>Tags</p></a></li>
+                </ul>
+            </div>
+            
+            
+            
+            
+        </div>
+    </div>
+</div>
+
+    </div>
+</div>
+    <div id="back-to-top" class="animated fadeIn faster">
+        <div class="flow"></div>
+        <span class="percentage animated fadeIn faster">0%</span>
+        <span class="iconfont icon-top02 animated fadeIn faster"></span>
+    </div>
+</body>
+<footer>
+    <p class="copyright" id="copyright">
+        &copy; 2020
+        <span class="gradient-text">
+            haotf
+        </span>.
+        Designed && Powerd  by <a href="http://hexo.io/" title="Hexo" target="_blank" rel="noopener">Hexo</a>
+        <p>Copyright© 2018 早起不吃虫的博客 粤ICP备18104892号</p>
+        <!-- Theme
+        <span class="gradient-text">
+            <a href="https://github.com/TriDiamond/hexo-theme-obsidian" title="Obsidian" target="_blank" rel="noopener">Obsidian</a>
+        </span>
+        <small><a href="https://github.com/TriDiamond/hexo-theme-obsidian/blob/master/CHANGELOG.md" title="v1.4.3" target="_blank" rel="noopener">v1.4.3</a></small> -->
+    </p>
+</footer>
+
+<script type="text/javascript" src="https://cdn.bootcss.com/mathjax/2.7.6/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<script>
+  MathJax.Hub.Config({
+    "HTML-CSS": {
+      preferredFont: "TeX",
+      availableFonts: ["STIX", "TeX"],
+      linebreaks: {
+        automatic: true
+      },
+      EqnChunk: (MathJax.Hub.Browser.isMobile ? 10 : 50)
+    },
+    tex2jax: {
+      inlineMath: [
+        ["$", "$"],
+        ["\\(", "\\)"]
+      ],
+      processEscapes: true,
+      ignoreClass: "tex2jax_ignore|dno",
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    TeX: {
+      noUndefined: {
+        attributes: {
+          mathcolor: "red",
+          mathbackground: "#FFEEEE",
+          mathsize: "90%"
+        }
+      },
+      Macros: {
+        href: "{}"
+      }
+    },
+    messageStyle: "none"
+  });
+</script>
+<script>
+  function initialMathJax() {
+    MathJax.Hub.Queue(function () {
+      var all = MathJax.Hub.getAllJax(),
+        i;
+      // console.log(all);
+      for (i = 0; i < all.length; i += 1) {
+        console.log(all[i].SourceElement().parentNode)
+        all[i].SourceElement().parentNode.className += ' has-jax';
+      }
+    });
+  }
+
+  function reprocessMathJax() {
+    if (typeof MathJax !== 'undefined') {
+      MathJax.Hub.Queue(["Typeset", MathJax.Hub]);
+    }
+  }
+</script>
+
+
+
+    
+<link rel="stylesheet" href="//cdn.bootcss.com/gitalk/1.5.0/gitalk.min.css">
+
+    
+<script src="//cdn.bootcss.com/gitalk/1.5.0/gitalk.min.js"></script>
+
+
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="/js/plugin.js"></script>
+<script src="/js/obsidian.js"></script>
+<script src="/js/jquery.truncate.js"></script>
+<script src="/js/search.js"></script>
+
+
+<script src="//cdn.bootcss.com/typed.js/2.0.10/typed.min.js"></script>
+
+
+<script src="//cdn.bootcss.com/blueimp-md5/2.12.0/js/md5.min.js"></script>
+
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/social-share.js/1.0.16/js/social-share.min.js"></script>
+
+
+<script src="https://cdn.bootcss.com/codemirror/5.48.4/codemirror.min.js"></script>
+
+    
+<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/javascript/javascript.min.js"></script>
+
+
+    
+<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/css/css.min.js"></script>
+
+
+    
+<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/xml/xml.min.js"></script>
+
+
+    
+<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/htmlmixed/htmlmixed.min.js"></script>
+
+
+    
+<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/clike/clike.min.js"></script>
+
+
+    
+<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/php/php.min.js"></script>
+
+
+    
+<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/shell/shell.min.js"></script>
+
+
+    
+<script src="//cdn.bootcss.com/codemirror/5.48.4/mode/python/python.min.js"></script>
+
+
+
+
+    
+<script src="/js/busuanzi.min.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            if ($('span[id^="busuanzi_"]').length) {
+                initialBusuanzi();
+            }
+        });
+    </script>
+
+
+
+<link rel="stylesheet" href="//cdn.bootcss.com/photoswipe/4.1.3/photoswipe.min.css">
+<link rel="stylesheet" href="//cdn.bootcss.com/photoswipe/4.1.3/default-skin/default-skin.min.css">
+
+
+<script src="//cdn.bootcss.com/photoswipe/4.1.3/photoswipe.min.js"></script>
+<script src="//cdn.bootcss.com/photoswipe/4.1.3/photoswipe-ui-default.min.js"></script>
+
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+            <div class="pswp__top-bar">
+                <!--  Controls are self-explanatory. Order can be changed. -->
+                <div class="pswp__counter"></div>
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                      <div class="pswp__preloader__cut">
+                        <div class="pswp__preloader__donut"></div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div> 
+            </div>
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="//www.googletagmanager.com/gtag/js?id=UA-149874671-1"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', 'UA-149874671-1');
+    </script>
+
+
+
+
+
+<script>
+    function initialTyped () {
+        var typedTextEl = $('.typed-text');
+        if (typedTextEl && typedTextEl.length > 0) {
+            var typed = new Typed('.typed-text', {
+                strings: ["Think like an artist, develop like an artisan", "艺术家思维去思考问题，工匠创造精神去开发"],
+                typeSpeed: 90,
+                loop: true,
+                loopCount: Infinity,
+                backSpeed: 20,
+            });
+        }
+    }
+
+    if ($('.article-header') && $('.article-header').length) {
+        $(document).ready(function () {
+            initialTyped();
+        });
+    }
+</script>
+
+
+
+
+</html>
