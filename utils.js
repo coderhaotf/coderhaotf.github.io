@@ -1,3 +1,9 @@
+/*
+ * @Author: haotengfei
+ * @Date: 2020-01-27 17:45:44
+ * @LastEditors: haotengfei
+ * @LastEditTime: 2020-02-24 21:41:39
+ */
 const spawn = require('cross-spawn');
 const fs = require('fs-extra');
 const path = require('path');
@@ -9,7 +15,7 @@ var questions = [
     name: 'dirPath',
     message: "请输入导入源markdown文件目录：",
     default: function() {
-        return 'C:\\home\\study\\blog\\blog-asset\\markdown';
+        return 'C:\\home\\study\\blog\\blog-asset\\Linux';
     }
   }
 ];
